@@ -6,6 +6,7 @@
 package me.areid.gold2iconomy;
 
 import java.util.HashMap;
+import org.bukkit.ChatColor;
 import java.util.logging.Logger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -130,12 +131,12 @@ public class gold2iconomy extends JavaPlugin {
 			Holdings balance = iConomy.getAccount(player.getName()).getHoldings();
 			balance.add(conversion);
 			HashMap<Integer,ItemStack> difference = pi.removeItem(new ItemStack(266, ingots));
-			sender.sendMessage("You converted " + Integer.toString(ingots) + " ingots into " + iConomy.format(conversion));
-			sender.sendMessage("You now have " + iConomy.format(player.getName()));
+			sender.sendMessage(ChatColor.GREEN + "You converted " + Integer.toString(ingots) + " ingots into " + iConomy.format(conversion));
+			sender.sendMessage(ChatColor.GREEN + "You now have " + iConomy.format(player.getName()));
 			difference.clear();
 			return true;
 		} else {
-			sender.sendMessage("You do not have " + Integer.toString(ingots) + " gold ingots!");
+			sender.sendMessage(ChatColor.RED + "You do not have " + Integer.toString(ingots) + ChatColor.RED + " gold ingots!");
 			return true;
 		}
 	}
@@ -143,7 +144,7 @@ public class gold2iconomy extends JavaPlugin {
 	// Reload configuration
 	public boolean giReload(CommandSender sender) {
 		config.loadConfig();
-		sender.sendMessage("[Gold2iConomy] Reloaded. Rate is " + config.cRate.toString());
+		sender.sendMessage(ChatColor.GREEN + "[Gold2iConomy] " + ChatColor.WHITE + "Reloaded. Rate is " + config.cRate.toString());
 		return true;
 	}
 
