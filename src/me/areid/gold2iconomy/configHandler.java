@@ -8,12 +8,15 @@ import java.util.Properties;
 
 public class configHandler {
 	
+	// Configuration file properties
 	static String pluginDir = "plugins/Gold2iConomy";
 	static File config = new File(pluginDir + File.separator + "config.yml");
 	static Properties prop = new Properties();
 	
+	// Default conversion rate
 	public Double cRate = 29.99;
 	
+	// Check to see if config exists, returns true or false
 	public boolean checkConfig() {
 		if (!config.exists())
 		{
@@ -23,6 +26,7 @@ public class configHandler {
 		}
 	}
 	
+	// Create the configuration file and insert default values
 	public void createConfig() {
 		try {
 			new File(pluginDir).mkdir();
@@ -37,6 +41,7 @@ public class configHandler {
 		}
 	}
 	
+	// Load configuration file
 	public void loadConfig() {
 		try {
 			FileInputStream in = new FileInputStream(config);

@@ -1,3 +1,8 @@
+// Plugin: Gold2iConomy
+// Author: EdTheLoon
+// Date (last modified): 13/07/11 07:43 by EdTheLoon
+// License : GNU GPL v3
+
 package me.areid.gold2iconomy;
 
 import java.util.HashMap;
@@ -18,29 +23,35 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class gold2iconomy extends JavaPlugin {
 
-	//static String pluginDir = "plugins/Gold2iConomy";
-	//static File config = new File(pluginDir + File.separator + "config.yml");
-	//static Properties prop = new Properties();
+	// Permission nodes
 	public final String PERMISSION_USE = "Gold2iConomy.use";
 	public final String PERMISSION_ADMIN = "Gold2iConomy.admin";
 
+	// Configuration handler and external APIs
 	public configHandler config = new configHandler();
 	public iConomy iConomyPlugin = null;
 	public static PermissionHandler permissionHandler;
 	public boolean usePermissions = false;	
 
+	// Minecraft Log
 	Logger log = Logger.getLogger("Minecraft");
 
 	public void onEnable() { 
+		
+		// Check to see if configuration exists. If it exists then load it; if not then create it
 		if (config.checkConfig()) {
 			config.loadConfig();
 		} else {
 			config.createConfig();
 		}
-		log.info("[Gold2iConomy] Plugin enabled.");
+		
+		// Register plugin enable and disable events
 		getServer().getPluginManager().registerEvent(Type.PLUGIN_ENABLE, new server(this), Priority.Monitor, this);
 		getServer().getPluginManager().registerEvent(Type.PLUGIN_DISABLE, new server(this), Priority.Monitor, this);
+		
+		// Hook into permissions (if available)
 		setupPermissions();
+		log.info("[Gold2iConomy] Plugin enabled.");
 	}
 
 	public void onDisable() { 
@@ -48,12 +59,14 @@ public class gold2iconomy extends JavaPlugin {
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		// Command = /gi
 		if (cmd.getName().equalsIgnoreCase("gi")) {
 			if (args.length == 0) {
 				sender.sendMessage("Conversion rate: 1 gold ingot = " + iConomy.format(config.cRate));
 				return true;
 			}
 
+			// Reload configuration
 			if (args[0].equalsIgnoreCase("reload")) {
 				if (usePermissions && permissionHandler.has((Player)sender, PERMISSION_ADMIN) | sender.isOp()) {
 					giReload(sender);
@@ -61,6 +74,7 @@ public class gold2iconomy extends JavaPlugin {
 				}
 			}
 
+			// Convert all gold
 			if (args[0].equalsIgnoreCase("all")) {
 				Player player = (Player)sender;
 				PlayerInventory pi = player.getInventory();
@@ -79,6 +93,7 @@ public class gold2iconomy extends JavaPlugin {
 				return true;
 			}
 
+			// Convert <amount> of gold
 			if (sender instanceof Player) {
 
 				Integer ingots = 0;
@@ -91,8 +106,9 @@ public class gold2iconomy extends JavaPlugin {
 						convertGold(sender, ingots);
 						return true;
 					}
-				} catch (NumberFormatException e) {
-					log.info("[Gold2iConomy] ERROR: " + e.toString());
+				} catch (NumberFormatException e) { // This should only be done if anything other than reload, all or a number was entered.
+					// Below line for debugging only
+					//log.info("[Gold2iConomy] ERROR: " + e.toString());
 					return false;
 				}
 			}
@@ -100,25 +116,15 @@ public class gold2iconomy extends JavaPlugin {
 		return false;
 	}
 
+	// Convert Gold into iConomy money
 	public boolean convertGold(CommandSender sender, Integer ingots)
 	{
-		//Integer ingots = 0;
-		/*try {
-			if (args[0].isEmpty())
-			{
-				sender.sendMessage("[Gold2iConomy] You did not enter an amount");
-				return true;
-			}
-			ingots = new Integer(args[0]);
-		} catch (NumberFormatException e) {
-			sender.sendMessage("[Gold2iConomy] You did not enter an amount");
-			return false;
-		}*/
 
 		Double conversion = config.cRate * ingots;
 		Player player = (Player)sender;
 		PlayerInventory pi = player.getInventory();
 
+		// If user has enough ingots then convert gold, otherwise inform user that they do not have enough gold ingots
 		if (pi.contains(266, ingots))
 		{				
 			Holdings balance = iConomy.getAccount(player.getName()).getHoldings();
@@ -134,12 +140,14 @@ public class gold2iconomy extends JavaPlugin {
 		}
 	}
 
+	// Reload configuration
 	public boolean giReload(CommandSender sender) {
 		config.loadConfig();
 		sender.sendMessage("[Gold2iConomy] Reloaded. Rate is " + config.cRate.toString());
 		return true;
 	}
 
+	// Hook into permissions (if available)
 	private void setupPermissions() {
 		if (permissionHandler != null) {
 			return;
@@ -147,12 +155,14 @@ public class gold2iconomy extends JavaPlugin {
 
 		Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
 
+		// If Permissions is not detected display a message to server console and set usePermissions to false
 		if (permissionsPlugin == null) {
-			log.info("[Gold2iConomy] Permissions not detected. Everyone can use /gi. Only ops can use /gi-reload");
+			log.info("[Gold2iConomy] Permissions not detected. Everyone can use /gi. Only ops can use /gi reload");
 			usePermissions = false;
 			return;
 		}
 
+		// If Permissions is detected then hook in and display message to server console and set usePermissions to true
 		permissionHandler = ((Permissions) permissionsPlugin).getHandler();
 		usePermissions = true;
 		log.info("[Gold2iConomy] Using "+((Permissions)permissionsPlugin).getDescription().getFullName());
