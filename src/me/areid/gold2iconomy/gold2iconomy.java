@@ -78,21 +78,27 @@ public class gold2iconomy extends JavaPlugin {
 
 			// Convert all gold
 			if (args[0].equalsIgnoreCase("all")) {
+				// Del=clare and initialise local variables
 				Player player = (Player)sender;
 				PlayerInventory pi = player.getInventory();				
 				ItemStack items[] = pi.getContents();
 
+				// Only go ahead if the players inventory contains at least 1 gold ingot
+				// Displays a message saying that the player doesn't have any gold if none is found
 				if (pi.contains(266)) {
 					Integer ingots = 0;
 
+					// Loop through players inventory
 					for (Integer i=0; i < items.length; i++) {
 						if (items[i] != null)
 						{
+							// If at least 1 gold ingot is in the inventory slot then add the amount of gold in this slot to total ingots found
 							if (items[i].getTypeId() == 266) {
 								ingots = ingots + items[i].getAmount();
 							}
 						}
 					}
+					// Call convertGold to convert the gold ingots
 					convertGold(sender, ingots);
 					return true;
 				} else {
@@ -107,10 +113,14 @@ public class gold2iconomy extends JavaPlugin {
 				Integer ingots = 0;
 				try {
 					ingots = Integer.parseInt(args[0]);
+					// if Permissions is not detected then all players can convert gold
 					if (!usePermissions) {
 						convertGold(sender, ingots);
 						return true;
-					} else if (permissionHandler.has((Player)sender, PERMISSION_USE)) {
+					} 
+					// if Permissions is detected only players with permission can convert gold
+					else if (permissionHandler.has((Player)sender, PERMISSION_USE))
+					{
 						convertGold(sender, ingots);
 						return true;
 					}
