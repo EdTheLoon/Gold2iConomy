@@ -1,6 +1,6 @@
 name: Gold2iConomy
 main: me.areid.gold2iconomy.gold2iconomy
-version: 0.3
+version: 0.3.2
 
 commands:
     gi:
