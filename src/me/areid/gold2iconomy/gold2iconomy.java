@@ -75,6 +75,7 @@ public class gold2iconomy extends JavaPlugin {
 						ingots = ingots + items[i].getAmount();
 					}
 				}
+				convertGold(sender, ingots);
 				return true;
 			}
 
@@ -85,8 +86,10 @@ public class gold2iconomy extends JavaPlugin {
 					ingots = Integer.parseInt(args[0]);
 					if (!usePermissions) {
 						convertGold(sender, ingots);
+						return true;
 					} else if (permissionHandler.has((Player)sender, PERMISSION_USE)) {
 						convertGold(sender, ingots);
+						return true;
 					}
 				} catch (NumberFormatException e) {
 					log.info("[Gold2iConomy] ERROR: " + e.toString());
