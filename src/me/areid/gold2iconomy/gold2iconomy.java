@@ -24,7 +24,7 @@ public class gold2iconomy extends JavaPlugin {
 	public final String PERMISSION_USE = "Gold2iConomy.use";
 	public final String PERMISSION_ADMIN = "Gold2iConomy.admin";
 
-	public configHandler config;
+	public configHandler config = new configHandler();
 	public iConomy iConomyPlugin = null;
 	public static PermissionHandler permissionHandler;
 	public boolean usePermissions = false;	
