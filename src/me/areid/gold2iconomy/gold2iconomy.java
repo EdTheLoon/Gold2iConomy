@@ -81,7 +81,7 @@ public class gold2iconomy extends JavaPlugin {
 				PlayerInventory pi = player.getInventory();				
 				ItemStack items[] = pi.getContents();
 
-				if (pi.contains(266)) {
+				if (pi.contains(266, 1)) {
 					Integer ingots = 0;
 					Integer i = 0;
 
@@ -91,6 +91,8 @@ public class gold2iconomy extends JavaPlugin {
 							ingots = ingots + items[i].getAmount();
 						}
 					}
+					convertGold(sender, ingots);
+					return true;
 				} else {
 					sender.sendMessage(ChatColor.DARK_RED + "You don't have any gold ingots to convert!");
 					return true;
