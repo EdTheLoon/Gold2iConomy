@@ -38,18 +38,18 @@ public class gold2iconomy extends JavaPlugin {
 	Logger log = Logger.getLogger("Minecraft");
 
 	public void onEnable() { 
-		
+
 		// Check to see if configuration exists. If it exists then load it; if not then create it
 		if (config.checkConfig()) {
 			config.loadConfig();
 		} else {
 			config.createConfig();
 		}
-		
+
 		// Register plugin enable and disable events
 		getServer().getPluginManager().registerEvent(Type.PLUGIN_ENABLE, new server(this), Priority.Monitor, this);
 		getServer().getPluginManager().registerEvent(Type.PLUGIN_DISABLE, new server(this), Priority.Monitor, this);
-		
+
 		// Hook into permissions (if available)
 		setupPermissions();
 		log.info("[Gold2iConomy] Plugin enabled.");
@@ -63,7 +63,7 @@ public class gold2iconomy extends JavaPlugin {
 		// Command = /gi
 		if (cmd.getName().equalsIgnoreCase("gi")) {
 			if (args.length == 0) {
-				sender.sendMessage("Conversion rate: 1 gold ingot = " + iConomy.format(config.cRate));
+				sender.sendMessage(ChatColor.GREEN + "Conversion rate: 1 gold ingot = " + iConomy.format(config.cRate));
 				return true;
 			}
 
@@ -79,19 +79,25 @@ public class gold2iconomy extends JavaPlugin {
 			if (args[0].equalsIgnoreCase("all")) {
 				Player player = (Player)sender;
 				PlayerInventory pi = player.getInventory();
-				
+
 				Integer i;
 				ItemStack items[] = pi.getContents();
 				Integer ingots = 0;
-				
+
 				for (i = 0; i < items.length; i++)
 				{
 					if (items[i].getTypeId() == 266) {
 						ingots = ingots + items[i].getAmount();
 					}
 				}
-				convertGold(sender, ingots);
-				return true;
+
+				if (ingots != 0) {
+					convertGold(sender, ingots);
+					return true;
+				} else {
+					sender.sendMessage(ChatColor.DARK_RED + "You don't have any gold ingots to convert!");
+					return true;
+				}
 			}
 
 			// Convert <amount> of gold
@@ -136,7 +142,7 @@ public class gold2iconomy extends JavaPlugin {
 			difference.clear();
 			return true;
 		} else {
-			sender.sendMessage(ChatColor.RED + "You do not have " + Integer.toString(ingots) + ChatColor.RED + " gold ingots!");
+			sender.sendMessage(ChatColor.DARK_RED + "You do not have " + Integer.toString(ingots) + ChatColor.RED + " gold ingots!");
 			return true;
 		}
 	}
