@@ -7,6 +7,7 @@ package me.areid.gold2iconomy;
 
 import java.util.HashMap;
 import org.bukkit.ChatColor;
+
 import java.util.logging.Logger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -81,14 +82,15 @@ public class gold2iconomy extends JavaPlugin {
 				PlayerInventory pi = player.getInventory();				
 				ItemStack items[] = pi.getContents();
 
-				if (pi.contains(266, 1)) {
+				if (pi.contains(266)) {
 					Integer ingots = 0;
-					Integer i = 0;
 
-					for (i = 0; i < items.length; i++)
-					{
-						if (items[i].getTypeId() == 266) {
-							ingots = ingots + items[i].getAmount();
+					for (Integer i=0; i < items.length; i++) {
+						if (items[i] != null)
+						{
+							if (items[i].getTypeId() == 266) {
+								ingots = ingots + items[i].getAmount();
+							}
 						}
 					}
 					convertGold(sender, ingots);
