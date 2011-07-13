@@ -78,22 +78,19 @@ public class gold2iconomy extends JavaPlugin {
 			// Convert all gold
 			if (args[0].equalsIgnoreCase("all")) {
 				Player player = (Player)sender;
-				PlayerInventory pi = player.getInventory();
-
-				Integer i;
+				PlayerInventory pi = player.getInventory();				
 				ItemStack items[] = pi.getContents();
-				Integer ingots = 0;
 
-				for (i = 0; i < items.length; i++)
-				{
-					if (items[i].getTypeId() == 266) {
-						ingots = ingots + items[i].getAmount();
+				if (pi.contains(266)) {
+					Integer ingots = 0;
+					Integer i = 0;
+
+					for (i = 0; i < items.length; i++)
+					{
+						if (items[i].getTypeId() == 266) {
+							ingots = ingots + items[i].getAmount();
+						}
 					}
-				}
-
-				if (ingots != 0) {
-					convertGold(sender, ingots);
-					return true;
 				} else {
 					sender.sendMessage(ChatColor.DARK_RED + "You don't have any gold ingots to convert!");
 					return true;
@@ -142,7 +139,7 @@ public class gold2iconomy extends JavaPlugin {
 			difference.clear();
 			return true;
 		} else {
-			sender.sendMessage(ChatColor.DARK_RED + "You do not have " + Integer.toString(ingots) + ChatColor.RED + " gold ingots!");
+			sender.sendMessage(ChatColor.DARK_RED + "You do not have " + Integer.toString(ingots) + ChatColor.DARK_RED + " gold ingots!");
 			return true;
 		}
 	}
