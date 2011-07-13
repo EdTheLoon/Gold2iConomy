@@ -1,0 +1,11 @@
+name: Gold2iConomy
+main: me.areid.gold2iconomy.gold2iconomy
+version: 0.3
+
+commands:
+    gi:
+        description: Convert your gold ingots to iConomy.
+        usage: |
+            /gi - Shows how much you will get per gold ingot
+            /gi <amount> - Where <amount> is the amount of gold ingots to convert
+            /gi reload - Reload config (Admin command)
