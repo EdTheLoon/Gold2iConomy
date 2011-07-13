@@ -8,4 +8,5 @@ commands:
         usage: |
             /gi - Shows how much you will get per gold ingot
             /gi <amount> - Where <amount> is the amount of gold ingots to convert
+            /gi all - Converts all your gold ingots into money
             /gi reload - Reload config (Admin command)
