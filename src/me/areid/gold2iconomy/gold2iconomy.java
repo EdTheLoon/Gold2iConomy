@@ -53,11 +53,11 @@ public class gold2iconomy extends JavaPlugin {
 
 		// Hook into permissions (if available)
 		setupPermissions();
-		log.info("[Gold2iConomy] Plugin enabled.");
+		log.info("[Gold2iConomy] Plugin enabled. Version " + this.getDescription().getVersion().toString());
 	}
 
 	public void onDisable() { 
-		log.info("[Gold2iConomy] Plugin disabled.");
+		log.info("[Gold2iConomy] Plugin disabled. Version " + this.getDescription().getVersion().toString());
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
