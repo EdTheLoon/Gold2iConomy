@@ -17,6 +17,7 @@ import org.bukkit.event.Event.Type;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.iConomy.*;
 import com.iConomy.system.Holdings;
@@ -34,6 +35,7 @@ public class gold2iconomy extends JavaPlugin {
 	public iConomy iConomyPlugin = null;
 	public static PermissionHandler permissionHandler;
 	public boolean usePermissions = false;	
+	public static PluginManager pm = null;
 
 	// Minecraft Log
 	Logger log = Logger.getLogger("Minecraft");
@@ -48,8 +50,9 @@ public class gold2iconomy extends JavaPlugin {
 		}
 
 		// Register plugin enable and disable events
-		getServer().getPluginManager().registerEvent(Type.PLUGIN_ENABLE, new server(this), Priority.Monitor, this);
-		getServer().getPluginManager().registerEvent(Type.PLUGIN_DISABLE, new server(this), Priority.Monitor, this);
+		pm = getServer().getPluginManager();
+		pm.registerEvent(Type.PLUGIN_ENABLE, new server(this), Priority.Monitor, this);
+		pm.registerEvent(Type.PLUGIN_DISABLE, new server(this), Priority.Monitor, this);
 
 		// Hook into permissions (if available)
 		setupPermissions();
