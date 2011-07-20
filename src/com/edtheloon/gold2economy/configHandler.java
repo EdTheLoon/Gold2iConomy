@@ -42,6 +42,9 @@ public class configHandler {
 		config.setProperty("economy.BOSEconomy", false);
 		config.setHeader("# Version" + plugin.getDescription().getVersion());
 		config.save();
+		
+		// Now that Config is created we can load the values
+		loadConfig();
 	}
 	
 	// Load configuration file

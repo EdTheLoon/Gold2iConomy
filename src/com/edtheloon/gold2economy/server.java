@@ -7,6 +7,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 
 import cosine.boseconomy.BOSEconomy;
 
@@ -85,9 +86,9 @@ public class server extends ServerListener {
 		
 		if (plugin.config.usePermissions) {
 			if (gold2economy.permissionHandler == null) {
-				Plugin Permissions = plugin.getServer().getPluginManager().getPlugin("Permissions");
+				Plugin PermissionsPlugin = plugin.getServer().getPluginManager().getPlugin("Permissions");
 				gold2economy.permissionsEnabled = true;
-				gold2economy.permissionHandler = (PermissionHandler) Permissions;
+				gold2economy.permissionHandler = ((Permissions) PermissionsPlugin).getHandler();
 			}
 		}
 	}
