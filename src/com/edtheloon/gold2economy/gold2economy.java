@@ -16,11 +16,14 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.iConomy.*;
 import com.iConomy.system.Holdings;
 import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
+
 import cosine.boseconomy.BOSEconomy;
 
 public class gold2economy extends JavaPlugin {
@@ -36,7 +39,7 @@ public class gold2economy extends JavaPlugin {
 	public static PermissionHandler permissionHandler;
 	public static boolean enabled = false;
 	public static PluginManager pm = null;
-	public static boolean permissionsEnabled;
+	public static boolean permissionsEnabled = false;
 
 	// Minecraft Log
 	public static Logger log = Logger.getLogger("Minecraft");
@@ -55,7 +58,7 @@ public class gold2economy extends JavaPlugin {
 		pm.registerEvent(Type.PLUGIN_ENABLE, new server(this), Priority.Monitor, this);
 		pm.registerEvent(Type.PLUGIN_DISABLE, new server(this), Priority.Monitor, this);
 		log.info("[Gold2Economy] Enabled. Version " + this.getDescription().getVersion().toString());
-		
+
 		// Hook into iConomy
 		if (config.iConomy && iConomyPlugin == null) {
 			if (pm.getPlugin("iConomy").isEnabled()) {
@@ -67,7 +70,7 @@ public class gold2economy extends JavaPlugin {
 				enabled = false;
 			}
 		}
-		
+
 		// Hook into BOSEconomy
 		if (config.BOSEconomy && BOSEconomyPlugin == null) {
 			if (pm.getPlugin("BOSEconomy").isEnabled()) {
@@ -77,6 +80,20 @@ public class gold2economy extends JavaPlugin {
 			} else {
 				log.info("[Gold2Economy] BOSEconomy not detected. Disabling.");
 				enabled = false;
+			}
+		}
+
+		// Hook into Permissions
+		if (config.usePermissions && permissionHandler == null) {
+			Plugin PermissionsPlugin = getServer().getPluginManager().getPlugin("Permissions");
+			if (PermissionsPlugin.isEnabled()) {
+				permissionsEnabled = true;
+				permissionHandler = ((Permissions) PermissionsPlugin).getHandler();
+				log.info("[Gold2Economy] Hooked into " + PermissionsPlugin.getDescription().getMain() + " Version " + PermissionsPlugin.getDescription().getVersion());
+			} else {
+				permissionsEnabled = false;
+				config.usePermissions = false;
+				log.info("[Gold2Economy] Permissions not detected. Falling back to OP for reload command");
 			}
 		}
 	}
@@ -198,7 +215,7 @@ public class gold2economy extends JavaPlugin {
 				sender.sendMessage(ChatColor.GREEN + "You converted " + ingots + " ingots into " + money + BOSEconomyPlugin.getMoneyNamePluralCaps());
 				sender.sendMessage(ChatColor.GREEN + "You now have " + BOSEconomyPlugin.getPlayerMoney(player.getName()) + BOSEconomyPlugin.getMoneyNamePluralCaps());
 			}
-			
+
 			// Remove gold ingots
 			HashMap<Integer,ItemStack> difference = pi.removeItem(new ItemStack(266, ingots));			
 			difference.clear();
