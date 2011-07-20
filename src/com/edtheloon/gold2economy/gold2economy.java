@@ -89,7 +89,7 @@ public class gold2economy extends JavaPlugin {
 			if (PermissionsPlugin.isEnabled()) {
 				permissionsEnabled = true;
 				permissionHandler = ((Permissions) PermissionsPlugin).getHandler();
-				log.info("[Gold2Economy] Hooked into " + PermissionsPlugin.getDescription().getMain() + " Version " + PermissionsPlugin.getDescription().getVersion());
+				log.info("[Gold2Economy] Hooked into " + PermissionsPlugin.getDescription().getName() + " Version " + PermissionsPlugin.getDescription().getVersion());
 			} else {
 				permissionsEnabled = false;
 				config.usePermissions = false;
