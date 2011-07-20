@@ -40,7 +40,7 @@ public class configHandler {
 		config.setProperty("permissions", false);
 		config.setProperty("economy.iConomy", true);
 		config.setProperty("economy.BOSEconomy", false);
-		config.setHeader("# Version" + plugin.getDescription().getVersion());
+		config.setHeader("# Gold2Economy Version " + plugin.getDescription().getVersion());
 		config.save();
 		
 		// Now that Config is created we can load the values

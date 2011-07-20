@@ -112,7 +112,8 @@ public class gold2economy extends JavaPlugin {
 						return true;
 					}
 					if (config.BOSEconomy && BOSEconomyPlugin != null) {
-						sender.sendMessage(ChatColor.GREEN + "Conversion rate: 1 gold ingot = " + config.cRate.toString() + BOSEconomyPlugin.getMoneyNamePluralCaps());
+						sender.sendMessage(ChatColor.GREEN + "Conversion rate: 1 gold ingot = " + config.cRate.toString());
+						return true;
 					}
 				}
 
@@ -158,36 +159,36 @@ public class gold2economy extends JavaPlugin {
 							return true;
 						}
 					}
+				}
 
-					// Convert <amount> of gold
-					if (sender instanceof Player) {
+				// Convert <amount> of gold
+				if (sender instanceof Player) {
 
-						Integer ingots = 0;
-						try {
-							ingots = Integer.parseInt(args[0]);
-							// if Permissions is not detected then all players can convert gold
-							if (!config.usePermissions) {
-								convertGold(sender, ingots);
-								return true;
-							} 
-							// if Permissions is detected only players with permission can convert gold
-							else if (config.usePermissions && permissionsEnabled && permissionHandler.has((Player)sender, PERMISSION_USE))
-							{
-								convertGold(sender, ingots);
-								return true;
-							}
-						} catch (NumberFormatException e) { // This should only be done if anything other than reload, all or a number was entered.
-							// Below line for debugging only
-							//log.info("[Gold2iConomy] ERROR: " + e.toString());
-							return false;
+					Integer ingots = 0;
+					try {
+						ingots = Integer.parseInt(args[0]);
+						// if Permissions is not detected then all players can convert gold
+						if (!config.usePermissions) {
+							convertGold(sender, ingots);
+							return true;
+						} 
+						// if Permissions is detected only players with permission can convert gold
+						else if (config.usePermissions && permissionsEnabled && permissionHandler.has((Player)sender, PERMISSION_USE))
+						{
+							convertGold(sender, ingots);
+							return true;
 						}
+					} catch (NumberFormatException e) { // This should only be done if anything other than reload, all or a number was entered.
+						// Below line for debugging only
+						//log.info("[Gold2iConomy] ERROR: " + e.toString());
+						return false;
 					}
 				}
 			} else {
 				sender.sendMessage(ChatColor.RED + "Gold2iConomy is disabled because no currency sytem is enabled");
 				return true;
 			}
-
+			return false;
 		}
 		return false;
 	}
@@ -209,11 +210,11 @@ public class gold2economy extends JavaPlugin {
 				balance.add(conversion);
 				sender.sendMessage(ChatColor.GREEN + "You converted " + ingots + " ingots into " + iConomy.format(conversion));
 				sender.sendMessage(ChatColor.GREEN + "You now have " + iConomy.format(player.getName()));
-			} else if (config.BOSEconomy && BOSEconomyPlugin != null) {
+			} else if (config.BOSEconomy && BOSEconomyPlugin != null) { // If using BOSEconomy
 				int money = Math.round(conversion.floatValue());
 				BOSEconomyPlugin.addPlayerMoney(player.getName(), money, true);
-				sender.sendMessage(ChatColor.GREEN + "You converted " + ingots + " ingots into " + money + BOSEconomyPlugin.getMoneyNamePluralCaps());
-				sender.sendMessage(ChatColor.GREEN + "You now have " + BOSEconomyPlugin.getPlayerMoney(player.getName()) + BOSEconomyPlugin.getMoneyNamePluralCaps());
+				sender.sendMessage(ChatColor.GREEN + "You converted " + ingots + " ingots into " + money + " " + BOSEconomyPlugin.getMoneyNamePluralCaps());
+				sender.sendMessage(ChatColor.GREEN + "You now have " + BOSEconomyPlugin.getPlayerMoney(player.getName()) + " " + BOSEconomyPlugin.getMoneyNamePluralCaps());
 			}
 
 			// Remove gold ingots
