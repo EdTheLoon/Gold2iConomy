@@ -1,6 +1,8 @@
 main: me.areid.gold2iconomy.gold2iconomy
 name: Gold2iConomy
-version: 0.3.2
+author: EdTheLoon
+description: Convert your gold ingots to money in iConomy
+version: 0.4
 
 commands:
     gi:

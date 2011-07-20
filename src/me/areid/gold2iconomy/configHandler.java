@@ -1,24 +1,32 @@
 package me.areid.gold2iconomy;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
+
+import org.bukkit.plugin.Plugin;
+import org.bukkit.util.config.Configuration;
 
 public class configHandler {
 	
 	// Configuration file properties
-	static String pluginDir = "plugins/Gold2iConomy";
-	static File config = new File(pluginDir + File.separator + "config.yml");
-	static Properties prop = new Properties();
+	private Plugin plugin;
+	private File configFile = new File("plugins/Gold2iConomy" + File.separator + "config.yml");
+	private Configuration config;
 	
 	// Default conversion rate
 	public Double cRate = 29.99;
+	public boolean iConomy;
+	public boolean BOSEconomy;
+	public boolean usePermissions;
+	
+	// CONSTRUCTOR 
+	public configHandler(Plugin _plugin) {
+		this.plugin = _plugin;
+		this.config = plugin.getConfiguration();
+	}
 	
 	// Check to see if config exists, returns true or false
 	public boolean checkConfig() {
-		if (!config.exists())
+		if (!configFile.exists())
 		{
 			return false;
 		} else {
@@ -28,29 +36,19 @@ public class configHandler {
 	
 	// Create the configuration file and insert default values
 	public void createConfig() {
-		try {
-			new File(pluginDir).mkdir();
-			config.createNewFile();
-			FileOutputStream out = new FileOutputStream(config);
-			prop.put("rate", "30");
-			prop.store(out, "The rate at which gold ingots are converted into currency. Default is 30");
-			out.flush();
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		config.removeProperty("clear");
+		config.setProperty("rate", cRate);
+		config.setProperty("permissions", false);
+		config.setProperty("economy.iConomy", true);
+		config.setProperty("economy.BOSEconomy", false);
 	}
 	
 	// Load configuration file
 	public void loadConfig() {
-		try {
-			FileInputStream in = new FileInputStream(config);
-			prop.load(in);
-			cRate = Double.parseDouble(prop.getProperty("rate"));
-			in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		config.load();
+		cRate = config.getDouble("rate", 29.99);
+		usePermissions = config.getBoolean("permissions", false);
+		iConomy = config.getBoolean("economy.iConomy", true);
+		BOSEconomy = config.getBoolean("economy.BOSEconomy", false);
 	}
 }
