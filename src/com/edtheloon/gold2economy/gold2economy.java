@@ -26,15 +26,15 @@ import cosine.boseconomy.BOSEconomy;
 public class gold2economy extends JavaPlugin {
 
 	// Permission nodes
-	public final String PERMISSION_USE = "Gold2iConomy.use";
-	public final String PERMISSION_ADMIN = "Gold2iConomy.admin";
+	public final String PERMISSION_USE = "Gold2Economy.use";
+	public final String PERMISSION_ADMIN = "Gold2Economy.admin";
 
 	// Config Handler, External APIs and class variables
 	public configHandler config = new configHandler(this);
 	public iConomy iConomyPlugin = null;
 	public BOSEconomy BOSEconomyPlugin = null;
 	public static PermissionHandler permissionHandler;
-	public static boolean enabled = true;
+	public static boolean enabled = false;
 	public static PluginManager pm = null;
 	public static boolean permissionsEnabled;
 
@@ -54,14 +54,35 @@ public class gold2economy extends JavaPlugin {
 		pm = getServer().getPluginManager();
 		pm.registerEvent(Type.PLUGIN_ENABLE, new server(this), Priority.Monitor, this);
 		pm.registerEvent(Type.PLUGIN_DISABLE, new server(this), Priority.Monitor, this);
-		log.info("[Gold2iConomy] Plugin enabled. Version " + this.getDescription().getVersion().toString());
+		log.info("[Gold2Economy] Enabled. Version " + this.getDescription().getVersion().toString());
 		
-		// Hook into iConomy or BOSEconomy
+		// Hook into iConomy
+		if (config.iConomy && iConomyPlugin == null) {
+			if (pm.getPlugin("iConomy").isEnabled()) {
+				iConomyPlugin = (iConomy) pm.getPlugin("iConomy");
+				enabled = true;
+				log.info("[Gold2Economy] Hooked into " + iConomyPlugin.getDescription().getName() + " Version " + iConomyPlugin.getDescription().getVersion());
+			} else {
+				log.info("[Gold2Economy] iConomy not detected. Disabling.");
+				enabled = false;
+			}
+		}
 		
+		// Hook into BOSEconomy
+		if (config.BOSEconomy && BOSEconomyPlugin == null) {
+			if (pm.getPlugin("BOSEconomy").isEnabled()) {
+				iConomyPlugin = (iConomy) pm.getPlugin("BOSEconomy");
+				enabled = true;
+				log.info("[Gold2Economy] Hooked into " + BOSEconomyPlugin.getDescription().getName() + " Version " + BOSEconomyPlugin.getDescription().getVersion());
+			} else {
+				log.info("[Gold2Economy] BOSEconomy not detected. Disabling.");
+				enabled = false;
+			}
+		}
 	}
 
 	public void onDisable() { 
-		log.info("[Gold2iConomy] Plugin disabled. Version " + this.getDescription().getVersion().toString());
+		log.info("[Gold2Economy] Plugin disabled. Version " + this.getDescription().getVersion().toString());
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -191,7 +212,7 @@ public class gold2economy extends JavaPlugin {
 	// Reload configuration
 	public boolean giReload(CommandSender sender) {
 		config.loadConfig();
-		sender.sendMessage(ChatColor.GREEN + "[Gold2iConomy] " + ChatColor.WHITE + "Reloaded. Rate is " + config.cRate.toString());
+		sender.sendMessage(ChatColor.GREEN + "[Gold2Economy] " + ChatColor.WHITE + "Reloaded. Rate is " + config.cRate.toString());
 		return true;
 	}
 }

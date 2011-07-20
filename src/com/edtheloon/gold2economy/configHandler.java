@@ -9,7 +9,7 @@ public class configHandler {
 	
 	// Configuration file properties
 	private Plugin plugin;
-	private File configFile = new File("plugins/Gold2iConomy" + File.separator + "config.yml");
+	private File configFile = new File("plugins/Gold2Economy" + File.separator + "config.yml");
 	private Configuration config;
 	
 	// Default conversion rate

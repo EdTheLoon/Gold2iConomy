@@ -24,7 +24,7 @@ public class server extends ServerListener {
 				if (event.getPlugin().getDescription().getName().equals("iConomy")) {
 					plugin.iConomyPlugin = null;
 					gold2economy.enabled = false;
-					gold2economy.log.info("[Gold2iConomy] Un-hooked from iConomy. Gold2iConomy will disable until iConomy is enabled.");
+					gold2economy.log.info("[Gold2Economy] Un-hooked from iConomy. Gold2Economy will disable until iConomy is enabled.");
 				}
 			}
 		}
@@ -35,7 +35,7 @@ public class server extends ServerListener {
 				if (event.getPlugin().getDescription().getName().equals("BOSEconomy")) {
 					plugin.BOSEconomyPlugin = null;
 					gold2economy.enabled = false;
-					gold2economy.log.info("[Gold2iConomy] Un-hooked from BOSEconomy. Gold2iConomy will disable until BOSEconomy is enabled.");
+					gold2economy.log.info("[Gold2Economy] Un-hooked from BOSEconomy. Gold2Economy will disable until BOSEconomy is enabled.");
 				}
 			}
 		}
@@ -46,7 +46,7 @@ public class server extends ServerListener {
 				if (event.getPlugin().getDescription().getName().equals("Permissions")) {
 					gold2economy.permissionHandler = null;
 					gold2economy.permissionsEnabled = false;
-					gold2economy.log.info("[Gold2iConomy] Permissions disabled. Falling back to OP only for /gi reload");
+					gold2economy.log.info("[Gold2Economy] Permissions disabled. Falling back to OP only for /gi reload");
 				}
 			}
 		}
@@ -62,7 +62,7 @@ public class server extends ServerListener {
 					if (iConomy.isEnabled() && iConomy.getClass().getName().equals("com.iConomy.iConomy")) {
 						plugin.iConomyPlugin = (iConomy)iConomy;
 						gold2economy.enabled = true;
-						gold2economy.log.info("[Gold2iConomy] Hooked into iConomy.");
+						gold2economy.log.info("[Gold2Economy] Hooked into iConomy.");
 					}
 				}
 			}
@@ -77,7 +77,7 @@ public class server extends ServerListener {
 					if (BOSEconomy.isEnabled() && BOSEconomy.getClass().getName().equals("cosine.boseconomy.BOSEconomy")) {
 						plugin.BOSEconomyPlugin = (BOSEconomy) BOSEconomy;
 						gold2economy.enabled = true;
-						gold2economy.log.info("[Gold2iConomy] Hooked into BOSEconomy");
+						gold2economy.log.info("[Gold2Economy] Hooked into BOSEconomy");
 					}
 				}
 			}
