@@ -1,4 +1,4 @@
-package me.areid.gold2iconomy;
+package com.edtheloon.gold2economy;
 
 import java.io.File;
 
@@ -21,7 +21,7 @@ public class configHandler {
 	// CONSTRUCTOR 
 	public configHandler(Plugin _plugin) {
 		this.plugin = _plugin;
-		this.config = plugin.getConfiguration();
+		this.config = new Configuration(configFile);
 	}
 	
 	// Check to see if config exists, returns true or false
@@ -36,11 +36,12 @@ public class configHandler {
 	
 	// Create the configuration file and insert default values
 	public void createConfig() {
-		config.removeProperty("clear");
 		config.setProperty("rate", cRate);
 		config.setProperty("permissions", false);
 		config.setProperty("economy.iConomy", true);
 		config.setProperty("economy.BOSEconomy", false);
+		config.setHeader("# Version" + plugin.getDescription().getVersion());
+		config.save();
 	}
 	
 	// Load configuration file

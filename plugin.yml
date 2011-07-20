@@ -1,12 +1,12 @@
-main: me.areid.gold2iconomy.gold2iconomy
-name: Gold2iConomy
+main: me.areid.gold2economy.gold2economy
+name: Gold2Economy
 author: EdTheLoon
 description: Convert your gold ingots to money in iConomy
 version: 0.4
 
 commands:
     gi:
-        description: Convert your gold ingots to iConomy.
+        description: Convert your gold ingots to money.
         usage: |
             /gi - Shows how much you will get per gold ingot
             /gi <amount> - Where <amount> is the amount of gold ingots to convert

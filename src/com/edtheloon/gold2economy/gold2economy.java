@@ -3,7 +3,7 @@
 // Date (last modified): 13/07/11 07:43 by EdTheLoon
 // License : GNU GPL v3
 
-package me.areid.gold2iconomy;
+package com.edtheloon.gold2economy;
 
 import java.util.HashMap;
 import org.bukkit.ChatColor;
@@ -23,7 +23,7 @@ import com.iConomy.system.Holdings;
 import com.nijiko.permissions.PermissionHandler;
 import cosine.boseconomy.BOSEconomy;
 
-public class gold2iconomy extends JavaPlugin {
+public class gold2economy extends JavaPlugin {
 
 	// Permission nodes
 	public final String PERMISSION_USE = "Gold2iConomy.use";
@@ -55,6 +55,9 @@ public class gold2iconomy extends JavaPlugin {
 		pm.registerEvent(Type.PLUGIN_ENABLE, new server(this), Priority.Monitor, this);
 		pm.registerEvent(Type.PLUGIN_DISABLE, new server(this), Priority.Monitor, this);
 		log.info("[Gold2iConomy] Plugin enabled. Version " + this.getDescription().getVersion().toString());
+		
+		// Hook into iConomy or BOSEconomy
+		
 	}
 
 	public void onDisable() { 
