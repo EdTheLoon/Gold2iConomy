@@ -4,7 +4,6 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
-
 import com.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -84,6 +83,7 @@ public class server extends ServerListener {
 			}
 		}
 		
+		// if using Permissions
 		if (plugin.config.usePermissions) {
 			if (gold2economy.permissionHandler == null) {
 				Plugin PermissionsPlugin = plugin.getServer().getPluginManager().getPlugin("Permissions");

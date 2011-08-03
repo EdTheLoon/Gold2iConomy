@@ -74,7 +74,7 @@ public class gold2economy extends JavaPlugin {
 		// Hook into BOSEconomy
 		if (config.BOSEconomy && BOSEconomyPlugin == null) {
 			if (pm.getPlugin("BOSEconomy").isEnabled()) {
-				iConomyPlugin = (iConomy) pm.getPlugin("BOSEconomy");
+				BOSEconomyPlugin = (BOSEconomy) pm.getPlugin("BOSEconomy");
 				enabled = true;
 				log.info("[Gold2Economy] Hooked into " + BOSEconomyPlugin.getDescription().getName() + " Version " + BOSEconomyPlugin.getDescription().getVersion());
 			} else {
