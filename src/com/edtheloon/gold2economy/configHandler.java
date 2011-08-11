@@ -53,7 +53,11 @@ public class configHandler {
 	
 	// Load configuration file
 	public void loadConfig() {
-		config.load();
+		config.load();	
+		
+		// if config version file is different to new version format then re-create config
+		if (config.getHeader() == "# Gold2Economy Version 1.0") createConfig();
+		
 		cRate = config.getDouble("rate", 29.99);
 		Permissions = config.getBoolean("permissions.use", false);
 		usePermissions = config.getBoolean("permissions.Permissions", false);

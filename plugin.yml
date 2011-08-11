@@ -2,7 +2,7 @@ main: com.edtheloon.gold2economy.gold2economy
 name: Gold2Economy
 author: EdTheLoon
 description: Convert your gold ingots to money in either iConomy or BOSEconomy
-version: 1.0
+version: 1.1
 
 commands:
     gi:
