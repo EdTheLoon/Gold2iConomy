@@ -5,7 +5,6 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
 import com.iConomy.iConomy;
-import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
 import cosine.boseconomy.BOSEconomy;
@@ -19,10 +18,10 @@ public class server extends ServerListener {
 
 	public void onPluginDisable(PluginDisableEvent event) {
 		// if using iConomy
-		if (plugin.config.iConomy) {
-			if (plugin.iConomyPlugin != null) {
+		if (gold2economy.config.iConomy) {
+			if (gold2economy.iConomyPlugin != null) {
 				if (event.getPlugin().getDescription().getName().equals("iConomy")) {
-					plugin.iConomyPlugin = null;
+					gold2economy.iConomyPlugin = null;
 					gold2economy.enabled = false;
 					gold2economy.log.info("[Gold2Economy] Un-hooked from iConomy. Gold2Economy will disable until iConomy is enabled.");
 				}
@@ -30,10 +29,10 @@ public class server extends ServerListener {
 		}
 
 		// if using BOSEconomy
-		if (plugin.config.BOSEconomy) {
-			if (plugin.BOSEconomyPlugin != null) {
+		if (gold2economy.config.BOSEconomy) {
+			if (gold2economy.BOSEconomyPlugin != null) {
 				if (event.getPlugin().getDescription().getName().equals("BOSEconomy")) {
-					plugin.BOSEconomyPlugin = null;
+					gold2economy.BOSEconomyPlugin = null;
 					gold2economy.enabled = false;
 					gold2economy.log.info("[Gold2Economy] Un-hooked from BOSEconomy. Gold2Economy will disable until BOSEconomy is enabled.");
 				}
@@ -41,7 +40,7 @@ public class server extends ServerListener {
 		}
 		
 		// Permissions
-		if (plugin.config.usePermissions) {
+		if (gold2economy.config.usePermissions) {
 			if (gold2economy.permissionHandler != null) {
 				if (event.getPlugin().getDescription().getName().equals("Permissions")) {
 					gold2economy.permissionHandler = null;
@@ -54,13 +53,13 @@ public class server extends ServerListener {
 
 	public void onPluginEnable(PluginEnableEvent event) {
 		// if using iConomy
-		if (plugin.config.iConomy) {
-			if (plugin.iConomyPlugin == null) {
+		if (gold2economy.config.iConomy) {
+			if (gold2economy.iConomyPlugin == null) {
 				Plugin iConomy = plugin.getServer().getPluginManager().getPlugin("iConomy");
 
 				if (iConomy != null) {
 					if (iConomy.isEnabled() && iConomy.getClass().getName().equals("com.iConomy.iConomy")) {
-						plugin.iConomyPlugin = (iConomy)iConomy;
+						gold2economy.iConomyPlugin = (iConomy)iConomy;
 						gold2economy.enabled = true;
 						gold2economy.log.info("[Gold2Economy] Hooked into iConomy.");
 					}
@@ -69,22 +68,22 @@ public class server extends ServerListener {
 		}
 
 		// if using BOSEconomy
-		if (plugin.config.BOSEconomy) {
-			if (plugin.BOSEconomyPlugin == null) {
+		if (gold2economy.config.BOSEconomy) {
+			if (gold2economy.BOSEconomyPlugin == null) {
 				Plugin BOSEconomy = plugin.getServer().getPluginManager().getPlugin("BOSEconomy");
 
 				if (BOSEconomy != null) {
 					if (BOSEconomy.isEnabled() && BOSEconomy.getClass().getName().equals("cosine.boseconomy.BOSEconomy")) {
-						plugin.BOSEconomyPlugin = (BOSEconomy) BOSEconomy;
+						gold2economy.BOSEconomyPlugin = (BOSEconomy) BOSEconomy;
 						gold2economy.enabled = true;
-						gold2economy.log.info("[Gold2Economy] Hooked into BOSEconomy");
+						gold2economy.log.info("[Gold2Economy] Hooked into BOSEconomy. Plugin enabled.");
 					}
 				}
 			}
 		}
 		
 		// if using Permissions
-		if (plugin.config.usePermissions) {
+		if (gold2economy.config.usePermissions) {
 			if (gold2economy.permissionHandler == null) {
 				Plugin PermissionsPlugin = plugin.getServer().getPluginManager().getPlugin("Permissions");
 				gold2economy.permissionsEnabled = true;
