@@ -12,3 +12,15 @@ commands:
             /gi <amount> - Where <amount> is the amount of gold ingots to convert
             /gi all - Converts all your gold ingots into money
             /gi reload - Reload config (Admin command)
+permissions:
+    Gold2Economy.*:
+        description: Gives access to all Gold2Economy features
+        children:
+            Gold2Economy.admin: true
+            Gold2Economy.use: true
+    Gold2Economy.use:
+        description: Allow users to convert gold
+        default: true
+    Gold2Economy.admin:
+        description: Allow users to use admin commands/features
+        default: op
