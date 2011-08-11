@@ -35,18 +35,17 @@ public class Commands implements CommandExecutor {
 
 				// Command = /gi reload - Reload configuration
 				if (args[0].equalsIgnoreCase("reload")) {
-					if (gold2economy.permissionsEnabled && gold2economy.permissionHandler.has((Player)sender, gold2economy.PERMISSION_ADMIN) || sender instanceof ConsoleCommandSender) {
+					if (Permissions.check(sender, gold2economy.PERMISSION_ADMIN) || sender instanceof ConsoleCommandSender) {
 						Functions.giReload(sender);
 						return true;
-					} else if (!gold2economy.config.usePermissions && sender.isOp()) {
-						Functions.giReload(sender);
-						return true;
+					} else {
+						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
 					}
 				}
 
 				// Command = /gi all - Convert all gold
 				if (args[0].equalsIgnoreCase("all")) {
-					if (gold2economy.config.usePermissions && gold2economy.permissionsEnabled && gold2economy.permissionHandler.has((Player)sender, gold2economy.PERMISSION_USE) || !gold2economy.config.usePermissions) {
+					if (Permissions.check(sender, gold2economy.PERMISSION_USE) || !gold2economy.config.usePermissions || !gold2economy.permissionsEnabled) {
 						// Declare and initialise local variables
 						Player player = (Player)sender;
 						PlayerInventory pi = player.getInventory();				
@@ -74,6 +73,8 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage(ChatColor.DARK_RED + "You don't have any gold ingots to convert!");
 							return true;
 						}
+					} else {
+						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
 					}
 				}
 
@@ -83,14 +84,7 @@ public class Commands implements CommandExecutor {
 					Integer ingots = 0;
 					try {
 						ingots = Integer.parseInt(args[0]);
-						// if Permissions is not detected then all players can convert gold
-						if (!gold2economy.config.usePermissions) {
-							Converter.convertGold(sender, ingots);
-							return true;
-						} 
-						// if Permissions is detected only players with permission can convert gold
-						else if (gold2economy.config.usePermissions && gold2economy.permissionsEnabled && gold2economy.permissionHandler.has((Player)sender, gold2economy.PERMISSION_USE))
-						{
+						if (Permissions.check(sender, gold2economy.PERMISSION_USE) || !gold2economy.config.usePermissions || !gold2economy.permissionsEnabled) {
 							Converter.convertGold(sender, ingots);
 							return true;
 						}

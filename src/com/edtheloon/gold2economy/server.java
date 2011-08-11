@@ -61,7 +61,7 @@ public class server extends ServerListener {
 					if (iConomy.isEnabled() && iConomy.getClass().getName().equals("com.iConomy.iConomy")) {
 						gold2economy.iConomyPlugin = (iConomy)iConomy;
 						gold2economy.enabled = true;
-						gold2economy.log.info("[Gold2Economy] Hooked into iConomy.");
+						gold2economy.log.info("[Gold2Economy] Hooked into " + gold2economy.iConomyPlugin.getDescription().getName());
 					}
 				}
 			}
@@ -76,7 +76,7 @@ public class server extends ServerListener {
 					if (BOSEconomy.isEnabled() && BOSEconomy.getClass().getName().equals("cosine.boseconomy.BOSEconomy")) {
 						gold2economy.BOSEconomyPlugin = (BOSEconomy) BOSEconomy;
 						gold2economy.enabled = true;
-						gold2economy.log.info("[Gold2Economy] Hooked into BOSEconomy. Plugin enabled.");
+						gold2economy.log.info("[Gold2Economy] Hooked into " + gold2economy.BOSEconomyPlugin.getDescription().getName());
 					}
 				}
 			}
@@ -88,6 +88,7 @@ public class server extends ServerListener {
 				Plugin PermissionsPlugin = plugin.getServer().getPluginManager().getPlugin("Permissions");
 				gold2economy.permissionsEnabled = true;
 				gold2economy.permissionHandler = ((Permissions) PermissionsPlugin).getHandler();
+				gold2economy.log.info("[Gold2Economy] Hooked into " + PermissionsPlugin.getDescription().getName());
 			}
 		}
 	}

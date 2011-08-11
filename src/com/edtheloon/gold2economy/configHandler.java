@@ -16,6 +16,8 @@ public class configHandler {
 	public Double cRate = 29.99;
 	public boolean iConomy;
 	public boolean BOSEconomy;
+	public boolean Permissions;
+	public boolean useBukkitPerms;
 	public boolean usePermissions;
 	
 	// CONSTRUCTOR 
@@ -37,7 +39,9 @@ public class configHandler {
 	// Create the configuration file and insert default values
 	public void createConfig() {
 		config.setProperty("rate", cRate);
-		config.setProperty("permissions", false);
+		config.setProperty("permissions.use", false);
+		config.setProperty("permissions.Permissions", false);
+		config.setProperty("permissions.PermissionsBukkit", true);
 		config.setProperty("economy.iConomy", true);
 		config.setProperty("economy.BOSEconomy", false);
 		config.setHeader("# Gold2Economy Version " + plugin.getDescription().getVersion());
@@ -51,7 +55,9 @@ public class configHandler {
 	public void loadConfig() {
 		config.load();
 		cRate = config.getDouble("rate", 29.99);
-		usePermissions = config.getBoolean("permissions", false);
+		Permissions = config.getBoolean("permissions.use", false);
+		usePermissions = config.getBoolean("permissions.Permissions", false);
+		useBukkitPerms = config.getBoolean("permissions.PermissionsBukkit", true);
 		iConomy = config.getBoolean("economy.iConomy", true);
 		BOSEconomy = config.getBoolean("economy.BOSEconomy", false);
 	}

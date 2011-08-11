@@ -24,7 +24,7 @@ public class gold2economy extends JavaPlugin {
 	public static configHandler config;
 	public static iConomy iConomyPlugin = null;
 	public static BOSEconomy BOSEconomyPlugin = null;
-	public static PermissionHandler permissionHandler;
+	public static PermissionHandler permissionHandler = null;
 	public static boolean enabled = false;
 	public static PluginManager pm = null;
 	public static boolean permissionsEnabled = false;
