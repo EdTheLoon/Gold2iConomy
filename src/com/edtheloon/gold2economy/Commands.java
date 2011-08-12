@@ -33,14 +33,47 @@ public class Commands implements CommandExecutor {
 						return true;
 					} else {
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
+						return true;
 					}
 				}
 
 				// Command = /gi <item> all - Convert all <item> - <item> is either iron, gold or diamond
 				// TODO: ADD command code
+				if (args[1].equalsIgnoreCase("all")) {
 
-				// Command = /gi <amount> - Convert <amount> of gold
+					int itemID = 0;
+					int amount = 0;
+					
+					// Determine what itemID to use
+					if (args[0].equalsIgnoreCase("iron")) itemID = 265;
+					if (args[0].equalsIgnoreCase("gold")) itemID = 266;
+					if (args[0].equalsIgnoreCase("diamond")) itemID = 264;
+					
+					// Prepare to loop through player inventory
+					Player player = ((Player) sender);
+					PlayerInventory pi = player.getInventory();
+					ItemStack items[] = pi.getContents();
+					
+					// First check to see that user has at least 1 of <item>
+					if (pi.contains(itemID)) {
+						
+						// Loop through player's inventory to look for <item>
+						for (ItemStack item : items) {
+							// if the inventory slot is not null AND it is the item we are looking for then change amount
+							if (item != null && item.getTypeId() == itemID) amount += item.getAmount();
+						}
+						Converter.convertItem(sender, itemID, amount);
+						return true; // finally say we've handled command correctly
+						
+					} else {
+						sender.sendMessage(ChatColor.RED + "You don't have any of that item!");
+						return true;
+					}
+				}
+
+				// Command = /gi <item> <amount> - Convert <amount> of <item> - <item> is either iron, gold or diamond
 				// TODO: ADD command code
+				
 			}
 		} else { // This part will run if the plugin is not 'enabled'
 			sender.sendMessage(ChatColor.RED + "Gold2eConomy is disabled because no currency sytem is enabled");
