@@ -162,7 +162,8 @@ public class Commands implements CommandExecutor {
 					}
 					
 					// Finally convert item into money
-					Converter.convertItem(sender, itemID, amount)	;			
+					Converter.convertItem(sender, itemID, amount);			
+					return true;
 					
 				}
 				

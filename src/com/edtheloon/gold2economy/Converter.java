@@ -12,7 +12,7 @@ import com.iConomy.system.Holdings;
 public class Converter {
 	
 	// Convert Gold into money
-	public static void convertItem(CommandSender sender, Integer itemID, Integer amount)
+	public static void convertItem(CommandSender sender, int itemID, int amount)
 	{
 		
 		// Declare local variables

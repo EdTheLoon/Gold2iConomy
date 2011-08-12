@@ -86,6 +86,11 @@ public class configHandler {
 		ironRate = config.getDouble("rates.iron", ironRate);
 		goldRate = config.getDouble("rates.gold", goldRate);
 		diamondRate = config.getDouble("rates.diamond", diamondRate);
+		// TODO: REMOVE THIS DEBUG ONLY LINE
+		gold2economy.log.info("[Gold2Economy] configHandler loaded these rates: " +
+				"Iron: " + ironRate.toString() +
+				",  Gold: " + goldRate.toString() +
+				" and Diamond: " + diamondRate.toString());
 		
 		// Load whether we shall use permissions or not, and which permissions to use
 		Permissions = config.getBoolean("permissions.use", false);
