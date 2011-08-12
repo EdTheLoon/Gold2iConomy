@@ -21,10 +21,20 @@ public class Converter {
 		PlayerInventory pi = player.getInventory();
 		
 		// Calculate conversion rate
-		switch (itemID) {
+		// Code block below may be causing a bug
+		/*switch (itemID) {
 		case 265: conversion = gold2economy.config.ironRate * amount; // IRON_INGOT
 		case 266: conversion = gold2economy.config.goldRate * amount; // GOLD_INGOT
 		case 264: conversion = gold2economy.config.diamondRate * amount; // DIAMOND
+		}*/
+		
+		// Calculate conversion rate
+		if (itemID == 265) { // IRON
+			conversion = gold2economy.config.ironRate * amount;
+		} else if (itemID == 266) { // GOLD
+			conversion = gold2economy.config.goldRate * amount;
+		} else if (itemID == 264) { // DIAMOND
+			conversion = gold2economy.config.diamondRate * amount;
 		}
 
 		// If user has enough ingots then convert gold, otherwise inform user that they do not have enough gold ingots
