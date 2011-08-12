@@ -17,7 +17,9 @@ import cosine.boseconomy.BOSEconomy;
 public class gold2economy extends JavaPlugin {
 
 	// Permission nodes
-	public final static String PERMISSION_USE = "Gold2Economy.use";
+	public final static String PERMISSION_IRON = "Gold2Economy.iron";
+	public final static String PERMISSION_GOLD = "Gold2Economy.gold";
+	public final static String PERMISSION_DIAMOND = "Gold2Economy.diamond";
 	public final static String PERMISSION_ADMIN = "Gold2Economy.admin";
 
 	// Config Handler, External APIs and class variables
