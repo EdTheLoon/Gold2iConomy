@@ -59,19 +59,19 @@ public class Commands implements CommandExecutor {
 					}
 					
 					// Don't continue if server config says we can't convert item
-					switch (itemID) {
-						case 265: // IRON
-							if (!gold2economy.config.convertIron) {
+					// Change this from a switch (itemID) to if conditions because it was causing bugs
+					if (itemID == 265) { // IRON
+						if (!gold2economy.config.convertIron) {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow iron to be converted");
 							return true;
 						}
-						case 266: // GOLD
-							if (!gold2economy.config.convertGold) {
+					} else if (itemID == 266) { // GOLD
+						if (!gold2economy.config.convertGold) {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
 							return true;
 						}
-						case 264: // DIAMOND
-							if (!gold2economy.config.convertDiamond) {
+					} else if (itemID == 264) { // DIAMOND
+						if (!gold2economy.config.convertDiamond) {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
 							return true;
 						}
@@ -141,14 +141,17 @@ public class Commands implements CommandExecutor {
 					if (itemID == 265) { // IRON
 						if (!gold2economy.config.convertIron) {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow iron to be converted");
+							return true;
 						}
 					} else if (itemID == 266) { // GOLD
 						if (!gold2economy.config.convertGold) {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
+							return true;
 						}
 					} else if (itemID == 264) { // DIAMOND
 						if (!gold2economy.config.convertDiamond) {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
+							return true;
 						}
 					}
 					
