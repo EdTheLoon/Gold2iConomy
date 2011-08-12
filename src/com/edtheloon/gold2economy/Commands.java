@@ -45,9 +45,16 @@ public class Commands implements CommandExecutor {
 					int amount = 0;
 					
 					// Determine what itemID to use
-					if (args[0].equalsIgnoreCase("iron")) itemID = 265;
-					if (args[0].equalsIgnoreCase("gold")) itemID = 266;
-					if (args[0].equalsIgnoreCase("diamond")) itemID = 264;
+					if (args[0].equalsIgnoreCase("iron")) {
+						itemID = 265;
+					} else if (args[0].equalsIgnoreCase("gold")) {
+						itemID = 266;
+					} else if (args[0].equalsIgnoreCase("diamond")) {
+						itemID = 264;
+					} else { // User did not type iron, gold or diamond
+						sender.sendMessage(ChatColor.RED + "You can only convert iron, gold or diamond!");
+						return true;
+					}
 					
 					// Prepare to loop through player inventory
 					Player player = ((Player) sender);
