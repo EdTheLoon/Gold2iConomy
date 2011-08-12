@@ -9,8 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import com.iConomy.iConomy;
-
 public class Commands implements CommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -39,21 +37,31 @@ public class Commands implements CommandExecutor {
 
 				// Command = /gi <item> all - Convert all <item> - <item> is either iron, gold or diamond
 				// TODO: ADD command code
-				if (args[1].equalsIgnoreCase("all")) {
+				if (args[1].equalsIgnoreCase("all") && sender instanceof Player) {
 
 					int itemID = 0;
 					int amount = 0;
+					String permNeeded = "";
 					
 					// Determine what itemID to use
 					if (args[0].equalsIgnoreCase("iron")) {
 						itemID = 265;
+						permNeeded = gold2economy.PERMISSION_IRON;
 					} else if (args[0].equalsIgnoreCase("gold")) {
 						itemID = 266;
+						permNeeded = gold2economy.PERMISSION_GOLD;
 					} else if (args[0].equalsIgnoreCase("diamond")) {
 						itemID = 264;
+						permNeeded = gold2economy.PERMISSION_DIAMOND;
 					} else { // User did not type iron, gold or diamond
 						sender.sendMessage(ChatColor.RED + "You can only convert iron, gold or diamond!");
 						return true;
+					}
+					
+					// Don't continue if player doesn't have required permission (if enabled)
+					if (gold2economy.config.Permissions && !Permissions.check(sender, permNeeded)) {
+						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
+						return false;
 					}
 					
 					// Prepare to loop through player inventory
