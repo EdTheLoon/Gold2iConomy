@@ -89,6 +89,47 @@ public class Commands implements CommandExecutor {
 				// Command = /gi <item> <amount> - Convert <amount> of <item> - <item> is either iron, gold or diamond
 				// TODO: ADD command code
 				
+				// Regular expression to check if args[1] is an integer
+				if (args[1].matches("\\d+") && sender instanceof Player) {
+					int amount = 0;
+					int itemID = 0;
+					String permNeeded = "";
+					
+					// Use a try-catch to safely retrieve amount to convert
+					try {
+						amount = Integer.parseInt(args[1]);
+					} catch (NumberFormatException e) {
+						// DEBUG LINE
+						gold2economy.log.severe("[Gold2Economy] Error: " + e.toString());
+						return false;
+					}
+					
+					// Determine what itemID to use
+					if (args[0].equalsIgnoreCase("iron")) {
+						itemID = 265;
+						permNeeded = gold2economy.PERMISSION_IRON;
+					} else if (args[0].equalsIgnoreCase("gold")) {
+						itemID = 266;
+						permNeeded = gold2economy.PERMISSION_GOLD;
+					} else if (args[0].equalsIgnoreCase("diamond")) {
+						itemID = 264;
+						permNeeded = gold2economy.PERMISSION_DIAMOND;
+					} else { // User did not type iron, gold or diamond
+						sender.sendMessage(ChatColor.RED + "You can only convert iron, gold or diamond!");
+						return true;
+					}
+					
+					// Check if player has permission first
+					if (gold2economy.config.Permissions && !Permissions.check(sender, permNeeded)) {
+						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
+						return false;
+					}
+					
+					// Finally convert item into money
+					Converter.convertItem(sender, itemID, amount)	;			
+					
+				}
+				
 			}
 		} else { // This part will run if the plugin is not 'enabled'
 			sender.sendMessage(ChatColor.RED + "Gold2eConomy is disabled because no currency sytem is enabled");
