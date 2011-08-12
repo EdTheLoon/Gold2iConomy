@@ -27,7 +27,10 @@ public class Commands implements CommandExecutor {
 
 				// Command = /gi reload - Reload configuration
 				if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-					if (Permissions.check(sender, gold2economy.PERMISSION_ADMIN) || sender instanceof ConsoleCommandSender) {
+					if (sender instanceof ConsoleCommandSender) {
+						Functions.giReload(sender);
+						return true;
+					} else if (Permissions.check(sender, gold2economy.PERMISSION_ADMIN)) {
 						Functions.giReload(sender);
 						return true;
 					} else {
@@ -80,7 +83,7 @@ public class Commands implements CommandExecutor {
 					// Don't continue if player doesn't have required permission (if enabled)
 					if (gold2economy.config.Permissions && !Permissions.check(sender, permNeeded)) {
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
-						return false;
+						return true;
 					}
 					
 					// Prepare to loop through player inventory
@@ -158,7 +161,7 @@ public class Commands implements CommandExecutor {
 					// Check if player has permission first
 					if (gold2economy.config.Permissions && !Permissions.check(sender, permNeeded)) {
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
-						return false;
+						return true;
 					}
 					
 					// Finally convert item into money
