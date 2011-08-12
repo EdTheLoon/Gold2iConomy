@@ -6,7 +6,7 @@ version: 1.2
 
 commands:
     gi:
-        description: Convert your gold ingots to money.
+        description: Turn your iron, gold or diamonds into money.
         usage: |
             /gi - Shows how much you will get per gold ingot
             /gi <item> <amount> - Where <amount> is the amount of <item> to convert. <item> can be iron, gold or diamond
