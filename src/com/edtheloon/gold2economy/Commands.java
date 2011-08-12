@@ -108,16 +108,21 @@ public class Commands implements CommandExecutor {
 					}
 				}
 
-				// Command = /gi <item> <amount> - Convert <amount> of <item> - <item> is either iron, gold or diamond				
+				// Command = /gi <item> <amount> - Convert <amount> of <item> - <item> is either iron, gold or diamond	
+				// If <amount> is left empty it will convert 1 of the item
 				// Regular expression to check if args[1] is an integer
-				if (args.length == 2 && args[1].matches("\\d+") && sender instanceof Player) {
+				if (args.length >= 2 && args[1].matches("\\d+") && sender instanceof Player) {
 					int amount = 0;
 					int itemID = 0;
 					String permNeeded = "";
 					
 					// Use a try-catch to safely retrieve amount to convert
 					try {
-						amount = Integer.parseInt(args[1]);
+						if (args.length == 2) {
+							amount = Integer.parseInt(args[1]);
+						} else if (args.length == 1) {
+							amount = 1;
+						}
 					} catch (NumberFormatException e) {
 						// DEBUG LINE
 						gold2economy.log.severe("[Gold2Economy] Error: " + e.toString());
