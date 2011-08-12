@@ -11,38 +11,48 @@ import com.iConomy.system.Holdings;
 
 public class Converter {
 	
-	// Convert Gold into iConomy money
-	@SuppressWarnings("deprecation")
-	public static boolean convertGold(CommandSender sender, Integer ingots)
+	// Convert Gold into money
+	public static void convertItem(CommandSender sender, Integer itemID, Integer amount)
 	{
-
-		Double conversion = gold2economy.config.cRate * ingots;
+		
+		// Declare local variables
+		Double conversion = 0.0;
 		Player player = (Player)sender;
 		PlayerInventory pi = player.getInventory();
+		
+		// Calculate conversion rate
+		switch (itemID) {
+		case 265: conversion = gold2economy.config.ironRate * amount; // IRON_INGOT
+		case 266: conversion = gold2economy.config.goldRate * amount; // GOLD_INGOT
+		case 264: conversion = gold2economy.config.diamondRate * amount; // DIAMOND
+		}
 
 		// If user has enough ingots then convert gold, otherwise inform user that they do not have enough gold ingots
-		if (pi.contains(266, ingots))
+		if (pi.contains(itemID, amount))
 		{
+			
+			// Remove gold ingots
+			HashMap<Integer,ItemStack> difference = pi.removeItem(new ItemStack(itemID, amount));			
+			difference.clear();
+			
 			// If using iConomy
 			if (gold2economy.config.iConomy && gold2economy.iConomyPlugin != null) {
+				
 				Holdings balance = iConomy.getAccount(player.getName()).getHoldings();
 				balance.add(conversion);
-				sender.sendMessage(ChatColor.GREEN + "You converted " + ingots + " ingots into " + iConomy.format(conversion));
+				sender.sendMessage(ChatColor.GREEN + "You converted " + amount + " item(s) into " + iConomy.format(conversion));
 				sender.sendMessage(ChatColor.GREEN + "You now have " + iConomy.format(player.getName()));
-			} else if (gold2economy.config.BOSEconomy && gold2economy.BOSEconomyPlugin != null) { // If using BOSEconomy
-				int money = Math.round(conversion.floatValue());
-				gold2economy.BOSEconomyPlugin.addPlayerMoney(player.getName(), money, true);
-				sender.sendMessage(ChatColor.GREEN + "You converted " + ingots + " ingots into " + money + " " + gold2economy.BOSEconomyPlugin.getMoneyNamePluralCaps());
-				sender.sendMessage(ChatColor.GREEN + "You now have " + gold2economy.BOSEconomyPlugin.getPlayerMoney(player.getName()) + " " + gold2economy.BOSEconomyPlugin.getMoneyNamePluralCaps());
-			}
-
-			// Remove gold ingots
-			HashMap<Integer,ItemStack> difference = pi.removeItem(new ItemStack(266, ingots));			
-			difference.clear();
-			return true;
+				
+			// If using BOSEconomy
+			} else if (gold2economy.config.BOSEconomy && gold2economy.BOSEconomyPlugin != null) { 
+				
+				gold2economy.BOSEconomyPlugin.addPlayerMoney(player.getName(), conversion, true);
+				sender.sendMessage(ChatColor.GREEN + "You converted " + amount + " item(s) into " + gold2economy.BOSEconomyPlugin.getMoneyNameCapsProper(conversion));
+				sender.sendMessage(ChatColor.GREEN + "You now have " 
+						+ gold2economy.BOSEconomyPlugin.getMoneyNameCapsProper(gold2economy.BOSEconomyPlugin.getPlayerMoneyDouble(player.getName())));
+			}			
 		} else {
-			sender.sendMessage(ChatColor.DARK_RED + "You do not have " + Integer.toString(ingots) + ChatColor.DARK_RED + " gold ingots!");
-			return true;
+			sender.sendMessage(ChatColor.DARK_RED + "You do not have " + Integer.toString(amount) + ChatColor.DARK_RED + " of that item!");
 		}
 	}
 
