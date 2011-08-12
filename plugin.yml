@@ -1,25 +1,33 @@
 main: com.edtheloon.gold2economy.gold2economy
 name: Gold2Economy
 author: EdTheLoon
-description: Convert your gold ingots to money in either iConomy or BOSEconomy
-version: 1.1
+description: Convert your iron, gold and diamonds to money in either iConomy or BOSEconomy
+version: 1.2
 
 commands:
     gi:
         description: Convert your gold ingots to money.
         usage: |
             /gi - Shows how much you will get per gold ingot
-            /gi <amount> - Where <amount> is the amount of gold ingots to convert
-            /gi all - Converts all your gold ingots into money
+            /gi <item> <amount> - Where <amount> is the amount of <item> to convert. <item> can be iron, gold or diamond
+            /gi <item> all - Converts all your gold ingots into money. <item> can be iron, gold or diamond
             /gi reload - Reload config (Admin command)
 permissions:
     Gold2Economy.*:
         description: Gives access to all Gold2Economy features
         children:
             Gold2Economy.admin: true
-            Gold2Economy.use: true
-    Gold2Economy.use:
+            Gold2Economy.iron: true
+            Gold2Economy.gold: true
+            Gold2Economy.diamond: true
+    Gold2Economy.iron:
+        description: Allow users to convert iron
+        default: true
+    Gold2Economy.gold:
         description: Allow users to convert gold
+        default: true
+    Gold2Economy.diamond:
+        description: Allow users to convert diamond
         default: true
     Gold2Economy.admin:
         description: Allow users to use admin commands/features
