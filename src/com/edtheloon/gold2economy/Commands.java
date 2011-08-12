@@ -22,6 +22,7 @@ public class Commands implements CommandExecutor {
 				// Command = /gi - Tells player the conversion rate
 				if (args.length == 0) {
 					Functions.displayRates(sender);
+					return true;
 				}
 
 				// Command = /gi reload - Reload configuration
