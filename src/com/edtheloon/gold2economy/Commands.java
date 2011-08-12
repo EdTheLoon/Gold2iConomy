@@ -36,7 +36,6 @@ public class Commands implements CommandExecutor {
 				}
 
 				// Command = /gi <item> all - Convert all <item> - <item> is either iron, gold or diamond
-				// TODO: ADD command code
 				if (args[1].equalsIgnoreCase("all") && sender instanceof Player) {
 
 					int itemID = 0;
@@ -56,6 +55,25 @@ public class Commands implements CommandExecutor {
 					} else { // User did not type iron, gold or diamond
 						sender.sendMessage(ChatColor.RED + "You can only convert iron, gold or diamond!");
 						return true;
+					}
+					
+					// Don't continue if server config says we can't convert item
+					switch (itemID) {
+						case 265: // IRON
+							if (!gold2economy.config.convertIron) {
+							sender.sendMessage(ChatColor.RED + "This server doesn't allow iron to be converted");
+							return true;
+						}
+						case 266: // GOLD
+							if (!gold2economy.config.convertGold) {
+							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
+							return true;
+						}
+						case 264: // DIAMOND
+							if (!gold2economy.config.convertDiamond) {
+							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
+							return true;
+						}
 					}
 					
 					// Don't continue if player doesn't have required permission (if enabled)
@@ -86,9 +104,7 @@ public class Commands implements CommandExecutor {
 					}
 				}
 
-				// Command = /gi <item> <amount> - Convert <amount> of <item> - <item> is either iron, gold or diamond
-				// TODO: ADD command code
-				
+				// Command = /gi <item> <amount> - Convert <amount> of <item> - <item> is either iron, gold or diamond				
 				// Regular expression to check if args[1] is an integer
 				if (args[1].matches("\\d+") && sender instanceof Player) {
 					int amount = 0;
@@ -117,6 +133,25 @@ public class Commands implements CommandExecutor {
 					} else { // User did not type iron, gold or diamond
 						sender.sendMessage(ChatColor.RED + "You can only convert iron, gold or diamond!");
 						return true;
+					}
+					
+					// Don't continue if server config says we can't convert item
+					switch (itemID) {
+						case 265: // IRON
+							if (!gold2economy.config.convertIron) {
+							sender.sendMessage(ChatColor.RED + "This server doesn't allow iron to be converted");
+							return true;
+						}
+						case 266: // GOLD
+							if (!gold2economy.config.convertGold) {
+							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
+							return true;
+						}
+						case 264: // DIAMOND
+							if (!gold2economy.config.convertDiamond) {
+							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
+							return true;
+						}
 					}
 					
 					// Check if player has permission first
