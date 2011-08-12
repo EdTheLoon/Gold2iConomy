@@ -26,7 +26,7 @@ public class Commands implements CommandExecutor {
 				}
 
 				// Command = /gi reload - Reload configuration
-				if (args[0].equalsIgnoreCase("reload")) {
+				if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
 					if (Permissions.check(sender, gold2economy.PERMISSION_ADMIN) || sender instanceof ConsoleCommandSender) {
 						Functions.giReload(sender);
 						return true;
@@ -37,7 +37,7 @@ public class Commands implements CommandExecutor {
 				}
 
 				// Command = /gi <item> all - Convert all <item> - <item> is either iron, gold or diamond
-				if (args[1].equalsIgnoreCase("all") && sender instanceof Player) {
+				if (args.length == 2 && args[1].equalsIgnoreCase("all") && sender instanceof Player) {
 
 					int itemID = 0;
 					int amount = 0;
@@ -107,7 +107,7 @@ public class Commands implements CommandExecutor {
 
 				// Command = /gi <item> <amount> - Convert <amount> of <item> - <item> is either iron, gold or diamond				
 				// Regular expression to check if args[1] is an integer
-				if (args[1].matches("\\d+") && sender instanceof Player) {
+				if (args.length == 2 && args[1].matches("\\d+") && sender instanceof Player) {
 					int amount = 0;
 					int itemID = 0;
 					String permNeeded = "";
