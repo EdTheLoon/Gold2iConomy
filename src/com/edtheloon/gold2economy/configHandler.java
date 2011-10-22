@@ -4,6 +4,8 @@ import java.io.File;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import com.nijikokun.register.payment.Methods;
+
 public class configHandler {
 	
 	// Configuration file properties
@@ -22,8 +24,9 @@ public class configHandler {
 	public boolean convertDiamond = false;
 	
 	// Should we use iConomy or BOSEconomy? Default values
-	public boolean iConomy = true;
-	public boolean BOSEconomy = false;
+	public String preferred = "iConomy6";
+	//public boolean iConomy = true;
+	//public boolean BOSEconomy = false;
 	
 	// Should we use permissions? Default false
 	public boolean Permissions = false;
@@ -65,8 +68,10 @@ public class configHandler {
 		config.set("permissions.Permissions", usePermissions);
 		config.set("permissions.PermissionsBukkit", useBukkitPerms);
 		
-		config.set("economy.iConomy", iConomy);
-		config.set("economy.BOSEconomy", BOSEconomy);
+		config.addDefault("preferred", preferred);
+		
+		//config.set("economy.iConomy", iConomy);
+		//config.set("economy.BOSEconomy", BOSEconomy);
 		//config.setHeader("# Gold2Economy Version " + plugin.getDescription().getVersion());
 		plugin.saveConfig();
 		
@@ -101,6 +106,8 @@ public class configHandler {
 		useBukkitPerms = config.getBoolean("permissions.PermissionsBukkit", true);
 		
 		// Load which economy system to use
+		preferred = config.getString("preferred");
+		Methods.setPreferred(preferred);
 		//iConomy = config.getBoolean("economy.iConomy", true);
 		//BOSEconomy = config.getBoolean("economy.BOSEconomy", false);
 	}

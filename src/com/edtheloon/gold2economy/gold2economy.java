@@ -10,9 +10,9 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.iConomy.*;
+//import com.iConomy.*;
 import com.nijiko.permissions.PermissionHandler;
-import cosine.boseconomy.BOSEconomy;
+import com.nijikokun.register.*;
 
 public class gold2economy extends JavaPlugin {
 
@@ -24,12 +24,13 @@ public class gold2economy extends JavaPlugin {
 
 	// Config Handler, External APIs and class variables
 	public static configHandler config;
-	public static iConomy iConomyPlugin = null;
-	public static BOSEconomy BOSEconomyPlugin = null;
+//	public static iConomy iConomyPlugin = null;
+//	public static BOSEconomy BOSEconomyPlugin = null;
 	public static PermissionHandler permissionHandler = null;
 	public static boolean enabled = false;
 	public static PluginManager pm = null;
 	public static boolean permissionsEnabled = false;
+	public static Register register;
 
 	// Minecraft Log
 	public static Logger log = Logger.getLogger("Minecraft");
@@ -53,7 +54,7 @@ public class gold2economy extends JavaPlugin {
 		
 		// Tell Bukkit that Commands class should handle command execution for this command
 		getCommand("gi").setExecutor(new Commands());
-		
+	
 		// Finally, log to console that the plugin has finished initialising and is enabled.
 		log.info("[Gold2Economy] Version " + this.getDescription().getVersion().toString() + " enabled.");
 		

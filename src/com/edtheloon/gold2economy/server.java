@@ -4,10 +4,9 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
-import com.iConomy.iConomy;
+//import com.iConomy.iConomy;
 import com.nijikokun.bukkit.Permissions.Permissions;
-
-import cosine.boseconomy.BOSEconomy;
+//import cosine.boseconomy.BOSEconomy;
 
 public class server extends ServerListener {
 	private gold2economy plugin;
@@ -17,7 +16,7 @@ public class server extends ServerListener {
 	}
 
 	public void onPluginDisable(PluginDisableEvent event) {
-		// if using iConomy
+		/*// if using iConomy
 		if (gold2economy.config.iConomy) {
 			if (gold2economy.iConomyPlugin != null) {
 				if (event.getPlugin().getDescription().getName().equals("iConomy")) {
@@ -48,11 +47,11 @@ public class server extends ServerListener {
 					gold2economy.log.info("[Gold2Economy] Permissions disabled. Falling back to OP only for /gi reload");
 				}
 			}
-		}
+		}*/
 	}
 
 	public void onPluginEnable(PluginEnableEvent event) {
-		// if using iConomy
+		/*// if using iConomy
 		if (gold2economy.config.iConomy) {
 			if (gold2economy.iConomyPlugin == null) {
 				Plugin iConomy = plugin.getServer().getPluginManager().getPlugin("iConomy");
@@ -80,7 +79,7 @@ public class server extends ServerListener {
 					}
 				}
 			}
-		}
+		}*/
 		
 		// if using Permissions
 		if (gold2economy.config.usePermissions) {
