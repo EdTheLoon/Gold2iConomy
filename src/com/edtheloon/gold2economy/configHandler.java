@@ -3,7 +3,6 @@ package com.edtheloon.gold2economy;
 import java.io.File;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
-
 import com.nijikokun.register.payment.Methods;
 
 public class configHandler {
@@ -24,7 +23,7 @@ public class configHandler {
 	public boolean convertDiamond = false;
 	
 	// Should we use iConomy or BOSEconomy? Default values
-	public String preferred = "iConomy6";
+	public String preferred = "iConomy 6";
 	//public boolean iConomy = true;
 	//public boolean BOSEconomy = false;
 	
@@ -68,8 +67,7 @@ public class configHandler {
 		config.set("permissions.Permissions", usePermissions);
 		config.set("permissions.PermissionsBukkit", useBukkitPerms);
 		
-		config.addDefault("preferred", preferred);
-		
+		config.set("preferred", preferred);
 		//config.set("economy.iConomy", iConomy);
 		//config.set("economy.BOSEconomy", BOSEconomy);
 		//config.setHeader("# Gold2Economy Version " + plugin.getDescription().getVersion());

@@ -12,7 +12,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 //import com.iConomy.*;
 import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.register.*;
+import com.nijikokun.register.payment.Method;
+import com.nijikokun.register.payment.Methods;
 
 public class gold2economy extends JavaPlugin {
 
@@ -30,7 +31,7 @@ public class gold2economy extends JavaPlugin {
 	public static boolean enabled = false;
 	public static PluginManager pm = null;
 	public static boolean permissionsEnabled = false;
-	public static Register register;
+	public static Method usedMethod = null;
 
 	// Minecraft Log
 	public static Logger log = Logger.getLogger("Minecraft");
@@ -54,6 +55,9 @@ public class gold2economy extends JavaPlugin {
 		
 		// Tell Bukkit that Commands class should handle command execution for this command
 		getCommand("gi").setExecutor(new Commands());
+		
+		// Check if register has a method yet
+		if (Methods.hasMethod()) usedMethod = Methods.getMethod();
 	
 		// Finally, log to console that the plugin has finished initialising and is enabled.
 		log.info("[Gold2Economy] Version " + this.getDescription().getVersion().toString() + " enabled.");

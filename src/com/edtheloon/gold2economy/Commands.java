@@ -15,8 +15,8 @@ public class Commands implements CommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 
-		// First check to see whether the plugin is 'enabled'
-		if (gold2economy.enabled) {
+		// First check to see whether Register has a payment method
+		if (Methods.hasMethod()) {
 
 			// COMMAND - /gi
 			if (cmd.getName().equalsIgnoreCase("gi")) {
@@ -31,6 +31,7 @@ public class Commands implements CommandExecutor {
 						return true;
 					} else {
 						sender.sendMessage(ChatColor.RED + "Gold2Economy was unable to find a supported economy plugin");
+						return true;
 					}
 				}
 
@@ -186,7 +187,7 @@ public class Commands implements CommandExecutor {
 				
 			}
 		} else { // This part will run if the plugin is not 'enabled'
-			sender.sendMessage(ChatColor.RED + "Gold2eConomy is disabled because no currency sytem is enabled");
+			sender.sendMessage(ChatColor.RED + "Gold2Economy is disabled because no currency sytem was found");
 			return true;
 		}
 		return false;

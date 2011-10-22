@@ -6,8 +6,6 @@ import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
 //import com.iConomy.iConomy;
 import com.nijikokun.bukkit.Permissions.Permissions;
-import com.nijikokun.register.payment.Method;
-import com.nijikokun.register.payment.Methods;
 //import cosine.boseconomy.BOSEconomy;
 
 public class server extends ServerListener {
@@ -18,12 +16,15 @@ public class server extends ServerListener {
 	}
 
 	public void onPluginDisable(PluginDisableEvent event) {
-		
-		if (!Methods.hasMethod()) {
-			gold2economy.enabled = false;
-			gold2economy.log.info("[Gold2Economy] Gold2Economy is disabled until a supported economy is found");
-		}
-		
+		/*if (Methods.getDependencies().contains(event.getPlugin().getDescription().getName())) {
+			if (Methods.hasMethod() == false) {
+				Methods.
+				if (!Methods.hasMethod()) {
+					gold2economy.enabled = false;
+					gold2economy.log.info("[Gold2Economy] Disabled. Register could not find a supported economy.");
+				}
+			}
+		}*/
 		/*// if using iConomy
 		if (gold2economy.config.iConomy) {
 			if (gold2economy.iConomyPlugin != null) {
@@ -44,8 +45,8 @@ public class server extends ServerListener {
 					gold2economy.log.info("[Gold2Economy] Un-hooked from BOSEconomy. Gold2Economy will disable until BOSEconomy is enabled.");
 				}
 			}
-		}
-		
+		}*/
+
 		// Permissions
 		if (gold2economy.config.usePermissions) {
 			if (gold2economy.permissionHandler != null) {
@@ -55,17 +56,17 @@ public class server extends ServerListener {
 					gold2economy.log.info("[Gold2Economy] Permissions disabled. Falling back to OP only for /gi reload");
 				}
 			}
-		}*/
+		}
 	}
 
 	public void onPluginEnable(PluginEnableEvent event) {
-		
-		if (Methods.hasMethod()) {
+
+		/*if (!gold2economy.enabled && Methods.hasMethod() && Methods.getDependencies().contains(event.getPlugin().getDescription().getName())) {
 			Method method = Methods.getMethod();
 			gold2economy.enabled = true;
-			gold2economy.log.info("[Gold2Economy] Register is using " + method.getName() + " Version " + method.getVersion());
-		}
-		
+			gold2economy.log.info("[Gold2Economy] Enabled. Register is using " + method.getName() + " Version " + method.getVersion());
+		}*/
+
 		/*// if using iConomy
 		if (gold2economy.config.iConomy) {
 			if (gold2economy.iConomyPlugin == null) {
@@ -95,7 +96,7 @@ public class server extends ServerListener {
 				}
 			}
 		}*/
-		
+
 		// if using Permissions
 		if (gold2economy.config.usePermissions) {
 			if (gold2economy.permissionHandler == null) {
