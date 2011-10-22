@@ -3,6 +3,7 @@ name: Gold2Economy
 author: EdTheLoon
 description: Convert your iron, gold and diamonds to money in either iConomy or BOSEconomy
 version: 1.4
+softdepend: [Register]
 
 commands:
     gi:
