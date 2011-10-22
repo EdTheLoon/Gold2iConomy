@@ -1,16 +1,15 @@
 package com.edtheloon.gold2economy;
 
 import java.io.File;
-
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.util.config.Configuration;
 
 public class configHandler {
 	
 	// Configuration file properties
 	private Plugin plugin;
 	private File configFile = new File("plugins/Gold2Economy" + File.separator + "config.yml");
-	private Configuration config;
+	private FileConfiguration config;
 	
 	// Default conversion rates
 	public Double ironRate = 9.99;
@@ -36,7 +35,7 @@ public class configHandler {
 	// CONSTRUCTOR 
 	public configHandler(Plugin _plugin) {
 		this.plugin = _plugin;
-		this.config = new Configuration(configFile);
+		this.config = _plugin.getConfig();
 	}
 	
 	// Check to see if config exists, returns true or false
@@ -52,22 +51,24 @@ public class configHandler {
 	// Create the configuration file and insert default values
 	public void createConfig() {
 		
-		config.setProperty("convert.iron", convertIron);
-		config.setProperty("convert.gold", convertGold);
-		config.setProperty("convert.diamond", convertDiamond);
+		config.set("# Gold2Economy Version", plugin.getDescription().getVersion());
 		
-		config.setProperty("rates.iron", ironRate);
-		config.setProperty("rates.gold", goldRate);
-		config.setProperty("rates.diamond", diamondRate);
+		config.set("convert.iron", convertIron);
+		config.set("convert.gold", convertGold);
+		config.set("convert.diamond", convertDiamond);
 		
-		config.setProperty("permissions.use", Permissions);
-		config.setProperty("permissions.Permissions", usePermissions);
-		config.setProperty("permissions.PermissionsBukkit", useBukkitPerms);
+		config.set("rates.iron", ironRate);
+		config.set("rates.gold", goldRate);
+		config.set("rates.diamond", diamondRate);
 		
-		config.setProperty("economy.iConomy", iConomy);
-		config.setProperty("economy.BOSEconomy", BOSEconomy);
-		config.setHeader("# Gold2Economy Version " + plugin.getDescription().getVersion());
-		config.save();
+		config.set("permissions.use", Permissions);
+		config.set("permissions.Permissions", usePermissions);
+		config.set("permissions.PermissionsBukkit", useBukkitPerms);
+		
+		config.set("economy.iConomy", iConomy);
+		config.set("economy.BOSEconomy", BOSEconomy);
+		//config.setHeader("# Gold2Economy Version " + plugin.getDescription().getVersion());
+		plugin.saveConfig();
 		
 		// Now that Config is created we can load the values
 		loadConfig();
@@ -75,7 +76,9 @@ public class configHandler {
 	
 	// Load configuration file
 	public void loadConfig() {
-		config.load();			
+		
+		plugin.reloadConfig();
+		config = plugin.getConfig();
 		
 		// Load which items we can convert
 		convertIron = config.getBoolean("convert.iron", convertIron);
@@ -98,7 +101,7 @@ public class configHandler {
 		useBukkitPerms = config.getBoolean("permissions.PermissionsBukkit", true);
 		
 		// Load which economy system to use
-		iConomy = config.getBoolean("economy.iConomy", true);
-		BOSEconomy = config.getBoolean("economy.BOSEconomy", false);
+		//iConomy = config.getBoolean("economy.iConomy", true);
+		//BOSEconomy = config.getBoolean("economy.BOSEconomy", false);
 	}
 }
