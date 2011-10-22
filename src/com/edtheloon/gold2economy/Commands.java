@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import com.nijikokun.register.payment.Methods;
+
 public class Commands implements CommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -18,11 +20,18 @@ public class Commands implements CommandExecutor {
 
 			// COMMAND - /gi
 			if (cmd.getName().equalsIgnoreCase("gi")) {
+				
+				// Command = /gi - Shows the help menu
+				if (args.length == 0) return false;
 
-				// Command = /gi - Tells player the conversion rate
-				if (args.length == 0) {
-					Functions.displayRates(sender);
-					return true;
+				// Command = /gi rates - Tells player the conversion rate
+				if (args.length == 1 && args[0].equalsIgnoreCase("rates")) {
+					if(Methods.hasMethod()) {
+						Functions.displayRates(sender);
+						return true;
+					} else {
+						sender.sendMessage(ChatColor.RED + "Gold2Economy was unable to find a supported economy plugin");
+					}
 				}
 
 				// Command = /gi reload - Reload configuration

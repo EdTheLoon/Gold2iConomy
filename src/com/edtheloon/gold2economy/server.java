@@ -6,6 +6,8 @@ import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
 //import com.iConomy.iConomy;
 import com.nijikokun.bukkit.Permissions.Permissions;
+import com.nijikokun.register.payment.Method;
+import com.nijikokun.register.payment.Methods;
 //import cosine.boseconomy.BOSEconomy;
 
 public class server extends ServerListener {
@@ -16,6 +18,12 @@ public class server extends ServerListener {
 	}
 
 	public void onPluginDisable(PluginDisableEvent event) {
+		
+		if (!Methods.hasMethod()) {
+			gold2economy.enabled = false;
+			gold2economy.log.info("[Gold2Economy] Gold2Economy is disabled until a supported economy is found");
+		}
+		
 		/*// if using iConomy
 		if (gold2economy.config.iConomy) {
 			if (gold2economy.iConomyPlugin != null) {
@@ -51,6 +59,13 @@ public class server extends ServerListener {
 	}
 
 	public void onPluginEnable(PluginEnableEvent event) {
+		
+		if (Methods.hasMethod()) {
+			Method method = Methods.getMethod();
+			gold2economy.enabled = true;
+			gold2economy.log.info("[Gold2Economy] Register is using " + method.getName() + " Version " + method.getVersion());
+		}
+		
 		/*// if using iConomy
 		if (gold2economy.config.iConomy) {
 			if (gold2economy.iConomyPlugin == null) {
