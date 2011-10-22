@@ -25,13 +25,13 @@ public class Functions {
 		// Display the rates here
 		sender.sendMessage("--- Conversion Rates ---");
 		
-		sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
+		if (gold2economy.config.convertIron) sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
 				+ ChatColor.GREEN + method.format(gold2economy.config.ironRate));
 		
-		sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
+		if (gold2economy.config.convertGold) sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
 				+ ChatColor.GREEN + method.format(gold2economy.config.goldRate));
 		
-		sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
+		if (gold2economy.config.convertDiamond) sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
 				+ ChatColor.GREEN + method.format(gold2economy.config.diamondRate));
 		
 		/*// If using iConomy

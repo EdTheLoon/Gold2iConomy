@@ -47,7 +47,7 @@ public class Converter {
 			account.add(conversion);
 			Double balance = account.balance();
 			sender.sendMessage(ChatColor.GREEN + "You converted " + amount + " item(s) into " + method.format(conversion));
-			sender.sendMessage(ChatColor.GREEN + "You now have " + balance.toString());
+			sender.sendMessage(ChatColor.GREEN + "You now have " + method.format(balance));
 			
 			// If using iConomy
 			/*if (gold2economy.config.iConomy && gold2economy.iConomyPlugin != null) {
