@@ -3,7 +3,9 @@ package com.edtheloon.gold2economy;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import com.iConomy.iConomy;
+import com.nijikokun.register.payment.Method;
+import com.nijikokun.register.payment.Methods;
+//import com.iConomy.iConomy;
 
 public class Functions {
 
@@ -17,7 +19,22 @@ public class Functions {
 	// Show conversion rates
 	public static void displayRates(CommandSender sender) {
 		
-		// If using iConomy
+		// TODO: ADD REGISTER CODE HERE
+		Method method = Methods.getMethod();
+		
+		// Display the rates here
+		sender.sendMessage("--- Conversion Rates ---");
+		
+		sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
+				+ ChatColor.GREEN + method.format(gold2economy.config.ironRate));
+		
+		sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
+				+ ChatColor.GREEN + method.format(gold2economy.config.goldRate));
+		
+		sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
+				+ ChatColor.GREEN + method.format(gold2economy.config.diamondRate));
+		
+		/*// If using iConomy
 		if (gold2economy.config.iConomy && gold2economy.iConomyPlugin != null) {
 			
 			sender.sendMessage("--- Conversion Rates ---");
@@ -59,6 +76,6 @@ public class Functions {
 			
 			sender.sendMessage(ChatColor.RED + "Gold2Economy is currently disabled because no economy system was found");
 			
-		}
+		}*/
 	}
 }
