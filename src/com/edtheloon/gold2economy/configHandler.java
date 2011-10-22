@@ -24,8 +24,6 @@ public class configHandler {
 	
 	// Should we use iConomy or BOSEconomy? Default values
 	public String preferred = "iConomy 6";
-	//public boolean iConomy = true;
-	//public boolean BOSEconomy = false;
 	
 	// Should we use permissions? Default false
 	public boolean Permissions = false;
@@ -53,8 +51,6 @@ public class configHandler {
 	// Create the configuration file and insert default values
 	public void createConfig() {
 		
-		config.set("# Gold2Economy Version", plugin.getDescription().getVersion());
-		
 		config.set("convert.iron", convertIron);
 		config.set("convert.gold", convertGold);
 		config.set("convert.diamond", convertDiamond);
@@ -68,9 +64,6 @@ public class configHandler {
 		config.set("permissions.PermissionsBukkit", useBukkitPerms);
 		
 		config.set("preferred", preferred);
-		//config.set("economy.iConomy", iConomy);
-		//config.set("economy.BOSEconomy", BOSEconomy);
-		//config.setHeader("# Gold2Economy Version " + plugin.getDescription().getVersion());
 		plugin.saveConfig();
 		
 		// Now that Config is created we can load the values
@@ -92,11 +85,6 @@ public class configHandler {
 		ironRate = config.getDouble("rates.iron", ironRate);
 		goldRate = config.getDouble("rates.gold", goldRate);
 		diamondRate = config.getDouble("rates.diamond", diamondRate);
-		// TODO: REMOVE THIS DEBUG ONLY LINE
-		gold2economy.log.info("[Gold2Economy] configHandler loaded these rates: " +
-				"Iron: " + ironRate.toString() +
-				",  Gold: " + goldRate.toString() +
-				" and Diamond: " + diamondRate.toString());
 		
 		// Load whether we shall use permissions or not, and which permissions to use
 		Permissions = config.getBoolean("permissions.use", false);
@@ -106,7 +94,5 @@ public class configHandler {
 		// Load which economy system to use
 		preferred = config.getString("preferred");
 		Methods.setPreferred(preferred);
-		//iConomy = config.getBoolean("economy.iConomy", true);
-		//BOSEconomy = config.getBoolean("economy.BOSEconomy", false);
 	}
 }

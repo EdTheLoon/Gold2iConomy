@@ -16,87 +16,11 @@ public class server extends ServerListener {
 	}
 
 	public void onPluginDisable(PluginDisableEvent event) {
-		/*if (Methods.getDependencies().contains(event.getPlugin().getDescription().getName())) {
-			if (Methods.hasMethod() == false) {
-				Methods.
-				if (!Methods.hasMethod()) {
-					gold2economy.enabled = false;
-					gold2economy.log.info("[Gold2Economy] Disabled. Register could not find a supported economy.");
-				}
-			}
-		}*/
-		/*// if using iConomy
-		if (gold2economy.config.iConomy) {
-			if (gold2economy.iConomyPlugin != null) {
-				if (event.getPlugin().getDescription().getName().equals("iConomy")) {
-					gold2economy.iConomyPlugin = null;
-					gold2economy.enabled = false;
-					gold2economy.log.info("[Gold2Economy] Un-hooked from iConomy. Gold2Economy will disable until iConomy is enabled.");
-				}
-			}
-		}
-
-		// if using BOSEconomy
-		if (gold2economy.config.BOSEconomy) {
-			if (gold2economy.BOSEconomyPlugin != null) {
-				if (event.getPlugin().getDescription().getName().equals("BOSEconomy")) {
-					gold2economy.BOSEconomyPlugin = null;
-					gold2economy.enabled = false;
-					gold2economy.log.info("[Gold2Economy] Un-hooked from BOSEconomy. Gold2Economy will disable until BOSEconomy is enabled.");
-				}
-			}
-		}*/
-
-		// Permissions
-		if (gold2economy.config.usePermissions) {
-			if (gold2economy.permissionHandler != null) {
-				if (event.getPlugin().getDescription().getName().equals("Permissions")) {
-					gold2economy.permissionHandler = null;
-					gold2economy.permissionsEnabled = false;
-					gold2economy.log.info("[Gold2Economy] Permissions disabled. Falling back to OP only for /gi reload");
-				}
-			}
-		}
+		// There's nothing here!
 	}
 
 	public void onPluginEnable(PluginEnableEvent event) {
-
-		/*if (!gold2economy.enabled && Methods.hasMethod() && Methods.getDependencies().contains(event.getPlugin().getDescription().getName())) {
-			Method method = Methods.getMethod();
-			gold2economy.enabled = true;
-			gold2economy.log.info("[Gold2Economy] Enabled. Register is using " + method.getName() + " Version " + method.getVersion());
-		}*/
-
-		/*// if using iConomy
-		if (gold2economy.config.iConomy) {
-			if (gold2economy.iConomyPlugin == null) {
-				Plugin iConomy = plugin.getServer().getPluginManager().getPlugin("iConomy");
-
-				if (iConomy != null) {
-					if (iConomy.isEnabled() && iConomy.getClass().getName().equals("com.iConomy.iConomy")) {
-						gold2economy.iConomyPlugin = (iConomy)iConomy;
-						gold2economy.enabled = true;
-						gold2economy.log.info("[Gold2Economy] Hooked into " + gold2economy.iConomyPlugin.getDescription().getName());
-					}
-				}
-			}
-		}
-
-		// if using BOSEconomy
-		if (gold2economy.config.BOSEconomy) {
-			if (gold2economy.BOSEconomyPlugin == null) {
-				Plugin BOSEconomy = plugin.getServer().getPluginManager().getPlugin("BOSEconomy");
-
-				if (BOSEconomy != null) {
-					if (BOSEconomy.isEnabled() && BOSEconomy.getClass().getName().equals("cosine.boseconomy.BOSEconomy")) {
-						gold2economy.BOSEconomyPlugin = (BOSEconomy) BOSEconomy;
-						gold2economy.enabled = true;
-						gold2economy.log.info("[Gold2Economy] Hooked into " + gold2economy.BOSEconomyPlugin.getDescription().getName());
-					}
-				}
-			}
-		}*/
-
+		
 		// if using Permissions
 		if (gold2economy.config.usePermissions) {
 			if (gold2economy.permissionHandler == null) {

@@ -25,8 +25,6 @@ public class gold2economy extends JavaPlugin {
 
 	// Config Handler, External APIs and class variables
 	public static configHandler config;
-//	public static iConomy iConomyPlugin = null;
-//	public static BOSEconomy BOSEconomyPlugin = null;
 	public static PermissionHandler permissionHandler = null;
 	public static boolean enabled = false;
 	public static PluginManager pm = null;
@@ -60,7 +58,7 @@ public class gold2economy extends JavaPlugin {
 		if (Methods.hasMethod()) usedMethod = Methods.getMethod();
 	
 		// Finally, log to console that the plugin has finished initialising and is enabled.
-		log.info("[Gold2Economy] Version " + this.getDescription().getVersion().toString() + " enabled.");
+		log.info("[Gold2Economy] Version " + this.getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
 		
 	}
 

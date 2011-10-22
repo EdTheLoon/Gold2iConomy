@@ -9,8 +9,6 @@ import org.bukkit.inventory.PlayerInventory;
 import com.nijikokun.register.payment.Method;
 import com.nijikokun.register.payment.Method.MethodAccount;
 import com.nijikokun.register.payment.Methods;
-//import com.iConomy.iConomy;
-//import com.iConomy.system.Holdings;
 
 public class Converter {
 	
@@ -40,31 +38,12 @@ public class Converter {
 			// Remove gold ingots
 			HashMap<Integer,ItemStack> difference = pi.removeItem(new ItemStack(itemID, amount));			
 			difference.clear();
-			
-			// TODO: ADD REGISTER CODE HERE
 			Method method = Methods.getMethod();
 			MethodAccount account = method.getAccount(player.getName());
 			account.add(conversion);
 			Double balance = account.balance();
 			sender.sendMessage(ChatColor.GREEN + "You converted " + amount + " item(s) into " + method.format(conversion));
-			sender.sendMessage(ChatColor.GREEN + "You now have " + method.format(balance));
-			
-			// If using iConomy
-			/*if (gold2economy.config.iConomy && gold2economy.iConomyPlugin != null) {
-				
-				Holdings balance = iConomy.getAccount(player.getName()).getHoldings();
-				balance.add(conversion);
-				sender.sendMessage(ChatColor.GREEN + "You converted " + amount + " item(s) into " + iConomy.format(conversion));
-				sender.sendMessage(ChatColor.GREEN + "You now have " + iConomy.format(player.getName()));
-				
-			// If using BOSEconomy
-			} else if (gold2economy.config.BOSEconomy && gold2economy.BOSEconomyPlugin != null) { 
-				
-				gold2economy.BOSEconomyPlugin.addPlayerMoney(player.getName(), conversion, true);
-				sender.sendMessage(ChatColor.GREEN + "You converted " + amount + " item(s) into " + gold2economy.BOSEconomyPlugin.getMoneyNameCapsProper(conversion));
-				sender.sendMessage(ChatColor.GREEN + "You now have " 
-						+ gold2economy.BOSEconomyPlugin.getMoneyNameCapsProper(gold2economy.BOSEconomyPlugin.getPlayerMoneyDouble(player.getName())));
-			}*/			
+			sender.sendMessage(ChatColor.GREEN + "You now have " + method.format(balance));	
 		} else {
 			sender.sendMessage(ChatColor.DARK_RED + "You do not have " + Integer.toString(amount) + ChatColor.DARK_RED + " of that item!");
 		}

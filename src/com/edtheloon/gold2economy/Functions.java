@@ -15,67 +15,26 @@ public class Functions {
 		sender.sendMessage(ChatColor.GREEN + "[Gold2Economy]" + ChatColor.WHITE + " Configuration reloaded");
 		return true;
 	}
-	
+
 	// Show conversion rates
 	public static void displayRates(CommandSender sender) {
-		
-		// TODO: ADD REGISTER CODE HERE
-		Method method = Methods.getMethod();
-		
-		// Display the rates here
-		sender.sendMessage("--- Conversion Rates ---");
-		
-		if (gold2economy.config.convertIron) sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
-				+ ChatColor.GREEN + method.format(gold2economy.config.ironRate));
-		
-		if (gold2economy.config.convertGold) sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
-				+ ChatColor.GREEN + method.format(gold2economy.config.goldRate));
-		
-		if (gold2economy.config.convertDiamond) sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
-				+ ChatColor.GREEN + method.format(gold2economy.config.diamondRate));
-		
-		/*// If using iConomy
-		if (gold2economy.config.iConomy && gold2economy.iConomyPlugin != null) {
-			
-			sender.sendMessage("--- Conversion Rates ---");
-			
-			sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
-					+ ChatColor.GREEN + iConomy.format(gold2economy.config.ironRate));
-			
-			sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
-					+ ChatColor.GREEN + iConomy.format(gold2economy.config.goldRate));
-			
-			sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
-					+ ChatColor.GREEN + iConomy.format(gold2economy.config.diamondRate));
-		
-		} else if (gold2economy.config.BOSEconomy && gold2economy.BOSEconomyPlugin != null) { // If using BOSEconomy
-			
-			sender.sendMessage("--- Conversion Rates ---");
-			
-			sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
-					+ ChatColor.GREEN + gold2economy.BOSEconomyPlugin.getMoneyFormatted(gold2economy.config.ironRate));
-			
-			sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
-					+ ChatColor.GREEN + gold2economy.BOSEconomyPlugin.getMoneyFormatted(gold2economy.config.goldRate));
-			
-			sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
-					+ ChatColor.GREEN + gold2economy.BOSEconomyPlugin.getMoneyFormatted(gold2economy.config.diamondRate));
-			
-		} else if (!gold2economy.enabled) { // If no economy is found
 
+		Method method = Methods.getMethod();
+
+		// Display the rates here
+		if (!gold2economy.config.convertDiamond && !gold2economy.config.convertGold && !gold2economy.config.convertIron) {
+			sender.sendMessage(ChatColor.RED + "This server doesn't allow anything to be converted");
+		} else {
 			sender.sendMessage("--- Conversion Rates ---");
-			
-			sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
-					+ ChatColor.GREEN + gold2economy.config.ironRate.toString());
-			
-			sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
-					+ ChatColor.GREEN + gold2economy.config.goldRate.toString());
-			
-			sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
-					+ ChatColor.GREEN + gold2economy.config.diamondRate.toString());
-			
-			sender.sendMessage(ChatColor.RED + "Gold2Economy is currently disabled because no economy system was found");
-			
-		}*/
+
+			if (gold2economy.config.convertIron) sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
+					+ ChatColor.GREEN + method.format(gold2economy.config.ironRate));
+
+			if (gold2economy.config.convertGold) sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
+					+ ChatColor.GREEN + method.format(gold2economy.config.goldRate));
+
+			if (gold2economy.config.convertDiamond) sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
+					+ ChatColor.GREEN + method.format(gold2economy.config.diamondRate));
+		}
 	}
 }
