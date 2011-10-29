@@ -1,7 +1,6 @@
 package com.edtheloon.gold2economy;
 
 import org.bukkit.command.CommandSender;
-
 import com.nijikokun.register.payment.Method;
 
 public class API {
