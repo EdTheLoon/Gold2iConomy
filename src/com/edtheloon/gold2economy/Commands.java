@@ -15,12 +15,12 @@ public class Commands implements CommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 
-		// First check to see whether Register has a payment method
+		// First check to see whether our plugin is 'enabled' and Register has a payment method
 		if (gold2economy.enabled && Methods.hasMethod()) {
 
 			// COMMAND - /gi
 			if (cmd.getName().equalsIgnoreCase("gi")) {
-				
+
 				// Command = /gi - Shows the help menu
 				if (args.length == 0) return false;
 
@@ -55,7 +55,7 @@ public class Commands implements CommandExecutor {
 					int itemID = 0;
 					int amount = 0;
 					String permNeeded = "";
-					
+
 					// Determine what itemID to use
 					if (args[0].equalsIgnoreCase("iron")) {
 						itemID = 265;
@@ -70,7 +70,7 @@ public class Commands implements CommandExecutor {
 						sender.sendMessage(ChatColor.RED + "You can only convert iron, gold or diamond!");
 						return true;
 					}
-					
+
 					// Don't continue if server config says we can't convert item
 					// Change this from a switch (itemID) to if conditions because it was causing bugs
 					if (itemID == 265) { // IRON
@@ -89,21 +89,21 @@ public class Commands implements CommandExecutor {
 							return true;
 						}
 					}
-					
+
 					// Don't continue if player doesn't have required permission (if enabled)
 					if (gold2economy.config.Permissions && !Permissions.check(sender, permNeeded)) {
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
 						return true;
 					}
-					
+
 					// Prepare to loop through player inventory
 					Player player = ((Player) sender);
 					PlayerInventory pi = player.getInventory();
 					ItemStack items[] = pi.getContents();
-					
+
 					// First check to see that user has at least 1 of <item>
 					if (pi.contains(itemID)) {
-						
+
 						// Loop through player's inventory to look for <item>
 						for (ItemStack item : items) {
 							// if the inventory slot is not null AND it is the item we are looking for then change amount
@@ -111,7 +111,7 @@ public class Commands implements CommandExecutor {
 						}
 						Converter.convertItem(sender, itemID, amount);
 						return true; // finally say we've handled command correctly
-						
+
 					} else {
 						sender.sendMessage(ChatColor.RED + "You don't have any of that item!");
 						return true;
@@ -125,7 +125,7 @@ public class Commands implements CommandExecutor {
 					int amount = 0;
 					int itemID = 0;
 					String permNeeded = "";
-					
+
 					// Use a try-catch to safely retrieve amount to convert
 					try {
 						if (args.length == 2) {
@@ -138,7 +138,7 @@ public class Commands implements CommandExecutor {
 						gold2economy.log.severe("[Gold2Economy] Error: " + e.toString());
 						return false;
 					}
-					
+
 					// Determine what itemID to use
 					if (args[0].equalsIgnoreCase("iron")) {
 						itemID = 265;
@@ -153,7 +153,7 @@ public class Commands implements CommandExecutor {
 						sender.sendMessage(ChatColor.RED + "You can only convert iron, gold or diamond!");
 						return true;
 					}
-					
+
 					// Don't continue if server config says we can't convert item
 					// Change this from a switch (itemID) to if conditions because it was causing bugs
 					if (itemID == 265) { // IRON
@@ -172,22 +172,25 @@ public class Commands implements CommandExecutor {
 							return true;
 						}
 					}
-					
+
 					// Check if player has permission first
 					if (gold2economy.config.Permissions && !Permissions.check(sender, permNeeded)) {
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
 						return true;
 					}
-					
+
 					// Finally convert item into money
 					Converter.convertItem(sender, itemID, amount);			
 					return true;
-					
+
 				}
-				
+
 			}
-		} else { // This part will run if the plugin is not 'enabled'
+		} else if (gold2economy.enabled) { // This part will run if the plugin is not 'enabled'
 			sender.sendMessage(ChatColor.RED + "Gold2Economy is disabled because no currency sytem was found");
+			return true;
+		} else {
+			sender.sendMessage(ChatColor.RED + "Gold2Economy is disabled until Register is enabled.");
 			return true;
 		}
 		return false;
