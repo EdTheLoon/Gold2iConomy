@@ -67,8 +67,8 @@ public class gold2economy extends JavaPlugin {
 			if (Methods.hasMethod()) usedMethod = Methods.getMethod();
 
 			// Finally, log to console that the plugin has finished initialising and is enabled.
-			log.info("[Gold2Economy] Version " + this.getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
 			enabled = true;
+			log.info("[Gold2Economy] Version " + this.getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
 		}
 		
 	}

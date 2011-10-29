@@ -6,6 +6,7 @@ import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
 //import com.iConomy.iConomy;
 import com.nijikokun.bukkit.Permissions.Permissions;
+import com.nijikokun.register.payment.Methods;
 //import cosine.boseconomy.BOSEconomy;
 
 public class server extends ServerListener {
@@ -39,6 +40,7 @@ public class server extends ServerListener {
 		// If plugin is disabled and enabled plugin is Register
 		if (gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Register")
 		{
+			Methods.setPreferred(gold2economy.config.preferred);
 			gold2economy.enabled = true;
 			gold2economy.log.info("[Gold2Economy] Register was enabled. G2E now functional.");
 		}

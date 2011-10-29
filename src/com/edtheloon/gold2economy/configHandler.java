@@ -93,6 +93,7 @@ public class configHandler {
 		
 		// Load which economy system to use
 		preferred = config.getString("preferred");
-		Methods.setPreferred(preferred);
+		// Set preferred if Register was found (if Register is found then enabled will be true.
+		if (gold2economy.enabled) Methods.setPreferred(preferred);
 	}
 }
