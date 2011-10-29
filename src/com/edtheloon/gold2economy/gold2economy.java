@@ -8,9 +8,9 @@ package com.edtheloon.gold2economy;
 import java.util.logging.Logger;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-//import com.iConomy.*;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.register.payment.Method;
 import com.nijikokun.register.payment.Methods;
@@ -59,7 +59,8 @@ public class gold2economy extends JavaPlugin {
 		 * it will only be enabled once Register has been found. It will still run however if Register is
 		 * not found, but will enable last.
 		 */
-		if (!pm.isPluginEnabled("Register")) {
+		Plugin plugin = pm.getPlugin("Register");
+		if (!pm.isPluginEnabled(plugin)) {
 			enabled = false;
 			log.severe("[Gold2Economy] Register was not found. G2E will not function properly until it is enabled");
 		} else {
