@@ -17,6 +17,11 @@ public class server extends ServerListener {
 
 	public void onPluginDisable(PluginDisableEvent event) {
 		// There's nothing here!
+		// If register was disabled then 'disable' our plugin.
+		if(event.getPlugin().getDescription().getName() == "Register") {
+			gold2economy.enabled = false;
+			gold2economy.log.info("[Gold2Economy] Disabled. G2E will re-enable once Register is enabled.");
+		}
 	}
 
 	public void onPluginEnable(PluginEnableEvent event) {
@@ -29,6 +34,13 @@ public class server extends ServerListener {
 				gold2economy.permissionHandler = ((Permissions) PermissionsPlugin).getHandler();
 				gold2economy.log.info("[Gold2Economy] Hooked into " + PermissionsPlugin.getDescription().getName());
 			}
+		}
+		
+		// If plugin is disabled and enabled plugin is Register
+		if (gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Register")
+		{
+			gold2economy.enabled = true;
+			gold2economy.log.info("[Gold2Economy] Register was enabled. G2E now functional.");
 		}
 	}
 

@@ -16,7 +16,7 @@ public class Commands implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 
 		// First check to see whether Register has a payment method
-		if (Methods.hasMethod()) {
+		if (gold2economy.enabled && Methods.hasMethod()) {
 
 			// COMMAND - /gi
 			if (cmd.getName().equalsIgnoreCase("gi")) {

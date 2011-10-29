@@ -54,15 +54,27 @@ public class gold2economy extends JavaPlugin {
 		// Tell Bukkit that Commands class should handle command execution for this command
 		getCommand("gi").setExecutor(new Commands());
 		
-		// Check if register has a method yet
-		if (Methods.hasMethod()) usedMethod = Methods.getMethod();
-	
-		// Finally, log to console that the plugin has finished initialising and is enabled.
-		log.info("[Gold2Economy] Version " + this.getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
+		/* First check to see if Register is installed/enabled. It is safe to perform this check at this
+		 * point in the code because in our plugin.yml we have added a softdepend. Meaning that
+		 * it will only be enabled once Register has been found. It will still run however if Register is
+		 * not found, but will enable last.
+		 */
+		if (!pm.isPluginEnabled("Register")) {
+			enabled = false;
+			log.severe("[Gold2Economy] Register was not found. G2E will not function properly until it is enabled");
+		} else {
+			// Check if register has a method yet and then take note of the method
+			if (Methods.hasMethod()) usedMethod = Methods.getMethod();
+
+			// Finally, log to console that the plugin has finished initialising and is enabled.
+			log.info("[Gold2Economy] Version " + this.getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
+			enabled = true;
+		}
 		
 	}
 
 	public void onDisable() { 
 		log.info("[Gold2Economy] Version " + this.getDescription().getVersion().toString() + " disabled.");
+		enabled = false;
 	}
 }
