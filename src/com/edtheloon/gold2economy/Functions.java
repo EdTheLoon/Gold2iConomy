@@ -12,7 +12,7 @@ public class Functions {
 	// Reload configuration
 	public static boolean giReload(CommandSender sender) {
 		gold2economy.config.loadConfig();
-		sender.sendMessage(ChatColor.GREEN + "[Gold2Economy]" + ChatColor.WHITE + " Configuration reloaded");
+		if (sender != null) sender.sendMessage(ChatColor.GREEN + "[Gold2Economy]" + ChatColor.WHITE + " Configuration reloaded");
 		return true;
 	}
 

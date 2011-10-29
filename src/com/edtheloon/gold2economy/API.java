@@ -1,5 +1,7 @@
 package com.edtheloon.gold2economy;
 
+import org.bukkit.command.CommandSender;
+
 import com.nijikokun.register.payment.Method;
 
 public class API {
@@ -37,6 +39,22 @@ public class API {
 	// Return the permission string for admin
 	public String getPermissionAdmin() {
 		return gold2economy.PERMISSION_ADMIN;
+	}
+	
+	public void reloadConfig() {
+		Functions.giReload(null);
+	}
+	
+	public void reloadConfig(CommandSender sender) {
+		Functions.giReload(sender);
+	}
+	
+	public void displayRates(CommandSender sender) {
+		Functions.displayRates(sender);
+	}
+	
+	public void convert(CommandSender sender, int itemID, int amount) {
+		Converter.convertItem(sender, itemID, amount);
 	}
 
 }
