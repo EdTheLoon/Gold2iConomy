@@ -13,10 +13,18 @@ import com.nijikokun.register.payment.Methods;
 
 public class Commands implements CommandExecutor {
 
+	private VaultSupport	vault	= null; // Added by turt2live
+
+	public Commands(VaultSupport v) { // Added by turt2live
+		vault = v;
+	}
+
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 
 		// First check to see whether our plugin is 'enabled' and Register has a payment method
-		if (gold2economy.enabled && Methods.hasMethod()) {
+		if (gold2economy.enabled) { // Modified by turt2live (removed && Methods.hasMethod()
+			// because the if should not continue of the plugin is not enabled
 
 			// COMMAND - /gi
 			if (cmd.getName().equalsIgnoreCase("gi")) {
@@ -25,28 +33,24 @@ public class Commands implements CommandExecutor {
 				if (args.length == 0) return false;
 
 				// Command = /gi rates - Tells player the conversion rate
-				if (args.length == 1 && args[0].equalsIgnoreCase("rates")) {
-					if(Methods.hasMethod()) {
-						Functions.displayRates(sender);
-						return true;
-					} else {
-						sender.sendMessage(ChatColor.RED + "Gold2Economy was unable to find a supported economy plugin");
-						return true;
-					}
+				if (args.length == 1 && args[0].equalsIgnoreCase("rates")) if(Methods.hasMethod()) {
+					Functions.displayRates(sender);
+					return true;
+				} else {
+					sender.sendMessage(ChatColor.RED + "Gold2Economy was unable to find a supported economy plugin");
+					return true;
 				}
 
 				// Command = /gi reload - Reload configuration
-				if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-					if (sender instanceof ConsoleCommandSender) {
-						Functions.giReload(sender);
-						return true;
-					} else if (Permissions.check(sender, gold2economy.PERMISSION_ADMIN)) {
-						Functions.giReload(sender);
-						return true;
-					} else {
-						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
-						return true;
-					}
+				if (args.length == 1 && args[0].equalsIgnoreCase("reload")) if (sender instanceof ConsoleCommandSender) {
+					Functions.giReload(sender);
+					return true;
+				} else if (Permissions.check(sender, gold2economy.PERMISSION_ADMIN)) {
+					Functions.giReload(sender);
+					return true;
+				} else {
+					sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
+					return true;
 				}
 
 				// Command = /gi <item> all - Convert all <item> - <item> is either iron, gold or diamond
@@ -83,11 +87,9 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
 							return true;
 						}
-					} else if (itemID == 264) { // DIAMOND
-						if (!gold2economy.config.convertDiamond) {
-							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
-							return true;
-						}
+					} else if (itemID == 264) if (!gold2economy.config.convertDiamond) {
+						sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
+						return true;
 					}
 
 					// Don't continue if player doesn't have required permission (if enabled)
@@ -105,11 +107,10 @@ public class Commands implements CommandExecutor {
 					if (pi.contains(itemID)) {
 
 						// Loop through player's inventory to look for <item>
-						for (ItemStack item : items) {
+						for (ItemStack item : items)
 							// if the inventory slot is not null AND it is the item we are looking for then change amount
 							if (item != null && item.getTypeId() == itemID) amount += item.getAmount();
-						}
-						Converter.convertItem(sender, itemID, amount);
+						Converter.convertItem(sender, itemID, amount, vault); // Added by turt2live
 						return true; // finally say we've handled command correctly
 
 					} else {
@@ -128,11 +129,8 @@ public class Commands implements CommandExecutor {
 
 					// Use a try-catch to safely retrieve amount to convert
 					try {
-						if (args.length == 2) {
-							amount = Integer.parseInt(args[1]);
-						} else if (args.length == 1) {
-							amount = 1;
-						}
+						if (args.length == 2) amount = Integer.parseInt(args[1]);
+						else if (args.length == 1) amount = 1;
 					} catch (NumberFormatException e) {
 						// DEBUG LINE
 						gold2economy.log.severe("[Gold2Economy] Error: " + e.toString());
@@ -166,11 +164,9 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
 							return true;
 						}
-					} else if (itemID == 264) { // DIAMOND
-						if (!gold2economy.config.convertDiamond) {
-							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
-							return true;
-						}
+					} else if (itemID == 264) if (!gold2economy.config.convertDiamond) {
+						sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
+						return true;
 					}
 
 					// Check if player has permission first
@@ -180,7 +176,7 @@ public class Commands implements CommandExecutor {
 					}
 
 					// Finally convert item into money
-					Converter.convertItem(sender, itemID, amount);			
+					Converter.convertItem(sender, itemID, amount, vault);
 					return true;
 
 				}

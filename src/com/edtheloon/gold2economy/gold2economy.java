@@ -52,9 +52,6 @@ public class gold2economy extends JavaPlugin {
 		pm.registerEvent(Type.PLUGIN_ENABLE, new server(this), Priority.Monitor, this);
 		pm.registerEvent(Type.PLUGIN_DISABLE, new server(this), Priority.Monitor, this);
 
-		// Tell Bukkit that Commands class should handle command execution for this command
-		getCommand("gi").setExecutor(new Commands());
-
 		/* First check to see if Register is installed/enabled. It is safe to perform this check at this
 		 * point in the code because in our plugin.yml we have added a softdepend. Meaning that
 		 * it will only be enabled once Register has been found. It will still run however if Register is
@@ -92,6 +89,10 @@ public class gold2economy extends JavaPlugin {
 				enabled = true;
 				log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
 			}
+
+		// Moved this down to below the Vault check (turt2live)
+		// Tell Bukkit that Commands class should handle command execution for this command
+		getCommand("gi").setExecutor(new Commands(vault));
 
 	}
 

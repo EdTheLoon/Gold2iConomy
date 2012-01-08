@@ -15,7 +15,7 @@ import com.nijikokun.register.payment.Methods;
 public class Converter {
 
 	// Convert Gold into money
-	public static void convertItem(CommandSender sender, int itemID, int amount)
+	public static void convertItem(CommandSender sender, int itemID, int amount, VaultSupport vault)
 	{
 
 		// Declare local variables
@@ -40,12 +40,22 @@ public class Converter {
 			Double balance = 0.0;
 			String formattedBalance = "";
 			String formattedConversion = "";
-			if (gold2economy.vault.isActive()) { // Do we have Vault? or Register?
-				VaultSupport v = gold2economy.vault;
-				v.deposit(player.getName(), conversion);
-				balance = v.balance(player.getName());
-				formattedBalance = v.format(balance);
-				formattedConversion = v.format(conversion);
+			if (vault != null) { // Cause I can't think of any other way... (turt2live)
+				if (vault.isActive()) { // Do we have Vault? or Register? (turt2live)
+					VaultSupport v = vault;
+					v.deposit(player.getName(), conversion);
+					balance = v.balance(player.getName());
+					formattedBalance = v.format(balance);
+					formattedConversion = v.format(conversion);
+				} else { // Duplicated from null check IF (turt2live)
+					Method method = Methods.getMethod();
+					MethodAccount account = method.getAccount(player.getName());
+					account.add(conversion);
+					balance = account.balance();
+					// Format values (turt2live)
+					formattedBalance = method.format(balance);
+					formattedConversion = method.format(conversion);
+				}
 			} else { // Code in here written by EdTheLoon, just thrown into an else
 				Method method = Methods.getMethod();
 				MethodAccount account = method.getAccount(player.getName());

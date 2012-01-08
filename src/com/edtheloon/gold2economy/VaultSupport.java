@@ -40,10 +40,12 @@ public class VaultSupport {
 			vault = false;
 			economy = null;
 		}
+		// System.out.println(economy); //DEBUG (turt2live)
 		return vault;
 	}
 
 	public void deposit(String player, double amount) {
+		// System.out.println(player + " | " + amount); //DEBUG (turt2live)
 		economy.depositPlayer(player, amount);
 	}
 
