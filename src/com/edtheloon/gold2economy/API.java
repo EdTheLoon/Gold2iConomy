@@ -17,8 +17,11 @@ public class API {
 	}
 
 	// Returns the configHandler being used
+	@Deprecated
+	// Because configHandler will not be static when I can get around it... (turt2live)
 	public configHandler getConfig() {
-		return gold2economy.config;
+		// return gold2economy.config;
+		return null;
 	}
 
 	// Return the permission string for iron
@@ -41,12 +44,16 @@ public class API {
 		return gold2economy.PERMISSION_ADMIN;
 	}
 
+	@Deprecated
+	// Because configHandler will not be static when I can get around it... (turt2live)
 	public void reloadConfig() {
-		Functions.giReload(null);
+		// Functions.giReload(null);
 	}
 
+	@Deprecated
+	// Because configHandler will not be static when I can get around it... (turt2live)
 	public void reloadConfig(CommandSender sender) {
-		Functions.giReload(sender);
+		// Functions.giReload(sender);
 	}
 
 	@Deprecated
@@ -58,7 +65,7 @@ public class API {
 	@Deprecated
 	// Because I need to fix the VaultSupport class passing (turt2live)
 	public void convert(CommandSender sender, int itemID, int amount) {
-		// Converter.convertItem(sender, itemID, amount); //Because of deprecation (turt2live)
+		// Converter.convertItem(sender, itemID, amount);
 	}
 
 }

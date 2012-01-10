@@ -8,12 +8,12 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 // Class written by Turt2Live: mc.turt2live.com/plugins
 public class VaultSupport {
 
-	private boolean	vault	= false;
+	private boolean	vault		= false;
 	private boolean	register	= false;
-	private Plugin	plugin	= null;
-	private String	method	= "Unknown";
+	private Plugin	plugin		= null;
+	private String	method		= "Unknown";
 
-	private Economy	economy	= null;
+	private Economy	economy		= null;
 
 	public VaultSupport(Plugin p) {
 		plugin = p;
