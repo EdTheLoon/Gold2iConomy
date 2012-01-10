@@ -9,6 +9,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 public class VaultSupport {
 
 	private boolean	vault	= false;
+	private boolean	register	= false;
 	private Plugin	plugin	= null;
 	private String	method	= "Unknown";
 
@@ -22,8 +23,16 @@ public class VaultSupport {
 		vault = b;
 	}
 
+	public void setRegister(boolean b) {
+		register = b;
+	}
+
 	public boolean isActive() {
 		return vault;
+	}
+
+	public boolean hasRegister() {
+		return register;
 	}
 
 	public String method() {

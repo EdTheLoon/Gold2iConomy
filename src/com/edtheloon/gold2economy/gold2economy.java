@@ -77,6 +77,8 @@ public class gold2economy extends JavaPlugin {
 				boolean success = vault.init();
 				// turt2live: Add the required stuff so the plugin doesn't die
 				enabled = true;
+			vault.setRegister(false);
+			vault.setUsed(true);
 				if(!success){
 					enabled = false;
 					log.info("[Gold2Economy] Version "+getDescription().getVersion().toString()+": Vault found! No method though :(");
@@ -84,7 +86,7 @@ public class gold2economy extends JavaPlugin {
 			}else{
 				vault.setUsed(false); //Added by turt2live
 				if (Methods.hasMethod()) usedMethod = Methods.getMethod();
-
+			vault.setRegister(true);
 				// Finally, log to console that the plugin has finished initialising and is enabled.
 				enabled = true;
 				log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());

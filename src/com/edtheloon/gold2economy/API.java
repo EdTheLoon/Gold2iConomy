@@ -49,8 +49,10 @@ public class API {
 		Functions.giReload(sender);
 	}
 
+	@Deprecated
+	// Because I need to fix the VaultSupport class passing (turt2live)
 	public void displayRates(CommandSender sender) {
-		Functions.displayRates(sender);
+		// Functions.displayRates(sender);
 	}
 
 	@Deprecated

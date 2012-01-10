@@ -9,8 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import com.nijikokun.register.payment.Methods;
-
 public class Commands implements CommandExecutor {
 
 	private VaultSupport	vault	= null; // Added by turt2live
@@ -33,8 +31,8 @@ public class Commands implements CommandExecutor {
 				if (args.length == 0) return false;
 
 				// Command = /gi rates - Tells player the conversion rate
-				if (args.length == 1 && args[0].equalsIgnoreCase("rates")) if(Methods.hasMethod()) {
-					Functions.displayRates(sender);
+				if (args.length == 1 && args[0].equalsIgnoreCase("rates")) if (vault.hasRegister() || vault.isActive()) { // Modified by turt2live (Removed Methods.hasMethod())
+					Functions.displayRates(sender, vault);
 					return true;
 				} else {
 					sender.sendMessage(ChatColor.RED + "Gold2Economy was unable to find a supported economy plugin");
