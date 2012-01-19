@@ -10,6 +10,7 @@ public class VaultSupport {
 
 	private boolean	vault		= false;
 	private boolean	register	= false;
+	private boolean	both		= false;		//Used by the API only (for now?)
 	private Plugin	plugin		= null;
 	private String	method		= "Unknown";
 
@@ -25,6 +26,18 @@ public class VaultSupport {
 
 	public void setRegister(boolean b) {
 		register = b;
+	}
+
+	public void setBoth(boolean b) {
+		both = b;
+	}
+
+	public void setBoth(Plugin vault, Plugin register) {
+		both = ((vault != null && register != null) ? true : false);
+	}
+
+	public boolean hasBoth() {
+		return both;
 	}
 
 	public boolean isActive() {

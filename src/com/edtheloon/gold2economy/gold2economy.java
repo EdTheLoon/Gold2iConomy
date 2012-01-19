@@ -7,6 +7,7 @@ package com.edtheloon.gold2economy;
 
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,6 +50,7 @@ public class gold2economy extends JavaPlugin {
 		/*
 		 * Turt2Live: Added a Vault check to support Vault users. This has also been added to the softdepend list
 		 */
+		pm = Bukkit.getServer().getPluginManager(); //Added by turt2live
 		vault = new VaultSupport(this);
 		Plugin vault_plugin = pm.getPlugin("Vault");
 		boolean hasVault = false;
@@ -78,7 +80,7 @@ public class gold2economy extends JavaPlugin {
 				enabled = true;
 				log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
 			}
-
+		vault.setBoth(vault_plugin, plugin); //For the API
 		// Moved to below vault check (turt2live)
 		// Create a new instance of configHandler
 		config = new configHandler(this, vault); // Fixed to pass in VaultSupport (turt2live)
