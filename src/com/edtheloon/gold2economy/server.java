@@ -1,8 +1,11 @@
 package com.edtheloon.gold2economy;
 
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
 
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -10,14 +13,20 @@ import com.nijikokun.register.payment.Methods;
 
 // import cosine.boseconomy.BOSEconomy;
 
-public class server extends ServerListener {
+public class server implements Listener { //Fixed for new event system - Turt2Live
 	private gold2economy	plugin;
 
 	public server(gold2economy plugin) {
 		this.plugin = plugin;
 	}
 
-	@Override
+	//Method added by Turt2Live
+	public void init() {
+		Bukkit.getPluginManager().registerEvents(this, plugin);
+	}
+
+	@EventHandler(event = PluginDisableEvent.class, priority = EventPriority.MONITOR)
+	//Fixed for new event system - Turt2Live
 	public void onPluginDisable(PluginDisableEvent event) {
 		// There's nothing here!
 		// If register was disabled then 'disable' our plugin.
@@ -32,7 +41,8 @@ public class server extends ServerListener {
 		}
 	}
 
-	@Override
+	@EventHandler(event = PluginEnableEvent.class, priority = EventPriority.MONITOR)
+	//Fixed for new event system - Turt2Live
 	public void onPluginEnable(PluginEnableEvent event) {
 
 		// if using Permissions

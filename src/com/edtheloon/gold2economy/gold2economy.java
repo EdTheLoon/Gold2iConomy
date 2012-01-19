@@ -7,8 +7,6 @@ package com.edtheloon.gold2economy;
 
 import java.util.logging.Logger;
 
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,10 +37,10 @@ public class gold2economy extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		// Register plugin enable and disable events
-		pm = getServer().getPluginManager();
-		pm.registerEvent(Type.PLUGIN_ENABLE, new server(this), Priority.Monitor, this);
-		pm.registerEvent(Type.PLUGIN_DISABLE, new server(this), Priority.Monitor, this);
+		//Event Handler : Turt2Live
+		server s = new server(this);
+		s.init();
+		//End Event Handler : Turt2Live
 
 		/*
 		 * First check to see if Register is installed/enabled. It is safe to perform this check at this point in the code because in our plugin.yml we have added a softdepend. Meaning that it will only be enabled once Register has been found. It will still run however if Register is not found, but will enable last.
@@ -61,25 +59,25 @@ public class gold2economy extends JavaPlugin {
 			// Added Vault to error (turt2live)
 			log.severe("[Gold2Economy] Register or Vault was not found. G2E will not function properly until it is enabled");
 		} else // Check if register has a method yet and then take note of the method
-				// Wrapped in a hasVault IF statement (turt2live)
-		if (hasVault) {
-			boolean success = vault.init();
-			// turt2live: Add the required stuff so the plugin doesn't die
-			enabled = true;
-			vault.setRegister(false);
-			vault.setUsed(true);
-			if (!success) {
-				enabled = false;
-				log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + ": Vault found! No method though :(");
-			} else log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + " enabled. Using " + vault.method() + " [VAULT]");
-		} else {
-			vault.setUsed(false); // Added by turt2live
-			if (Methods.hasMethod()) usedMethod = Methods.getMethod();
-			vault.setRegister(true);
-			// Finally, log to console that the plugin has finished initialising and is enabled.
-			enabled = true;
-			log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
-		}
+			// Wrapped in a hasVault IF statement (turt2live)
+			if (hasVault) {
+				boolean success = vault.init();
+				// turt2live: Add the required stuff so the plugin doesn't die
+				enabled = true;
+				vault.setRegister(false);
+				vault.setUsed(true);
+				if (!success) {
+					enabled = false;
+					log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + ": Vault found! No method though :(");
+				} else log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + " enabled. Using " + vault.method() + " [VAULT]");
+			} else {
+				vault.setUsed(false); // Added by turt2live
+				if (Methods.hasMethod()) usedMethod = Methods.getMethod();
+				vault.setRegister(true);
+				// Finally, log to console that the plugin has finished initialising and is enabled.
+				enabled = true;
+				log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
+			}
 
 		// Moved to below vault check (turt2live)
 		// Create a new instance of configHandler
