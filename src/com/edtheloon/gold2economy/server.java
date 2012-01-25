@@ -25,7 +25,7 @@ public class server implements Listener { //Fixed for new event system - Turt2Li
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 	}
 
-	@EventHandler (event = PluginDisableEvent.class, priority = EventPriority.MONITOR)
+	@EventHandler (priority = EventPriority.MONITOR)
 	//Fixed for new event system - Turt2Live
 	public void onPluginDisable(PluginDisableEvent event){
 		// There's nothing here!
@@ -41,7 +41,7 @@ public class server implements Listener { //Fixed for new event system - Turt2Li
 		}
 	}
 
-	@EventHandler (event = PluginEnableEvent.class, priority = EventPriority.MONITOR)
+	@EventHandler (priority = EventPriority.MONITOR)
 	//Fixed for new event system - Turt2Live
 	public void onPluginEnable(PluginEnableEvent event){
 
