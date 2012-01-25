@@ -1,9 +1,10 @@
 main: com.edtheloon.gold2economy.gold2economy
-name: Gold2Economy
+name: Gold2Economy-Vault
 author: EdTheLoon
+authors: [EdTheLoon, Turt2Live]
 description: Convert your iron, gold and diamonds to money in either iConomy or BOSEconomy
-version: 1.4
-softdepend: [Register]
+version: 1.4_r5
+softdepend: [Register, Vault]
 
 commands:
     gi:
