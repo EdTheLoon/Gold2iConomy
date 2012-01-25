@@ -25,12 +25,17 @@ public class Converter {
 
 		// Calculate conversion rate
 		// Change this from a switch (itemID) to if conditions because it was causing bugs
-		if (itemID == 265) conversion = config.ironRate * amount; // Fixed for argument change (turt2live)
-		else if (itemID == 266) conversion = config.goldRate * amount; // Fixed for argument change (turt2live)
-		else if (itemID == 264) conversion = config.diamondRate * amount; // Fixed for argument change (turt2live)
+		if(itemID == 265){
+			conversion = config.ironRate * amount; // Fixed for argument change (turt2live)
+		}else if(itemID == 266){
+			conversion = config.goldRate * amount; // Fixed for argument change (turt2live)
+		}else if(itemID == 264)
+		{
+			conversion = config.diamondRate * amount; // Fixed for argument change (turt2live)
+		}
 
 		// If user has enough ingots then convert gold, otherwise inform user that they do not have enough gold ingots
-		if (pi.contains(itemID, amount)) {
+		if(pi.contains(itemID, amount)){
 
 			// Remove gold ingots
 			HashMap<Integer, ItemStack> difference = pi.removeItem(new ItemStack(itemID, amount));
@@ -39,14 +44,14 @@ public class Converter {
 			Double balance = 0.0;
 			String formattedBalance = "";
 			String formattedConversion = "";
-			if (vault != null) { // Cause I can't think of any other way... (turt2live)
-				if (vault.isActive()) { // Do we have Vault? or Register? (turt2live)
+			if(vault != null){ // Cause I can't think of any other way... (turt2live)
+				if(vault.isActive()){ // Do we have Vault? or Register? (turt2live)
 					VaultSupport v = vault;
 					v.deposit(player.getName(), conversion);
 					balance = v.balance(player.getName());
 					formattedBalance = v.format(balance);
 					formattedConversion = v.format(conversion);
-				} else { // Duplicated from null check IF (turt2live)
+				}else{ // Duplicated from null check IF (turt2live)
 					Method method = Methods.getMethod();
 					MethodAccount account = method.getAccount(player.getName());
 					account.add(conversion);
@@ -55,7 +60,7 @@ public class Converter {
 					formattedBalance = method.format(balance);
 					formattedConversion = method.format(conversion);
 				}
-			} else { // Code in here written by EdTheLoon, just thrown into an else
+			}else{ // Code in here written by EdTheLoon, just thrown into an else
 				Method method = Methods.getMethod();
 				MethodAccount account = method.getAccount(player.getName());
 				account.add(conversion);
@@ -67,7 +72,9 @@ public class Converter {
 			sender.sendMessage(ChatColor.GREEN + "You converted " + amount + " item(s) into " + formattedConversion); // Renamed variable used
 			sender.sendMessage(ChatColor.GREEN + "You now have " + formattedBalance); // Renamed variable used
 			// End turt2live edit
-		} else sender.sendMessage(ChatColor.DARK_RED + "You do not have " + Integer.toString(amount) + ChatColor.DARK_RED + " of that item!");
+		}else{
+			sender.sendMessage(ChatColor.DARK_RED + "You do not have " + Integer.toString(amount) + ChatColor.DARK_RED + " of that item!");
+		}
 	}
 
 }
