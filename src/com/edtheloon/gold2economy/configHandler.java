@@ -59,8 +59,6 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 		if(updateConfig()){ //More of a failsafe than a check (see loadConfig())
 			saveDefaults();
 		}
-		//Reload again (also inits the file)
-		loadConfig();
 	}
 
 	// Load configuration file
@@ -69,9 +67,8 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 	public void loadConfig(){
 		if(updateConfig()){
 			createConfig();
-			return; //So we don't have an infinite loop of loading (see last line line createConfig(), turt2live)
 		}
-		//TEMP load();
+		//TEMP REMOVE load();
 
 		// Load which items we can convert
 		// System.out.println(config.getBoolean("convert.iron")); //DEBUG LINE - Turt2Live
