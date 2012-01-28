@@ -70,11 +70,7 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 			createConfig();
 			return; //So we don't have an infinite loop of loading (see last line line createConfig(), turt2live)
 		}
-		if(!this.load()){
-			//Report the inability to load (turt2live)
-			gold2economy.log.severe("[" + plugin.getDescription().getName() + "] CANNOT LOAD CONFIGURATION!! Using default values.");
-			return; //Use default values as for whatever reason we can't load (turt2live)
-		}
+		load();
 
 		// Load which items we can convert
 		// System.out.println(config.getBoolean("convert.iron")); //DEBUG LINE - Turt2Live
