@@ -50,10 +50,12 @@ public class Commands implements CommandExecutor {
 				// Command = /gi reload - Reload configuration
 				if(args.length == 1 && args[0].equalsIgnoreCase("reload")){
 					if(sender instanceof ConsoleCommandSender){
-						Functions.giReload(sender, config); // Fixed for argument change (turt2live)
+						//Functions.giReload(sender, config); // Fixed for argument change (turt2live)
+						config.reload(sender); // removed old call, replaced with newer one (turt2live)
 						return true;
 					}else if(Permissions.check(sender, gold2economy.PERMISSION_ADMIN, config)){ // Fixed for argument change (turt2live)
-						Functions.giReload(sender, config); // Fixed for argument change (turt2live)
+						//Functions.giReload(sender, config); // Fixed for argument change (turt2live)
+						config.reload(sender); // removed old call, replaced with newer one (turt2live)
 						return true;
 					}else{
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
@@ -147,8 +149,7 @@ public class Commands implements CommandExecutor {
 						}else if(args.length == 1){
 							amount = 1;
 						}
-					}
-					catch(NumberFormatException e){
+					}catch(NumberFormatException e){
 						// DEBUG LINE
 						gold2economy.log.severe("[Gold2Economy] Error: " + e.toString());
 						return false;

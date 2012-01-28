@@ -1,22 +1,16 @@
 package com.edtheloon.gold2economy;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
+import com.feildmaster.lib.configuration.EnhancedConfiguration;
 import com.nijikokun.register.payment.Methods;
 
-public class configHandler {
+public class configHandler extends EnhancedConfiguration { //Added by turt2live (extends)
 
 	// Configuration file properties
 	private Plugin plugin;
-	private File configFile = new File("plugins/Gold2Economy" + File.separator + "config.yml");
-	private FileConfiguration config;
+	//Removed config values (turt2live)
 
 	// Default conversion rates
 	public Double ironRate = 9.99;
@@ -41,85 +35,67 @@ public class configHandler {
 	private VaultSupport vault; // Added by turt2live
 
 	// CONSTRUCTOR
+	// Removed config global variables (turt2live)
 	public configHandler(Plugin _plugin, VaultSupport _vault){ // Added Vault class (turt2live)
+		super(_plugin); //Added by turt2live
 		this.plugin = _plugin;
-		this.config = _plugin.getConfig();
 		this.vault = _vault; // Added by turt2live
-		if(checkConfig())
-		{
-			loadConfig(); // Added by turt2live
-		}
-	}
-
-	// Check to see if config exists, returns true or false
-	public boolean checkConfig(){
-		if(!configFile.exists()){
-			return false;
+		if(updateConfig()){ //Auto-load the config
+			createConfig(); // Added by turt2live
 		}else{
-			return true;
+			loadConfig(); //Added by turt2live (auto-load config)
 		}
 	}
 
 	// Create the configuration file and insert default values
-	public void createConfig(){
-
-		config.set("convert.iron", convertIron);
-		config.set("convert.gold", convertGold);
-		config.set("convert.diamond", convertDiamond);
-
-		config.set("rates.iron", ironRate);
-		config.set("rates.gold", goldRate);
-		config.set("rates.diamond", diamondRate);
-
-		config.set("permissions.use", Permissions);
-		config.set("permissions.Permissions", usePermissions);
-		config.set("permissions.PermissionsBukkit", useBukkitPerms);
-
-		config.set("preferred", preferred);
-		plugin.saveConfig();
-
-		// Now that Config is created we can load the values
+	// Changed to private (turt2live)
+	// Rewritten by turt2live (comments also by turt2live)
+	private void createConfig(){
+		//Load the configuration
+		plugin.reloadConfig();
+		//Load the defaults, just in case
+		loadDefaults(plugin.getResource("resources/config.yml"));
+		//If the file doesn't exist or the defaults are missing/not there, 
+		//save the defaults to the config
+		if(updateConfig()){ //More of a failsafe than a check (see loadConfig())
+			saveDefaults();
+		}
+		//Reload again (also inits the file)
 		loadConfig();
 	}
 
 	// Load configuration file
 	// Removed defaults (DEBUG TEST) - turt2live
+	// Changed all calls to plugin.getConfig() - turt2live
 	public void loadConfig(){
-
-		plugin.reloadConfig();
-		// config = plugin.getConfig(); //EdTheLoon
-		config = new YamlConfiguration(); // Config fix (not liking this though...) - Turt2Live
-		try{ // Config fix (not liking this though...) - Turt2Live [TODO: Fix catch blocks to better handle possible errors]
-			config.load(configFile);
+		if(updateConfig()){
+			createConfig();
+			return; //So we don't have an infinite loop of loading (see last line line createConfig(), turt2live)
 		}
-		catch(FileNotFoundException e){
-			e.printStackTrace();
-		}
-		catch(IOException e){
-			e.printStackTrace();
-		}
-		catch(InvalidConfigurationException e){
-			e.printStackTrace();
+		if(!this.load()){
+			//Report the inability to load (turt2live)
+			gold2economy.log.severe("[" + plugin.getDescription().getName() + "] CANNOT LOAD CONFIGURATION!! Using default values.");
+			return; //Use default values as for whatever reason we can't load (turt2live)
 		}
 
 		// Load which items we can convert
 		// System.out.println(config.getBoolean("convert.iron")); //DEBUG LINE - Turt2Live
-		convertIron = config.getBoolean("convert.iron");
-		convertGold = config.getBoolean("convert.gold");
-		convertDiamond = config.getBoolean("convert.diamond");
+		convertIron = plugin.getConfig().getBoolean("convert.iron");
+		convertGold = plugin.getConfig().getBoolean("convert.gold");
+		convertDiamond = plugin.getConfig().getBoolean("convert.diamond");
 
 		// Load the conversion rates
-		ironRate = config.getDouble("rates.iron");
-		goldRate = config.getDouble("rates.gold");
-		diamondRate = config.getDouble("rates.diamond");
+		ironRate = plugin.getConfig().getDouble("rates.iron");
+		goldRate = plugin.getConfig().getDouble("rates.gold");
+		diamondRate = plugin.getConfig().getDouble("rates.diamond");
 
 		// Load whether we shall use permissions or not, and which permissions to use
-		Permissions = config.getBoolean("permissions.use");
-		usePermissions = config.getBoolean("permissions.Permissions");
-		useBukkitPerms = config.getBoolean("permissions.PermissionsBukkit");
+		Permissions = plugin.getConfig().getBoolean("permissions.use");
+		usePermissions = plugin.getConfig().getBoolean("permissions.Permissions");
+		useBukkitPerms = plugin.getConfig().getBoolean("permissions.PermissionsBukkit");
 
 		// Load which economy system to use
-		preferred = config.getString("preferred");
+		preferred = plugin.getConfig().getString("preferred");
 		// Set preferred if Register was found (if Register is found then enabled will be true.
 		if(gold2economy.enabled){
 			if(vault.hasRegister()){
@@ -129,8 +105,14 @@ public class configHandler {
 	}
 
 	// Added reload (turt2live) - Seemed to work, not ideal though
-	public void reload(){
-		plugin.reloadConfig();
+	public void reload(CommandSender sender){ //Removed by turt2live
 		loadConfig();
+	}
+
+	// Check to see if the config is in the correct format & is present
+	// RETURNS: True if a config change is needed, false otherwise
+	// Rewritten to determine if the config needs to be created
+	private boolean updateConfig(){ //Changed to private & renamed: checkConfig -> updateConfig(turt2live)
+		return (!fileExists() || !checkDefaults()) ? true : false; //Changed by turt2live
 	}
 }

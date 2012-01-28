@@ -20,51 +20,24 @@ public class API {
 		config = new configHandler(plugin, vault);
 	}
 
-	// Returns the method used
-	public Method getMethod(){
-		return gold2economy.usedMethod;
+	//Returns TRUE if the CommandSender can sell diamond
+	public boolean canSellDiamond(CommandSender player){
+		return player.hasPermission(getPermissionDiamond());
 	}
 
-	// Returns whether the plugin is 'enabled' or not
-	public boolean isEnabled(){
-		return gold2economy.enabled;
+	//Returns TRUE if the CommandSender can sell gold
+	public boolean canSellGold(CommandSender player){
+		return player.hasPermission(getPermissionGold());
 	}
 
-	// Returns the configHandler being used
-	public configHandler getConfig(){
-		return config; //Modified by turt2live
+	//Returns TRUE if the CommandSender can sell iron
+	public boolean canSellIron(CommandSender player){
+		return player.hasPermission(getPermissionIron());
 	}
 
-	// Return the permission string for iron
-	public String getPermissionIron(){
-		return gold2economy.PERMISSION_IRON;
-	}
-
-	// Return the permission string for gold
-	public String getPermissionGold(){
-		return gold2economy.PERMISSION_GOLD;
-	}
-
-	// Return the permission string for diamond
-	public String getPermissionDiamond(){
-		return gold2economy.PERMISSION_DIAMOND;
-	}
-
-	// Return the permission string for admin
-	public String getPermissionAdmin(){
-		return gold2economy.PERMISSION_ADMIN;
-	}
-
-	//Reloads the configuration (turt2live)
-	public void reloadConfig(){
-		Functions.giReload(null, config); //Turt2Live: Passing null into CommandSender 
-											//doesn't break anything, just means no display 
-											//message is sent
-	}
-
-	//Reloads the configuration from a command sender (turt2live)
-	public void reloadConfig(CommandSender sender){
-		Functions.giReload(sender, config);
+	//Converts an item for a user (turt2live)
+	public void convert(CommandSender sender, int itemID, int amount){
+		Converter.convertItem(sender, itemID, amount, vault, config);
 	}
 
 	//Displays the rates to the CommandSender (turt2live)
@@ -72,9 +45,34 @@ public class API {
 		Functions.displayRates(sender, vault, config);
 	}
 
-	//Converts an item for a user (turt2live)
-	public void convert(CommandSender sender, int itemID, int amount){
-		Converter.convertItem(sender, itemID, amount, vault, config);
+	// Returns the configHandler being used
+	public configHandler getConfig(){
+		return config; //Modified by turt2live
+	}
+
+	// Returns the method used
+	public Method getMethod(){
+		return gold2economy.usedMethod;
+	}
+
+	// Return the permission string for admin
+	public String getPermissionAdmin(){
+		return gold2economy.PERMISSION_ADMIN;
+	}
+
+	// Return the permission string for diamond
+	public String getPermissionDiamond(){
+		return gold2economy.PERMISSION_DIAMOND;
+	}
+
+	// Return the permission string for gold
+	public String getPermissionGold(){
+		return gold2economy.PERMISSION_GOLD;
+	}
+
+	// Return the permission string for iron
+	public String getPermissionIron(){
+		return gold2economy.PERMISSION_IRON;
 	}
 
 	//METHODS ADDED BY TURT2LIVE
@@ -84,9 +82,14 @@ public class API {
 		return vault;
 	}
 
-	//Returns TRUE if Vault is being used as the economy hook
-	public boolean isVaultUsed(){
-		return vault.isActive();
+	//Returns TRUE if the CommandSender has admin access
+	public boolean isAdmin(CommandSender player){
+		return player.hasPermission(getPermissionAdmin());
+	}
+
+	// Returns whether the plugin is 'enabled' or not
+	public boolean isEnabled(){
+		return gold2economy.enabled;
 	}
 
 	//Returns TRUE if Register is being used as the economy hook
@@ -99,23 +102,22 @@ public class API {
 		return vault.hasBoth();
 	}
 
-	//Returns TRUE if the CommandSender can sell iron
-	public boolean canSellIron(CommandSender player){
-		return player.hasPermission(getPermissionIron());
+	//Returns TRUE if Vault is being used as the economy hook
+	public boolean isVaultUsed(){
+		return vault.isActive();
 	}
 
-	//Returns TRUE if the CommandSender can sell gold
-	public boolean canSellGold(CommandSender player){
-		return player.hasPermission(getPermissionGold());
+	//Reloads the configuration (turt2live)
+	public void reloadConfig(){
+		//Removed deprecated Functions.giReload() call (turt2live)
+		config.reload(null); //Turt2Live: Passing null into CommandSender 
+								//doesn't break anything, just means no display 
+								//message is sent
 	}
 
-	//Returns TRUE if the CommandSender can sell diamond
-	public boolean canSellDiamond(CommandSender player){
-		return player.hasPermission(getPermissionDiamond());
-	}
-
-	//Returns TRUE if the CommandSender has admin access
-	public boolean isAdmin(CommandSender player){
-		return player.hasPermission(getPermissionAdmin());
+	//Reloads the configuration from a command sender (turt2live)
+	public void reloadConfig(CommandSender sender){
+		//Removed deprecated Functions.giReload() call (turt2live)
+		config.reload(null);
 	}
 }
