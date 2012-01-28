@@ -58,6 +58,7 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 		//save the defaults to the config
 		if(updateConfig()){ //More of a failsafe than a check (see loadConfig())
 			saveDefaults();
+			gold2economy.log.severe("[DEBUG] [G2E-VAULT] CONFIG UPDATED"); //Debug line, comment for release
 		}
 	}
 
@@ -72,22 +73,22 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 
 		// Load which items we can convert
 		// System.out.println(config.getBoolean("convert.iron")); //DEBUG LINE - Turt2Live
-		convertIron = plugin.getConfig().getBoolean("convert.iron");
-		convertGold = plugin.getConfig().getBoolean("convert.gold");
-		convertDiamond = plugin.getConfig().getBoolean("convert.diamond");
+		convertIron = getBoolean("convert.iron");
+		convertGold = getBoolean("convert.gold");
+		convertDiamond = getBoolean("convert.diamond");
 
 		// Load the conversion rates
-		ironRate = plugin.getConfig().getDouble("rates.iron");
-		goldRate = plugin.getConfig().getDouble("rates.gold");
-		diamondRate = plugin.getConfig().getDouble("rates.diamond");
+		ironRate = getDouble("rates.iron");
+		goldRate = getDouble("rates.gold");
+		diamondRate = getDouble("rates.diamond");
 
 		// Load whether we shall use permissions or not, and which permissions to use
-		Permissions = plugin.getConfig().getBoolean("permissions.use");
-		usePermissions = plugin.getConfig().getBoolean("permissions.Permissions");
-		useBukkitPerms = plugin.getConfig().getBoolean("permissions.PermissionsBukkit");
+		Permissions = getBoolean("permissions.use");
+		usePermissions = getBoolean("permissions.Permissions");
+		useBukkitPerms = getBoolean("permissions.PermissionsBukkit");
 
 		// Load which economy system to use
-		preferred = plugin.getConfig().getString("preferred");
+		preferred = getString("preferred");
 		// Set preferred if Register was found (if Register is found then enabled will be true.
 		if(gold2economy.enabled){
 			if(vault.hasRegister()){
