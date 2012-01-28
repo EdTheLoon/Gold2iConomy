@@ -41,11 +41,7 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 		super(_plugin); //Added by turt2live
 		this.plugin = _plugin;
 		this.vault = _vault; // Added by turt2live
-		if(updateConfig()){ //Auto-load the config
-			createConfig(); // Added by turt2live
-		}else{
-			loadConfig(); //Added by turt2live (auto-load config)
-		}
+		//Removed auto-loader (turt2live)
 	}
 
 	// Create the configuration file and insert default values
@@ -69,7 +65,7 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 		if(updateConfig()){
 			createConfig();
 		}
-		//TEMP REMOVE load();
+		load();
 
 		// Load which items we can convert
 		// System.out.println(config.getBoolean("convert.iron")); //DEBUG LINE - Turt2Live
