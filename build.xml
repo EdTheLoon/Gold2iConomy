@@ -28,7 +28,7 @@
         <copy todir="${build}">
             <fileset dir="${src}" excludes="**/*.java,**/*.form" includes="**"/>
         </copy>
-       <copy todir="${build}">
+       <copy todir="${build}/${resources}">
             <fileset dir="${resources}" excludes="**/*.java,**/*.form" includes="**"/>
         </copy>
 
