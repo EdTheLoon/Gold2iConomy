@@ -51,8 +51,6 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 	// Changed to private (turt2live)
 	// Rewritten by turt2live (comments also by turt2live)
 	private void createConfig(){
-		//Load the configuration
-		plugin.reloadConfig();
 		//Load the defaults, just in case
 		loadDefaults(plugin.getResource("resources/config.yml"));
 		//If the file doesn't exist or the defaults are missing/not there, 
