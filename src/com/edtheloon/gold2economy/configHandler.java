@@ -54,7 +54,7 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 		//save the defaults to the config
 		if(updateConfig()){ //More of a failsafe than a check (see loadConfig())
 			saveDefaults();
-			gold2economy.log.severe("[DEBUG] [G2E-VAULT] CONFIG UPDATED"); //Debug line, comment for release
+			//gold2economy.log.severe("[DEBUG] [G2E-VAULT] CONFIG UPDATED"); //Debug line, comment for release
 		}
 	}
 
