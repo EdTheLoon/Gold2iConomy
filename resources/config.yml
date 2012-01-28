@@ -6,15 +6,15 @@
 #    "Permissions" - true/false, use Permissions Nijikokun
 #    "PermissionBukkit" - true/false, use default Bukkit permission system
 convert:
-	iron: false
-	gold: true
-	diamond: false
+    iron: false
+    gold: true
+    diamond: false
 rates:
-	iron:
-	gold:
-	diamond:
+    iron:
+    gold:
+    diamond:
 permissions:
-	use: true
-	Permissions: false
-	PermissionsBukkit: true
+    use: true
+    Permissions: false
+    PermissionsBukkit: true
 preferred: iConomy 6
