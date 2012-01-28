@@ -39,6 +39,7 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 	// Removed config global variables (turt2live)
 	public configHandler(Plugin _plugin, VaultSupport _vault){ // Added Vault class (turt2live)
 		super(_plugin); //Added by turt2live
+		loadDefaults(plugin.getResource("resources/config.yml")); //TMP ADD ?
 		this.plugin = _plugin;
 		this.vault = _vault; // Added by turt2live
 		if(updateConfig()){ //Auto-load the config
@@ -53,7 +54,7 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 	// Rewritten by turt2live (comments also by turt2live)
 	private void createConfig(){
 		//Load the defaults, just in case
-		loadDefaults(plugin.getResource("resources/config.yml"));
+		// TMP REMOVE? loadDefaults(plugin.getResource("resources/config.yml"));
 		//If the file doesn't exist or the defaults are missing/not there, 
 		//save the defaults to the config
 		if(updateConfig()){ //More of a failsafe than a check (see loadConfig())
