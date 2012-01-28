@@ -10,9 +10,9 @@ convert:
     gold: true
     diamond: false
 rates:
-    iron:
-    gold:
-    diamond:
+    iron: 9.99
+    gold: 29.99
+    diamond: 99.99
 permissions:
     use: true
     Permissions: false
