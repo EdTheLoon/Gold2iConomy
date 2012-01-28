@@ -65,7 +65,6 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 		if(updateConfig()){
 			createConfig();
 		}
-		load();
 
 		// Load which items we can convert
 		// System.out.println(config.getBoolean("convert.iron")); //DEBUG LINE - Turt2Live
@@ -94,7 +93,7 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 	}
 
 	// Added reload (turt2live) - Seemed to work, not ideal though
-	public void reload(CommandSender sender){ //Removed by turt2live
+	public void reload(CommandSender sender){
 		if(sender != null){
 			sender.sendMessage("[" + plugin.getDescription().getName() + "] " + ChatColor.DARK_GREEN + "Configuration reloaded.");
 		}

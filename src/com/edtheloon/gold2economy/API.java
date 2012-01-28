@@ -18,6 +18,7 @@ public class API {
 		vault = new VaultSupport(plugin);
 		vault.init();
 		config = new configHandler(plugin, vault);
+		config.loadConfig();
 	}
 
 	//Returns TRUE if the CommandSender can sell diamond
