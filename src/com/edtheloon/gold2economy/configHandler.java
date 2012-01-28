@@ -1,5 +1,6 @@
 package com.edtheloon.gold2economy;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
@@ -100,6 +101,9 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 
 	// Added reload (turt2live) - Seemed to work, not ideal though
 	public void reload(CommandSender sender){ //Removed by turt2live
+		if(sender != null){
+			sender.sendMessage("[" + plugin.getDescription().getName() + "] " + ChatColor.DARK_GREEN + "Configuration reloaded.");
+		}
 		loadConfig();
 	}
 

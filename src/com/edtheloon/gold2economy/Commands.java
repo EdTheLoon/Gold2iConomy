@@ -151,7 +151,7 @@ public class Commands implements CommandExecutor {
 						}
 					}catch(NumberFormatException e){
 						// DEBUG LINE
-						gold2economy.log.severe("[Gold2Economy] Error: " + e.toString());
+						gold2economy.log.severe("[" + vault.getPlugin().getDescription().getName() + "] Error: " + e.toString());
 						return false;
 					}
 
