@@ -8,15 +8,6 @@ import com.nijikokun.register.payment.Methods;
 
 public class Functions {
 
-	// Reload configuration
-	public static boolean giReload(CommandSender sender, configHandler config){ // Added argument: configHandler (turt2live)
-		config.loadConfig();
-		if(sender != null){
-			sender.sendMessage(ChatColor.GREEN + "[Gold2Economy]" + ChatColor.WHITE + " Configuration reloaded");
-		}
-		return true;
-	}
-
 	// Show conversion rates
 	public static void displayRates(CommandSender sender, VaultSupport vault, configHandler config){ // Added argument: VaultSupport, configHandler (turt2live)
 		if(vault.hasRegister()){ // Added by turt2live (rate table for Register is EdTheLoon)
@@ -63,5 +54,16 @@ public class Functions {
 						+ ChatColor.GREEN + vault.format(config.diamondRate));
 			}
 		}
+	}
+
+	// Reload configuration
+	@Deprecated
+	// See configHandler.reload(CommandSender) (turt2live)
+	public static boolean giReload(CommandSender sender, configHandler config){ // Added argument: configHandler (turt2live)
+		config.loadConfig();
+		if(sender != null){
+			sender.sendMessage(ChatColor.GREEN + "[Gold2Economy]" + ChatColor.WHITE + " Configuration reloaded");
+		}
+		return true;
 	}
 }

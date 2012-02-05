@@ -10,13 +10,13 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import com.feildmaster.lib.configuration.PluginWrapper;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.register.payment.Method;
 import com.nijikokun.register.payment.Methods;
 
-public class gold2economy extends JavaPlugin {
+public class gold2economy extends PluginWrapper { //To implement feildmaster's config library (turt2live)
 
 	// Permission nodes
 	public final static String PERMISSION_IRON = "Gold2Economy.iron";
@@ -35,6 +35,12 @@ public class gold2economy extends JavaPlugin {
 
 	// Minecraft Log
 	public static Logger log = Logger.getLogger("Minecraft");
+
+	@Override
+	public void onDisable(){
+		log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " disabled.");
+		enabled = false;
+	}
 
 	@Override
 	public void onEnable(){
@@ -63,7 +69,7 @@ public class gold2economy extends JavaPlugin {
 		if(!pm.isPluginEnabled(plugin) && !hasVault){ // Added !hasVault (turt2live)
 			enabled = false;
 			// Added Vault to error (turt2live)
-			log.severe("[Gold2Economy] Register or Vault was not found. G2E will not function properly until it is enabled");
+			log.severe("[" + getDescription().getName() + "] Register or Vault was not found. G2E will not function properly until it is enabled");
 		}else // Check if register has a method yet and then take note of the method
 				// Wrapped in a hasVault IF statement (turt2live)
 		if(hasVault){
@@ -74,9 +80,9 @@ public class gold2economy extends JavaPlugin {
 			vault.setUsed(true);
 			if(!success){
 				enabled = false;
-				log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + ": Vault found! No method though :(");
+				log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + ": Vault found! No method though :(");
 			}else{
-				log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + " enabled. Using " + vault.method() + " [VAULT]");
+				log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " enabled. Using " + vault.method() + " [VAULT]");
 			}
 		}else{
 			vault.setUsed(false); // Added by turt2live
@@ -86,7 +92,7 @@ public class gold2economy extends JavaPlugin {
 			vault.setRegister(true);
 			// Finally, log to console that the plugin has finished initialising and is enabled.
 			enabled = true;
-			log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
+			log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
 		}
 		vault.setBoth(vault_plugin, plugin); //For the API
 		// Moved to below vault check (turt2live)
@@ -94,20 +100,10 @@ public class gold2economy extends JavaPlugin {
 		config = new configHandler(this, vault); // Fixed to pass in VaultSupport (turt2live)
 
 		// Check to see if configuration exists. If it exists then load it; if not then create it
-		if(config.checkConfig()){
-			config.loadConfig();
-		}else{
-			config.createConfig();
-		}
-		config.reload();
+		//Removed check, just load it (turt2live) -- Check is done internally now
+		config.loadConfig();
 		// Moved this down to below the Vault check (turt2live)
 		// Tell Bukkit that Commands class should handle command execution for this command
 		getCommand("gi").setExecutor(new Commands(vault, config)); // Fixed for argument change (turt2live)
-	}
-
-	@Override
-	public void onDisable(){
-		log.info("[Gold2Economy] Version " + getDescription().getVersion().toString() + " disabled.");
-		enabled = false;
 	}
 }
