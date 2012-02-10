@@ -1,0 +1,20 @@
+# Gold2Economy - Vault Configuration
+# "convert" - true/false, convert <ITEM>
+# "rates" - double (decimal), rate for <ITEM>
+# "permissions":
+#    "use" - true/false, use permissions
+#    "Permissions" - true/false, use Permissions Nijikokun
+#    "PermissionBukkit" - true/false, use default Bukkit permission system
+convert:
+    iron: false
+    gold: true
+    diamond: false
+rates:
+    iron: 9.99
+    gold: 29.99
+    diamond: 99.99
+permissions:
+    use: true
+    Permissions: false
+    PermissionsBukkit: true
+preferred: iConomy 6

@@ -20,36 +20,29 @@ public class VaultSupport {
 		plugin = p;
 	}
 
-	public void setUsed(boolean b){
-		vault = b;
+	public double balance(String player){
+		return economy.getBalance(player);
 	}
 
-	public void setRegister(boolean b){
-		register = b;
+	public void deposit(String player, double amount){
+		// System.out.println(player + " | " + amount); //DEBUG (turt2live)
+		economy.depositPlayer(player, amount);
 	}
 
-	public void setBoth(boolean b){
-		both = b;
+	public String format(double amount){
+		return economy.format(amount);
 	}
 
-	public void setBoth(Plugin vault, Plugin register){
-		both = ((vault != null && register != null) ? true : false);
+	public Plugin getPlugin(){
+		return plugin;
 	}
 
 	public boolean hasBoth(){
 		return both;
 	}
 
-	public boolean isActive(){
-		return vault;
-	}
-
 	public boolean hasRegister(){
 		return register;
-	}
-
-	public String method(){
-		return method;
 	}
 
 	public boolean init(){
@@ -66,20 +59,31 @@ public class VaultSupport {
 		return vault;
 	}
 
-	public void deposit(String player, double amount){
-		// System.out.println(player + " | " + amount); //DEBUG (turt2live)
-		economy.depositPlayer(player, amount);
+	public boolean isActive(){
+		return vault;
+	}
+
+	public String method(){
+		return method;
+	}
+
+	public void setBoth(boolean b){
+		both = b;
+	}
+
+	public void setBoth(Plugin vault, Plugin register){
+		both = ((vault != null && register != null) ? true : false);
+	}
+
+	public void setRegister(boolean b){
+		register = b;
+	}
+
+	public void setUsed(boolean b){
+		vault = b;
 	}
 
 	public void withdraw(String player, double amount){
 		economy.withdrawPlayer(player, amount);
-	}
-
-	public double balance(String player){
-		return economy.getBalance(player);
-	}
-
-	public String format(double amount){
-		return economy.format(amount);
 	}
 }
