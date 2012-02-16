@@ -3,15 +3,20 @@ package com.edtheloon.gold2economy;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.feildmaster.lib.configuration.EnhancedConfiguration;
+
 public class Permissions {
 
-	public static boolean check(CommandSender sender, String perm, configHandler config){ // Added argument: configHandler (turt2live)
+	public static boolean check(CommandSender sender, String perm, EnhancedConfiguration config){ // Added argument: configHandler (turt2live)
+		// Create Variables (turt2live)
+		boolean usePermissions = config.getBoolean("permissions.Permissions");
+		boolean useBukkitPerms = config.getBoolean("permissions.PermissionsBukkit");
 
 		// If using permissions is enabled
-		if(config.usePermissions){
+		if(usePermissions){
 
 			// If using PermissionsBukkit (aka SuperPerms)
-			if(config.useBukkitPerms){
+			if(useBukkitPerms){
 				if(sender.hasPermission(perm)){
 					return true;
 				}else if(sender.isOp())
@@ -22,7 +27,7 @@ public class Permissions {
 			}
 
 			// If using Permissions by Nijikokun
-			else if(config.usePermissions){
+			else if(usePermissions){
 				if(gold2economy.permissionHandler.has((Player) sender, perm) && gold2economy.permissionsEnabled){
 					return true;
 				}else if(sender.isOp())

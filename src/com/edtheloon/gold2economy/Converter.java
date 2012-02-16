@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import com.feildmaster.lib.configuration.EnhancedConfiguration;
 import com.nijikokun.register.payment.Method;
 import com.nijikokun.register.payment.Method.MethodAccount;
 import com.nijikokun.register.payment.Methods;
@@ -15,8 +16,12 @@ import com.nijikokun.register.payment.Methods;
 public class Converter {
 
 	// Convert Gold into money
-	public static void convertItem(CommandSender sender, int itemID, int amount, VaultSupport vault, configHandler config) // Added argument: configHandler (turt2live)
+	public static void convertItem(CommandSender sender, int itemID, int amount, VaultSupport vault, EnhancedConfiguration config) // Added argument: configHandler (turt2live)
 	{
+		// Setup variables (turt2live)
+		double ironRate = config.getDouble("rates.iron");
+		double goldRate = config.getDouble("rates.gold");
+		double diamondRate = config.getDouble("rates.diamond");
 
 		// Declare local variables
 		Double conversion = 0.0;
@@ -26,12 +31,12 @@ public class Converter {
 		// Calculate conversion rate
 		// Change this from a switch (itemID) to if conditions because it was causing bugs
 		if(itemID == 265){
-			conversion = config.ironRate * amount; // Fixed for argument change (turt2live)
+			conversion = ironRate * amount; // Fixed for argument change (turt2live)
 		}else if(itemID == 266){
-			conversion = config.goldRate * amount; // Fixed for argument change (turt2live)
+			conversion = goldRate * amount; // Fixed for argument change (turt2live)
 		}else if(itemID == 264)
 		{
-			conversion = config.diamondRate * amount; // Fixed for argument change (turt2live)
+			conversion = diamondRate * amount; // Fixed for argument change (turt2live)
 		}
 
 		// If user has enough ingots then convert gold, otherwise inform user that they do not have enough gold ingots

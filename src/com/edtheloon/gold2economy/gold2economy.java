@@ -25,13 +25,13 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 	public final static String PERMISSION_ADMIN = "Gold2Economy.admin";
 
 	// Config Handler, External APIs and class variables
-	public configHandler config; // Removed static access (turt2live)
 	public static PermissionHandler permissionHandler = null;
 	public static boolean enabled = false;
 	public static PluginManager pm = null;
 	public static boolean permissionsEnabled = false;
 	public static Method usedMethod = null;
 	public static VaultSupport vault = null; // turt2live: Start of support
+	public API api = null; // Added by turt2live
 
 	// Minecraft Log
 	public static Logger log = Logger.getLogger("Minecraft");
@@ -50,7 +50,10 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 		//End Event Handler : Turt2Live
 
 		/*
-		 * First check to see if Register is installed/enabled. It is safe to perform this check at this point in the code because in our plugin.yml we have added a softdepend. Meaning that it will only be enabled once Register has been found. It will still run however if Register is not found, but will enable last.
+		 * First check to see if Register is installed/enabled. 
+		 * It is safe to perform this check at this point in the code because in our plugin.yml we have added a softdepend. 
+		 * Meaning that it will only be enabled once Register has been found. 
+		 * It will still run however if Register is not found, but will enable last.
 		 */
 
 		/*
@@ -96,14 +99,19 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 		}
 		vault.setBoth(vault_plugin, plugin); //For the API
 		// Moved to below vault check (turt2live)
-		// Create a new instance of configHandler
-		config = new configHandler(this, vault); // Fixed to pass in VaultSupport (turt2live)
-
-		// Check to see if configuration exists. If it exists then load it; if not then create it
-		//Removed check, just load it (turt2live) -- Check is done internally now
-		config.loadConfig();
+		// Start configuration (turt2live)
+		//Load the defaults, just in case (turt2live)
+		getConfig().loadDefaults(getResource("resources/config.yml"));
+		/*If the file doesn't exist or the defaults are missing/not there, 
+		  save the defaults to the config (turt2live)
+		*/
+		if(getConfig().needsUpdate()){
+			getConfig().saveDefaults();
+		}
 		// Moved this down to below the Vault check (turt2live)
 		// Tell Bukkit that Commands class should handle command execution for this command
-		getCommand("gi").setExecutor(new Commands(vault, config)); // Fixed for argument change (turt2live)
+		getCommand("gi").setExecutor(new Commands(this, vault)); // Fixed for argument change (turt2live)
+		// Start API
+		api = new API();
 	}
 }

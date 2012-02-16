@@ -9,20 +9,31 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import com.feildmaster.lib.configuration.EnhancedConfiguration;
+
 public class Commands implements CommandExecutor {
 
+	private gold2economy plugin = null; // Added by turt2live
 	private VaultSupport vault = null; // Added by turt2live
-	private configHandler config = null; // Added by turt2live
 
-	public Commands(VaultSupport v, configHandler c){ // Added by turt2live
-		vault = v;
-		config = c;
+	public Commands(gold2economy plugin, VaultSupport vault){ // Added by turt2live
+		this.plugin = plugin;
+		this.vault = vault;
 	}
 
 	// *** Removed static access calls to gold2economy.config EVERYWHERE here (turt2live)
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
+		// Initilize variables (turt2live)
+		EnhancedConfiguration config = plugin.getConfig();
+		boolean convertIron = config.getBoolean("convert.iron");
+		boolean convertGold = config.getBoolean("convert.gold");
+		boolean convertDiamond = config.getBoolean("convert.diamond");
+		boolean usePermissions = config.getBoolean("permissions.Permissions");
+
+		// Reload configuration to not cause issues (turt2live)
+		config.load();
 
 		// First check to see whether our plugin is 'enabled' and Register has a payment method
 		if(gold2economy.enabled){ // Modified by turt2live (removed && Methods.hasMethod()
@@ -51,11 +62,11 @@ public class Commands implements CommandExecutor {
 				if(args.length == 1 && args[0].equalsIgnoreCase("reload")){
 					if(sender instanceof ConsoleCommandSender){
 						//Functions.giReload(sender, config); // Fixed for argument change (turt2live)
-						config.reload(sender); // removed old call, replaced with newer one (turt2live)
+						plugin.api.reloadConfig(sender); // removed old call, replaced with newer one (turt2live)
 						return true;
 					}else if(Permissions.check(sender, gold2economy.PERMISSION_ADMIN, config)){ // Fixed for argument change (turt2live)
 						//Functions.giReload(sender, config); // Fixed for argument change (turt2live)
-						config.reload(sender); // removed old call, replaced with newer one (turt2live)
+						plugin.api.reloadConfig(sender); // removed old call, replaced with newer one (turt2live)
 						return true;
 					}else{
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
@@ -88,24 +99,24 @@ public class Commands implements CommandExecutor {
 					// Don't continue if server config says we can't convert item
 					// Change this from a switch (itemID) to if conditions because it was causing bugs
 					if(itemID == 265){ // IRON
-						if(!config.convertIron){
+						if(!convertIron){
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow iron to be converted");
 							return true;
 						}
 					}else if(itemID == 266){ // GOLD
-						if(!config.convertGold){
+						if(!convertGold){
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
 							return true;
 						}
 					}else if(itemID == 264){
-						if(!config.convertDiamond){
+						if(!convertDiamond){
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
 							return true;
 						}
 					}
 
 					// Don't continue if player doesn't have required permission (if enabled)
-					if(config.Permissions && !Permissions.check(sender, permNeeded, config)){ // Fixed for argument change (turt2live)
+					if(usePermissions && !Permissions.check(sender, permNeeded, config)){ // Fixed for argument change (turt2live)
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
 						return true;
 					}
@@ -173,24 +184,24 @@ public class Commands implements CommandExecutor {
 					// Don't continue if server config says we can't convert item
 					// Change this from a switch (itemID) to if conditions because it was causing bugs
 					if(itemID == 265){ // IRON
-						if(!config.convertIron){
+						if(!convertIron){
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow iron to be converted");
 							return true;
 						}
 					}else if(itemID == 266){ // GOLD
-						if(!config.convertGold){
+						if(!convertGold){
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
 							return true;
 						}
 					}else if(itemID == 264){
-						if(!config.convertDiamond){
+						if(!convertDiamond){
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
 							return true;
 						}
 					}
 
 					// Check if player has permission first
-					if(config.Permissions && !Permissions.check(sender, permNeeded, config)){ // Fixed for argument change (turt2live)
+					if(usePermissions && !Permissions.check(sender, permNeeded, config)){ // Fixed for argument change (turt2live)
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
 						return true;
 					}
@@ -211,5 +222,4 @@ public class Commands implements CommandExecutor {
 		}
 		return false;
 	}
-
 }

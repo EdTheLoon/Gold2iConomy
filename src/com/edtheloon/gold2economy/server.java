@@ -44,9 +44,12 @@ public class server implements Listener { //Fixed for new event system - Turt2Li
 	@EventHandler (priority = EventPriority.MONITOR)
 	//Fixed for new event system - Turt2Live
 	public void onPluginEnable(PluginEnableEvent event){
+		// Create Variables (turt2live)
+		boolean usePermissions = plugin.getConfig().getBoolean("permissions.Permissions");
+		String preferred = plugin.getConfig().getString("preferred");
 
 		// if using Permissions
-		if(plugin.config.usePermissions){
+		if(usePermissions){
 			if(gold2economy.permissionHandler == null){
 				Plugin PermissionsPlugin = plugin.getServer().getPluginManager().getPlugin("Permissions");
 				gold2economy.permissionsEnabled = true;
@@ -58,14 +61,14 @@ public class server implements Listener { //Fixed for new event system - Turt2Li
 		// If plugin is disabled and enabled plugin is Register
 		if(gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Register")
 		{
-			Methods.setPreferred(plugin.config.preferred); // Fixed for argument change (turt2live)
+			Methods.setPreferred(preferred); // Fixed for argument change (turt2live)
 			gold2economy.enabled = true;
 			gold2economy.log.info("[Gold2Economy] Register was enabled. G2E now functional.");
 		}
 		// Repeat for Vault (turt2live)
 		if(gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Vault")
 		{
-			Methods.setPreferred(plugin.config.preferred); // Fixed for argument change (turt2live)
+			Methods.setPreferred(preferred); // Fixed for argument change (turt2live)
 			gold2economy.enabled = true;
 			gold2economy.log.info("[Gold2Economy] Vault was enabled. G2E now functional.");
 		}

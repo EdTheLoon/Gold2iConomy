@@ -1,24 +1,24 @@
 package com.edtheloon.gold2economy;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
 
+import com.feildmaster.lib.configuration.EnhancedConfiguration;
 import com.nijikokun.register.payment.Method;
 
 public class API {
 
-	private configHandler config; //Added by turt2live
+	private EnhancedConfiguration config; //Added by turt2live
 	private VaultSupport vault; //Added by turt2live
-	private Plugin plugin; //Added by turt2live
+	private gold2economy plugin; //Added by turt2live
 
 	//Added constructor
 	public API(){
-		plugin = Bukkit.getServer().getPluginManager().getPlugin("Gold2Economy-Vault");
+		plugin = (gold2economy) Bukkit.getServer().getPluginManager().getPlugin("Gold2Economy-Vault");
 		vault = new VaultSupport(plugin);
 		vault.init();
-		config = new configHandler(plugin, vault);
-		config.loadConfig();
+		config = plugin.getConfig();
 	}
 
 	//Returns TRUE if the CommandSender can sell diamond
@@ -47,7 +47,7 @@ public class API {
 	}
 
 	// Returns the configHandler being used
-	public configHandler getConfig(){
+	public EnhancedConfiguration getConfig(){
 		return config; //Modified by turt2live
 	}
 
@@ -111,14 +111,16 @@ public class API {
 	//Reloads the configuration (turt2live)
 	public void reloadConfig(){
 		//Removed deprecated Functions.giReload() call (turt2live)
-		config.reload(null); //Turt2Live: Passing null into CommandSender 
-								//doesn't break anything, just means no display 
-								//message is sent
+		config.load();
 	}
 
 	//Reloads the configuration from a command sender (turt2live)
 	public void reloadConfig(CommandSender sender){
 		//Removed deprecated Functions.giReload() call (turt2live)
-		config.reload(null);
+		if(config.load()){
+			sender.sendMessage("[" + plugin.getDescription().getName() + "] " + ChatColor.DARK_GREEN + "Configuration Reloaded");
+		}else{
+			sender.sendMessage("[" + plugin.getDescription().getName() + "] " + ChatColor.DARK_RED + "Configuration failed to reload");
+		}
 	}
 }

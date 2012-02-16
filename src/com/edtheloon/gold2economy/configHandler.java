@@ -2,15 +2,15 @@ package com.edtheloon.gold2economy;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
 
-import com.feildmaster.lib.configuration.EnhancedConfiguration;
 import com.nijikokun.register.payment.Methods;
 
-public class configHandler extends EnhancedConfiguration { //Added by turt2live (extends)
+@Deprecated
+// implemented EVERYWHERE else
+public class configHandler {
 
 	// Configuration file properties
-	private Plugin plugin;
+	private gold2economy plugin;
 	//Removed config values (turt2live)
 
 	// Default conversion rates
@@ -37,8 +37,7 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 
 	// CONSTRUCTOR
 	// Removed config global variables (turt2live)
-	public configHandler(Plugin _plugin, VaultSupport _vault){ // Added Vault class (turt2live)
-		super(_plugin); //Added by turt2live
+	public configHandler(gold2economy _plugin, VaultSupport _vault){ // Added Vault class (turt2live)
 		this.plugin = _plugin;
 		this.vault = _vault; // Added by turt2live
 		//Removed auto-loader (turt2live)
@@ -49,11 +48,11 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 	// Rewritten by turt2live (comments also by turt2live)
 	private void createConfig(){
 		//Load the defaults, just in case
-		loadDefaults(plugin.getResource("resources/config.yml"));
+		plugin.getConfig().loadDefaults(plugin.getResource("resources/config.yml"));
 		//If the file doesn't exist or the defaults are missing/not there, 
 		//save the defaults to the config
 		if(updateConfig()){ //More of a failsafe than a check (see loadConfig())
-			saveDefaults();
+			plugin.getConfig().saveDefaults();
 			//gold2economy.log.severe("[DEBUG] [G2E-VAULT] CONFIG UPDATED"); //Debug line, comment for release
 		}
 	}
@@ -68,22 +67,22 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 
 		// Load which items we can convert
 		// System.out.println(config.getBoolean("convert.iron")); //DEBUG LINE - Turt2Live
-		convertIron = getBoolean("convert.iron");
-		convertGold = getBoolean("convert.gold");
-		convertDiamond = getBoolean("convert.diamond");
+		convertIron = plugin.getConfig().getBoolean("convert.iron");
+		convertGold = plugin.getConfig().getBoolean("convert.gold");
+		convertDiamond = plugin.getConfig().getBoolean("convert.diamond");
 
 		// Load the conversion rates
-		ironRate = getDouble("rates.iron");
-		goldRate = getDouble("rates.gold");
-		diamondRate = getDouble("rates.diamond");
+		ironRate = plugin.getConfig().getDouble("rates.iron");
+		goldRate = plugin.getConfig().getDouble("rates.gold");
+		diamondRate = plugin.getConfig().getDouble("rates.diamond");
 
 		// Load whether we shall use permissions or not, and which permissions to use
-		Permissions = getBoolean("permissions.use");
-		usePermissions = getBoolean("permissions.Permissions");
-		useBukkitPerms = getBoolean("permissions.PermissionsBukkit");
+		Permissions = plugin.getConfig().getBoolean("permissions.use");
+		usePermissions = plugin.getConfig().getBoolean("permissions.Permissions");
+		useBukkitPerms = plugin.getConfig().getBoolean("permissions.PermissionsBukkit");
 
 		// Load which economy system to use
-		preferred = getString("preferred");
+		preferred = plugin.getConfig().getString("preferred");
 		// Set preferred if Register was found (if Register is found then enabled will be true.
 		if(gold2economy.enabled){
 			if(vault.hasRegister()){
@@ -104,6 +103,6 @@ public class configHandler extends EnhancedConfiguration { //Added by turt2live 
 	// RETURNS: True if a config change is needed, false otherwise
 	// Rewritten to determine if the config needs to be created
 	private boolean updateConfig(){ //Changed to private & renamed: checkConfig -> updateConfig(turt2live)
-		return (!fileExists() || !checkDefaults()) ? true : false; //Changed by turt2live
+		return (!plugin.getConfig().fileExists() || !plugin.getConfig().checkDefaults()) ? true : false; //Changed by turt2live
 	}
 }
