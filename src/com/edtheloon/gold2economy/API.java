@@ -3,6 +3,7 @@ package com.edtheloon.gold2economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import com.feildmaster.lib.configuration.EnhancedConfiguration;
 import com.nijikokun.register.payment.Method;
@@ -22,18 +23,51 @@ public class API {
 	}
 
 	//Returns TRUE if the CommandSender can sell diamond
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellDiamond(Player)
 	public boolean canSellDiamond(CommandSender player){
-		return player.hasPermission(getPermissionDiamond());
+		return vault.hasPermission(player, getPermissionDiamond());
+	}
+
+	//Returns TRUE if the CommandSender can sell diamond
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellDiamond(Player)
+	public boolean canSellDiamond(Player player){
+		return vault.hasPermission(player, getPermissionDiamond());
 	}
 
 	//Returns TRUE if the CommandSender can sell gold
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellGold(Player)
 	public boolean canSellGold(CommandSender player){
-		return player.hasPermission(getPermissionGold());
+		return vault.hasPermission(player, getPermissionGold());
+	}
+
+	//Returns TRUE if the CommandSender can sell gold
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellGold(Player)
+	public boolean canSellGold(Player player){
+		return vault.hasPermission(player, getPermissionGold());
 	}
 
 	//Returns TRUE if the CommandSender can sell iron
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellIron(Player)
 	public boolean canSellIron(CommandSender player){
-		return player.hasPermission(getPermissionIron());
+		return vault.hasPermission(player, getPermissionIron());
+	}
+
+	//Returns TRUE if the CommandSender can sell iron
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellIron(Player)
+	public boolean canSellIron(Player player){
+		return vault.hasPermission(player, getPermissionIron());
 	}
 
 	//Converts an item for a user (turt2live)

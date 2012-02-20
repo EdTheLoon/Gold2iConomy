@@ -1,5 +1,6 @@
 package com.edtheloon.gold2economy;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -43,6 +44,19 @@ public class Permissions {
 		}else{
 			return false;
 		}
+
+		// TODO: Check PEX specifically (turt2live)
+
+		// Now check Vault (turt2live)
+		if(gold2economy.vault.isActive()){
+			Player player = Bukkit.getPlayer(sender.getName());
+			if(player != null){
+				return gold2economy.vault.hasPermission(player, perm);
+			}else{
+				return gold2economy.vault.hasPermission(sender, perm);
+			}
+		}
+
 		return false; // Ultimately return false if all checks fail
 	}
 
