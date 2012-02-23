@@ -9,7 +9,6 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.nijikokun.bukkit.Permissions.Permissions;
-import com.nijikokun.register.payment.Methods;
 
 // import cosine.boseconomy.BOSEconomy;
 
@@ -46,7 +45,7 @@ public class server implements Listener { //Fixed for new event system - Turt2Li
 	public void onPluginEnable(PluginEnableEvent event){
 		// Create Variables (turt2live)
 		boolean usePermissions = plugin.getConfig().getBoolean("permissions.Permissions");
-		String preferred = plugin.getConfig().getString("preferred");
+		//		String preferred = plugin.getConfig().getString("preferred");
 
 		// if using Permissions
 		if(usePermissions){
@@ -61,14 +60,13 @@ public class server implements Listener { //Fixed for new event system - Turt2Li
 		// If plugin is disabled and enabled plugin is Register
 		if(gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Register")
 		{
-			Methods.setPreferred(preferred); // Fixed for argument change (turt2live)
-			gold2economy.enabled = true;
-			gold2economy.log.info("[Gold2Economy] Register was enabled. G2E now functional.");
+			//			Methods.setPreferred(preferred); // Fixed for argument change (turt2live)
+			//			gold2economy.enabled = true;
+			//			gold2economy.log.info("[Gold2Economy] Register was enabled. G2E now functional.");
 		}
 		// Repeat for Vault (turt2live)
 		if(gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Vault")
 		{
-			Methods.setPreferred(preferred); // Fixed for argument change (turt2live)
 			gold2economy.enabled = true;
 			gold2economy.log.info("[Gold2Economy] Vault was enabled. G2E now functional.");
 		}

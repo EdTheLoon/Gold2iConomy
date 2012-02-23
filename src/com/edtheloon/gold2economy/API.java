@@ -6,7 +6,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.feildmaster.lib.configuration.EnhancedConfiguration;
-import com.nijikokun.register.payment.Method;
 
 public class API {
 
@@ -85,10 +84,10 @@ public class API {
 		return config; //Modified by turt2live
 	}
 
-	// Returns the method used
-	public Method getMethod(){
-		return gold2economy.usedMethod;
-	}
+	//	// Returns the method used
+	//	public Method getMethod(){
+	//		return gold2economy.usedMethod;
+	//	}
 
 	// Return the permission string for admin
 	public String getPermissionAdmin(){

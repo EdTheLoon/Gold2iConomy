@@ -4,8 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import com.feildmaster.lib.configuration.EnhancedConfiguration;
-import com.nijikokun.register.payment.Method;
-import com.nijikokun.register.payment.Methods;
 
 public class Functions {
 
@@ -20,29 +18,29 @@ public class Functions {
 		double diamondRate = config.getDouble("rates.diamond");
 
 		if(vault.hasRegister()){ // Added by turt2live (rate table for Register is EdTheLoon)
-			Method method = Methods.getMethod();
-
-			// Display the rates here
-			if(!convertDiamond && !convertGold && !convertIron){
-				sender.sendMessage(ChatColor.RED + "This server doesn't allow anything to be converted");
-			}else{
-				sender.sendMessage("--- Conversion Rates ---");
-
-				if(convertIron){
-					sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
-							+ ChatColor.GREEN + method.format(ironRate));
-				}
-
-				if(convertGold){
-					sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
-							+ ChatColor.GREEN + method.format(goldRate));
-				}
-
-				if(convertDiamond){
-					sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
-							+ ChatColor.GREEN + method.format(diamondRate));
-				}
-			}
+		//			Method method = Methods.getMethod();
+		//
+		//			// Display the rates here
+		//			if(!convertDiamond && !convertGold && !convertIron){
+		//				sender.sendMessage(ChatColor.RED + "This server doesn't allow anything to be converted");
+		//			}else{
+		//				sender.sendMessage("--- Conversion Rates ---");
+		//
+		//				if(convertIron){
+		//					sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
+		//							+ ChatColor.GREEN + method.format(ironRate));
+		//				}
+		//
+		//				if(convertGold){
+		//					sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
+		//							+ ChatColor.GREEN + method.format(goldRate));
+		//				}
+		//
+		//				if(convertDiamond){
+		//					sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
+		//							+ ChatColor.GREEN + method.format(diamondRate));
+		//				}
+		//			}
 		}else if(!convertDiamond && !convertGold && !convertIron){
 			sender.sendMessage(ChatColor.RED + "This server doesn't allow anything to be converted");
 		}else{

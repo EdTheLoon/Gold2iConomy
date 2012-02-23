@@ -5,6 +5,7 @@
 #    "use" - true/false, use permissions
 #    "Permissions" - true/false, use Permissions Nijikokun
 #    "PermissionBukkit" - true/false, use default Bukkit permission system
+# "preferred" - Does nothing as Register was removed
 convert:
     iron: false
     gold: true

@@ -3,8 +3,6 @@ package com.edtheloon.gold2economy;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import com.nijikokun.register.payment.Methods;
-
 @Deprecated
 // implemented EVERYWHERE else
 public class configHandler {
@@ -33,6 +31,7 @@ public class configHandler {
 	public boolean useBukkitPerms = true;
 	public boolean usePermissions = false;
 
+	@SuppressWarnings ("unused")
 	private VaultSupport vault; // Added by turt2live
 
 	// CONSTRUCTOR
@@ -81,14 +80,14 @@ public class configHandler {
 		usePermissions = plugin.getConfig().getBoolean("permissions.Permissions");
 		useBukkitPerms = plugin.getConfig().getBoolean("permissions.PermissionsBukkit");
 
-		// Load which economy system to use
-		preferred = plugin.getConfig().getString("preferred");
-		// Set preferred if Register was found (if Register is found then enabled will be true.
-		if(gold2economy.enabled){
-			if(vault.hasRegister()){
-				Methods.setPreferred(preferred);
-			}
-		}
+		//		// Load which economy system to use
+		//		preferred = plugin.getConfig().getString("preferred");
+		//		// Set preferred if Register was found (if Register is found then enabled will be true.
+		//		if(gold2economy.enabled){
+		//			if(vault.hasRegister()){
+		//				Methods.setPreferred(preferred);
+		//			}
+		//		}
 	}
 
 	// Added reload (turt2live) - Seemed to work, not ideal though

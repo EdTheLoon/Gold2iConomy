@@ -13,8 +13,6 @@ import org.bukkit.plugin.PluginManager;
 
 import com.feildmaster.lib.configuration.PluginWrapper;
 import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.register.payment.Method;
-import com.nijikokun.register.payment.Methods;
 
 public class gold2economy extends PluginWrapper { //To implement feildmaster's config library (turt2live)
 
@@ -29,7 +27,7 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 	public static boolean enabled = false;
 	public static PluginManager pm = null;
 	public static boolean permissionsEnabled = false;
-	public static Method usedMethod = null;
+	//	public static Method usedMethod = null;
 	public static VaultSupport vault = null; // turt2live: Start of support
 	public API api = null; // Added by turt2live
 
@@ -88,14 +86,14 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 				log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " enabled. Using " + vault.method() + " [VAULT]");
 			}
 		}else{
-			vault.setUsed(false); // Added by turt2live
-			if(Methods.hasMethod()){
-				usedMethod = Methods.getMethod();
-			}
-			vault.setRegister(true);
-			// Finally, log to console that the plugin has finished initialising and is enabled.
-			enabled = true;
-			log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
+			//			vault.setUsed(false); // Added by turt2live
+			//			if(Methods.hasMethod()){
+			//				usedMethod = Methods.getMethod();
+			//			}
+			//			vault.setRegister(true);
+			//			// Finally, log to console that the plugin has finished initialising and is enabled.
+			//			enabled = true;
+			//			log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
 		}
 		vault.setBoth(vault_plugin, plugin); //For the API
 		// Moved to below vault check (turt2live)
