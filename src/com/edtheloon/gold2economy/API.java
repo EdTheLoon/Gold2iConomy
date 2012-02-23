@@ -127,14 +127,14 @@ public class API {
 	}
 
 	//Returns TRUE if Register is being used as the economy hook
-	public boolean isRegisterUsed(){
-		return vault.hasRegister();
-	}
-
-	//Returns TRUE if both Vault and Register COULD be used
-	public boolean isVaultAndRegisterUsed(){
-		return vault.hasBoth();
-	}
+	//	public boolean isRegisterUsed(){
+	//		return vault.hasRegister();
+	//	}
+	//
+	//	//Returns TRUE if both Vault and Register COULD be used
+	//	public boolean isVaultAndRegisterUsed(){
+	//		return vault.hasBoth();
+	//	}
 
 	//Returns TRUE if Vault is being used as the economy hook
 	public boolean isVaultUsed(){

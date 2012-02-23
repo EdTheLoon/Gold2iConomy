@@ -13,8 +13,8 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 public class VaultSupport {
 
 	private boolean vault = false;
-	private boolean register = false;
-	private boolean both = false; //Used by the API only (for now?)
+	//private boolean register = false;
+	//private boolean both = false; //Used by the API only (for now?)
 	private Plugin plugin = null;
 	private String method = "Unknown";
 
@@ -46,9 +46,9 @@ public class VaultSupport {
 		return plugin;
 	}
 
-	public boolean hasBoth(){
-		return both;
-	}
+	//	public boolean hasBoth(){
+	//		return both;
+	//	}
 
 	public boolean hasPermission(CommandSender player, String permission){
 		if(Bukkit.getPlayer(player.getName()) != null){
@@ -61,9 +61,9 @@ public class VaultSupport {
 		return permissions.has(player.getLocation().getWorld(), player.getName(), permission);
 	}
 
-	public boolean hasRegister(){
-		return register;
-	}
+	//	public boolean hasRegister(){
+	//		return register;
+	//	}
 
 	public boolean init(){
 		RegisteredServiceProvider<Economy> economyProvider = plugin.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
@@ -94,17 +94,17 @@ public class VaultSupport {
 		return method;
 	}
 
-	public void setBoth(boolean b){
-		both = b;
-	}
-
-	public void setBoth(Plugin vault, Plugin register){
-		both = ((vault != null && register != null) ? true : false);
-	}
-
-	public void setRegister(boolean b){
-		register = b;
-	}
+	//	public void setBoth(boolean b){
+	//		both = b;
+	//	}
+	//
+	//	public void setBoth(Plugin vault, Plugin register){
+	//		both = ((vault != null && register != null) ? true : false);
+	//	}
+	//
+	//	public void setRegister(boolean b){
+	//		register = b;
+	//	}
 
 	public void setUsed(boolean b){
 		vault = b;

@@ -77,7 +77,7 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 			boolean success = vault.init();
 			// turt2live: Add the required stuff so the plugin doesn't die
 			enabled = true;
-			vault.setRegister(false);
+			//vault.setRegister(false);
 			vault.setUsed(true);
 			if(!success){
 				enabled = false;
@@ -95,7 +95,7 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 			//			enabled = true;
 			//			log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
 		}
-		vault.setBoth(vault_plugin, plugin); //For the API
+		//vault.setBoth(vault_plugin, plugin); //For the API
 		// Moved to below vault check (turt2live)
 		// Start configuration (turt2live)
 		//Load the defaults, just in case (turt2live)

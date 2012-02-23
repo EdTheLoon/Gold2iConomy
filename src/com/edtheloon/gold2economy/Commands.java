@@ -49,7 +49,15 @@ public class Commands implements CommandExecutor {
 
 				// Command = /gi rates - Tells player the conversion rate
 				if(args.length == 1 && args[0].equalsIgnoreCase("rates")){
-					if(vault.hasRegister() || vault.isActive()){ // Modified by turt2live (Removed Methods.hasMethod())
+					//					if(vault.hasRegister() || vault.isActive()){ // Modified by turt2live (Removed Methods.hasMethod())
+					//						Functions.displayRates(sender, vault, config); // Fixed for argument change (turt2live)
+					//						return true;
+					//					}else{
+					//						sender.sendMessage(ChatColor.RED + "Gold2Economy was unable to find a supported economy plugin");
+					//						return true;
+					//					}
+					// ADDED FOR R5 SUPPORT
+					if(vault.isActive()){
 						Functions.displayRates(sender, vault, config); // Fixed for argument change (turt2live)
 						return true;
 					}else{
