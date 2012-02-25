@@ -10,42 +10,40 @@ public class Permissions {
 
 	public static boolean check(CommandSender sender, String perm, EnhancedConfiguration config){ // Added argument: configHandler (turt2live)
 		// Create Variables (turt2live)
-		boolean usePermissions = config.getBoolean("permissions.Permissions");
-		boolean useBukkitPerms = config.getBoolean("permissions.PermissionsBukkit");
+		//		boolean usePermissions = config.getBoolean("permissions.Permissions");
+		//		boolean useBukkitPerms = config.getBoolean("permissions.PermissionsBukkit");
 
 		// If using permissions is enabled
-		if(usePermissions){
-
-			// If using PermissionsBukkit (aka SuperPerms)
-			if(useBukkitPerms){
-				if(sender.hasPermission(perm)){
-					return true;
-				}else if(sender.isOp())
-				{
-					return true; // If player doesn't have permission node but is op return true
-				}
-				return false; // just in case no permissions plugin is enabled.
-			}
-
-			// If using Permissions by Nijikokun
-			else if(usePermissions){
-				if(gold2economy.permissionHandler.has((Player) sender, perm) && gold2economy.permissionsEnabled){
-					return true;
-				}else if(sender.isOp())
-				{
-					return true; // If player doesn't have permission node but is op return true
-				}
-				return false; // return false if permissions plugin isn't enabled.
-			}
-
-		}else // If user is OP return true
-		if(sender.isOp()){
-			return true;
-		}else{
-			return false;
-		}
-
-		// TODO: Check PEX specifically (turt2live)
+		//		if(usePermissions){
+		//
+		//			// If using PermissionsBukkit (aka SuperPerms)
+		//			if(useBukkitPerms){
+		//				if(sender.hasPermission(perm)){
+		//					return true;
+		//				}else if(sender.isOp())
+		//				{
+		//					return true; // If player doesn't have permission node but is op return true
+		//				}
+		//				return false; // just in case no permissions plugin is enabled.
+		//			}
+		//
+		//			// If using Permissions by Nijikokun
+		//			else if(usePermissions){
+		//				if(gold2economy.permissionHandler.has((Player) sender, perm) && gold2economy.permissionsEnabled){
+		//					return true;
+		//				}else if(sender.isOp())
+		//				{
+		//					return true; // If player doesn't have permission node but is op return true
+		//				}
+		//				return false; // return false if permissions plugin isn't enabled.
+		//			}
+		//
+		//		}else // If user is OP return true
+		//		if(sender.isOp()){
+		//			return true;
+		//		}else{
+		//			return false;
+		//		}
 
 		// Now check Vault (turt2live)
 		if(gold2economy.vault.isActive()){

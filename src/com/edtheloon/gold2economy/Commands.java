@@ -30,7 +30,6 @@ public class Commands implements CommandExecutor {
 		boolean convertIron = config.getBoolean("convert.iron");
 		boolean convertGold = config.getBoolean("convert.gold");
 		boolean convertDiamond = config.getBoolean("convert.diamond");
-		boolean usePermissions = config.getBoolean("permissions.Permissions");
 
 		// Reload configuration to not cause issues (turt2live)
 		config.load();
@@ -99,9 +98,12 @@ public class Commands implements CommandExecutor {
 					}else if(args[0].equalsIgnoreCase("diamond")){
 						itemID = 264;
 						permNeeded = gold2economy.PERMISSION_DIAMOND;
-					}else{ // User did not type iron, gold or diamond
-						sender.sendMessage(ChatColor.RED + "You can only convert iron, gold or diamond!");
-						return true;
+					}else{
+						try{
+							itemID = Integer.parseInt(args[0]);
+						}catch(Exception e){
+							sender.sendMessage(ChatColor.RED + "That is not a valid item ID!");
+						}
 					}
 
 					// Don't continue if server config says we can't convert item
@@ -121,10 +123,18 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
 							return true;
 						}
+					}else if(!Converter.isAllowed(itemID)){
+						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted! ");
+						return true;
+					}else if(Converter.isAllowed(itemID)){
+						permNeeded = "Gold2Economy." + itemID;
+					}else{ // Failsafe
+						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted!");
+						return true;
 					}
 
 					// Don't continue if player doesn't have required permission (if enabled)
-					if(usePermissions && !Permissions.check(sender, permNeeded, config)){ // Fixed for argument change (turt2live)
+					if(vault.hasPermission(sender, permNeeded)){ // Fixed for argument change (turt2live)
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
 						return true;
 					}
@@ -184,9 +194,12 @@ public class Commands implements CommandExecutor {
 					}else if(args[0].equalsIgnoreCase("diamond")){
 						itemID = 264;
 						permNeeded = gold2economy.PERMISSION_DIAMOND;
-					}else{ // User did not type iron, gold or diamond
-						sender.sendMessage(ChatColor.RED + "You can only convert iron, gold or diamond!");
-						return true;
+					}else{
+						try{
+							itemID = Integer.parseInt(args[0]);
+						}catch(Exception e){
+							sender.sendMessage(ChatColor.RED + "That is not a valid item ID!");
+						}
 					}
 
 					// Don't continue if server config says we can't convert item
@@ -206,10 +219,18 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
 							return true;
 						}
+					}else if(!Converter.isAllowed(itemID)){
+						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted!");
+						return true;
+					}else if(Converter.isAllowed(itemID)){
+						permNeeded = "Gold2Economy." + itemID;
+					}else{ // Failsafe
+						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted!");
+						return true;
 					}
 
 					// Check if player has permission first
-					if(usePermissions && !Permissions.check(sender, permNeeded, config)){ // Fixed for argument change (turt2live)
+					if(vault.hasPermission(sender, permNeeded)){ // Fixed for argument change (turt2live)
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
 						return true;
 					}
@@ -225,7 +246,7 @@ public class Commands implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "Gold2Economy is disabled because no currency sytem was found");
 			return true;
 		}else{
-			sender.sendMessage(ChatColor.RED + "Gold2Economy is disabled until Register is enabled.");
+			sender.sendMessage(ChatColor.RED + "Gold2Economy is disabled until Vault is enabled.");
 			return true;
 		}
 		return false;

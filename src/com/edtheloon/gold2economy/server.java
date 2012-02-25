@@ -6,9 +6,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.plugin.Plugin;
-
-import com.nijikokun.bukkit.Permissions.Permissions;
 
 // import cosine.boseconomy.BOSEconomy;
 
@@ -29,14 +26,14 @@ public class server implements Listener { //Fixed for new event system - Turt2Li
 	public void onPluginDisable(PluginDisableEvent event){
 		// There's nothing here!
 		// If register was disabled then 'disable' our plugin.
-		if(event.getPlugin().getDescription().getName() == "Register"){
-			gold2economy.enabled = false;
-			gold2economy.log.info("[Gold2Economy] Disabled. G2E will re-enable once Register/Vault is enabled."); // Added a /Vault to message (turt2live)
-		}
+		//		if(event.getPlugin().getDescription().getName() == "Register"){
+		//			gold2economy.enabled = false;
+		//			gold2economy.log.info("[Gold2Economy] Disabled. G2E will re-enable once Vault is enabled."); // Added a /Vault to message (turt2live)
+		//		}
 		// Repeat for Vault (turt2live)
 		if(event.getPlugin().getDescription().getName() == "Vault"){
 			gold2economy.enabled = false;
-			gold2economy.log.info("[Gold2Economy] Disabled. G2E will re-enable once Register/Vault is enabled.");
+			gold2economy.log.info("[Gold2Economy] Disabled. G2E will re-enable once Vault is enabled.");
 		}
 	}
 
@@ -44,29 +41,28 @@ public class server implements Listener { //Fixed for new event system - Turt2Li
 	//Fixed for new event system - Turt2Live
 	public void onPluginEnable(PluginEnableEvent event){
 		// Create Variables (turt2live)
-		boolean usePermissions = plugin.getConfig().getBoolean("permissions.Permissions");
-		//		String preferred = plugin.getConfig().getString("preferred");
-
-		// if using Permissions
-		if(usePermissions){
-			if(gold2economy.permissionHandler == null){
-				Plugin PermissionsPlugin = plugin.getServer().getPluginManager().getPlugin("Permissions");
-				gold2economy.permissionsEnabled = true;
-				gold2economy.permissionHandler = ((Permissions) PermissionsPlugin).getHandler();
-				gold2economy.log.info("[Gold2Economy] Hooked into " + PermissionsPlugin.getDescription().getName());
-			}
-		}
+		//		boolean usePermissions = plugin.getConfig().getBoolean("permissions.Permissions");
+		//		//		String preferred = plugin.getConfig().getString("preferred");
+		//
+		//		// if using Permissions
+		//		if(usePermissions){
+		//			if(gold2economy.permissionHandler == null){
+		//				Plugin PermissionsPlugin = plugin.getServer().getPluginManager().getPlugin("Permissions");
+		//				gold2economy.permissionsEnabled = true;
+		//				gold2economy.permissionHandler = ((Permissions) PermissionsPlugin).getHandler();
+		//				gold2economy.log.info("[Gold2Economy] Hooked into " + PermissionsPlugin.getDescription().getName());
+		//			}
+		//		}
 
 		// If plugin is disabled and enabled plugin is Register
-		if(gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Register")
-		{
-			//			Methods.setPreferred(preferred); // Fixed for argument change (turt2live)
-			//			gold2economy.enabled = true;
-			//			gold2economy.log.info("[Gold2Economy] Register was enabled. G2E now functional.");
-		}
+		//		if(gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Register")
+		//		{
+		//			//			Methods.setPreferred(preferred); // Fixed for argument change (turt2live)
+		//			//			gold2economy.enabled = true;
+		//			//			gold2economy.log.info("[Gold2Economy] Register was enabled. G2E now functional.");
+		//		}
 		// Repeat for Vault (turt2live)
-		if(gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Vault")
-		{
+		if(gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Vault"){
 			gold2economy.enabled = true;
 			gold2economy.log.info("[Gold2Economy] Vault was enabled. G2E now functional.");
 		}

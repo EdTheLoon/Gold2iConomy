@@ -60,17 +60,7 @@ public class Functions {
 				sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
 						+ ChatColor.GREEN + vault.format(diamondRate));
 			}
+			// TODO: Add other items
 		}
-	}
-
-	// Reload configuration
-	@Deprecated
-	// See configHandler.reload(CommandSender) (turt2live)
-	public static boolean giReload(CommandSender sender, configHandler config){ // Added argument: configHandler (turt2live)
-		config.loadConfig();
-		if(sender != null){
-			sender.sendMessage(ChatColor.GREEN + "[Gold2Economy]" + ChatColor.WHITE + " Configuration reloaded");
-		}
-		return true;
 	}
 }

@@ -5,14 +5,15 @@
 
 package com.edtheloon.gold2economy;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
+import com.feildmaster.lib.configuration.EnhancedConfiguration;
 import com.feildmaster.lib.configuration.PluginWrapper;
-import com.nijiko.permissions.PermissionHandler;
 
 public class gold2economy extends PluginWrapper { //To implement feildmaster's config library (turt2live)
 
@@ -23,7 +24,6 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 	public final static String PERMISSION_ADMIN = "Gold2Economy.admin";
 
 	// Config Handler, External APIs and class variables
-	public static PermissionHandler permissionHandler = null;
 	public static boolean enabled = false;
 	public static PluginManager pm = null;
 	public static boolean permissionsEnabled = false;
@@ -33,6 +33,17 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 
 	// Minecraft Log
 	public static Logger log = Logger.getLogger("Minecraft");
+
+	// Added by turt2live for gold nuggets and such
+	public EnhancedConfiguration getConversionChart(){
+		EnhancedConfiguration items = new EnhancedConfiguration(new File(getDataFolder(), "items.yml"), this);
+		items.loadDefaults(getResource("resources/items.yml"));
+		if(items.needsUpdate()){
+			items.saveDefaults();
+		}
+		items.load();
+		return items;
+	}
 
 	@Override
 	public void onDisable(){
