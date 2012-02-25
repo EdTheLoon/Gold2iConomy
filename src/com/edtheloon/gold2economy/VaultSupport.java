@@ -6,7 +6,6 @@ import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 // Class written by Turt2Live: mc.turt2live.com/plugins
@@ -15,13 +14,13 @@ public class VaultSupport {
 	private boolean vault = false;
 	//private boolean register = false;
 	//private boolean both = false; //Used by the API only (for now?)
-	private Plugin plugin = null;
+	private gold2economy plugin = null;
 	private String method = "Unknown";
 
 	private Economy economy = null;
 	private Permission permissions = null;
 
-	public VaultSupport(Plugin p){
+	public VaultSupport(gold2economy p){
 		plugin = p;
 	}
 
@@ -42,7 +41,7 @@ public class VaultSupport {
 		return permissions.getName();
 	}
 
-	public Plugin getPlugin(){
+	public gold2economy getPlugin(){
 		return plugin;
 	}
 

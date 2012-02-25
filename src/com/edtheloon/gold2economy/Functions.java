@@ -1,6 +1,9 @@
 package com.edtheloon.gold2economy;
 
+import java.util.Set;
+
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
 import com.feildmaster.lib.configuration.EnhancedConfiguration;
@@ -60,7 +63,24 @@ public class Functions {
 				sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
 						+ ChatColor.GREEN + vault.format(diamondRate));
 			}
-			// TODO: Add other items
+			// Display other items (turt2live)
+			EnhancedConfiguration items = vault.getPlugin().getConversionChart();
+			Set<String> keys = items.getConfigurationSection("").getKeys(false);
+			int i = 0;
+			for(String itemID : keys){
+				Material item = Material.getMaterial(Integer.valueOf(itemID.replace("'", "")));
+				String itemName = item.name().substring(0, 1) + item.name().toLowerCase().substring(1);
+				double rate = Converter.getRate(item.getId());
+				sender.sendMessage("1 " + ChatColor.AQUA + itemName + ChatColor.WHITE + " = "
+						+ ChatColor.GREEN + vault.format(rate));
+				i++;
+				if(i == 10){
+					break;
+				}
+			}
+			if(keys.size() > 10){
+				sender.sendMessage(ChatColor.RED + "There are more items that can be converted! Contact your admin for help.");
+			}
 		}
 	}
 }

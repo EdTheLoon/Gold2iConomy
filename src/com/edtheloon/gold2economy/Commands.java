@@ -21,8 +21,6 @@ public class Commands implements CommandExecutor {
 		this.vault = vault;
 	}
 
-	// *** Removed static access calls to gold2economy.config EVERYWHERE here (turt2live)
-
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
 		// Initilize variables (turt2live)
@@ -55,7 +53,6 @@ public class Commands implements CommandExecutor {
 					//						sender.sendMessage(ChatColor.RED + "Gold2Economy was unable to find a supported economy plugin");
 					//						return true;
 					//					}
-					// ADDED FOR R5 SUPPORT
 					if(vault.isActive()){
 						Functions.displayRates(sender, vault, config); // Fixed for argument change (turt2live)
 						return true;
@@ -68,11 +65,9 @@ public class Commands implements CommandExecutor {
 				// Command = /gi reload - Reload configuration
 				if(args.length == 1 && args[0].equalsIgnoreCase("reload")){
 					if(sender instanceof ConsoleCommandSender){
-						//Functions.giReload(sender, config); // Fixed for argument change (turt2live)
 						plugin.api.reloadConfig(sender); // removed old call, replaced with newer one (turt2live)
 						return true;
-					}else if(Permissions.check(sender, gold2economy.PERMISSION_ADMIN, config)){ // Fixed for argument change (turt2live)
-						//Functions.giReload(sender, config); // Fixed for argument change (turt2live)
+					}else if(vault.hasPermission(sender, gold2economy.PERMISSION_ADMIN)){ // Fixed for argument change (turt2live)
 						plugin.api.reloadConfig(sender); // removed old call, replaced with newer one (turt2live)
 						return true;
 					}else{
@@ -118,7 +113,7 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
 							return true;
 						}
-					}else if(itemID == 264){
+					}else if(itemID == 264){ // DIAMOND
 						if(!convertDiamond){
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
 							return true;
@@ -133,7 +128,7 @@ public class Commands implements CommandExecutor {
 						return true;
 					}
 
-					// Don't continue if player doesn't have required permission (if enabled)
+					// Don't continue if player doesn't have required permission
 					if(vault.hasPermission(sender, permNeeded)){ // Fixed for argument change (turt2live)
 						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
 						return true;
@@ -163,9 +158,8 @@ public class Commands implements CommandExecutor {
 					}
 				}
 
-				// Command = /gi <item> <amount> - Convert <amount> of <item> - <item> is either iron, gold or diamond
+				// Command = /gi <item> <amount> - Convert <amount> of <item> - <item> is either iron, gold, diamond, or custom
 				// If <amount> is left empty it will convert 1 of the item
-				// Regular expression to check if args[1] is an integer
 				if(args.length >= 1 && sender instanceof Player){
 					int amount = 0;
 					int itemID = 0;
@@ -214,7 +208,7 @@ public class Commands implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
 							return true;
 						}
-					}else if(itemID == 264){
+					}else if(itemID == 264){ // DIAMOND
 						if(!convertDiamond){
 							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
 							return true;

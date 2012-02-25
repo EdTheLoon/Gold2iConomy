@@ -21,6 +21,11 @@ public class API {
 		config = plugin.getConfig();
 	}
 
+	// Returns whether or not an item can be sold
+	public boolean canBeConverted(int itemID){
+		return Converter.isAllowed(itemID);
+	}
+
 	//Returns TRUE if the CommandSender can sell diamond
 	// Updated for Vault Permissions (turt2live)
 	@Deprecated
@@ -84,15 +89,15 @@ public class API {
 		return config; //Modified by turt2live
 	}
 
-	//	// Returns the method used
-	//	public Method getMethod(){
-	//		return gold2economy.usedMethod;
-	//	}
-
 	// Return the permission string for admin
 	public String getPermissionAdmin(){
 		return gold2economy.PERMISSION_ADMIN;
 	}
+
+	//	// Returns the method used
+	//	public Method getMethod(){
+	//		return gold2economy.usedMethod;
+	//	}
 
 	// Return the permission string for diamond
 	public String getPermissionDiamond(){
@@ -109,9 +114,12 @@ public class API {
 		return gold2economy.PERMISSION_IRON;
 	}
 
-	//METHODS ADDED BY TURT2LIVE
+	// Returns the rate at which an item sells (turt2live)
+	public double getRate(int itemID){
+		return Converter.getRate(itemID);
+	}
 
-	//get the VaultSupport class directly
+	//get the VaultSupport class directly (turt2live)
 	public VaultSupport getVaultSupport(){
 		return vault;
 	}
@@ -136,7 +144,7 @@ public class API {
 	//		return vault.hasBoth();
 	//	}
 
-	//Returns TRUE if Vault is being used as the economy hook
+	//Returns TRUE if Vault is being used as the economy hook (turt2live)
 	public boolean isVaultUsed(){
 		return vault.isActive();
 	}

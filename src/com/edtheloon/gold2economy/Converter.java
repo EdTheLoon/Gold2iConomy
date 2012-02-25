@@ -13,9 +13,8 @@ import com.feildmaster.lib.configuration.EnhancedConfiguration;
 
 public class Converter {
 
-	// Convert Gold into money
-	public static void convertItem(CommandSender sender, int itemID, int amount, VaultSupport vault, EnhancedConfiguration config) // Added argument: configHandler (turt2live)
-	{
+	// Convert items into money
+	public static void convertItem(CommandSender sender, int itemID, int amount, VaultSupport vault, EnhancedConfiguration config){ // Added argument: configHandler (turt2live)
 		// Setup variables (turt2live)
 		double ironRate = config.getDouble("rates.iron");
 		double goldRate = config.getDouble("rates.gold");
@@ -38,10 +37,10 @@ public class Converter {
 			conversion = getRate(itemID) * amount;
 		}
 
-		// If user has enough ingots then convert gold, otherwise inform user that they do not have enough gold ingots
+		// Check to see if they have enough of <item>
 		if(pi.contains(itemID, amount)){
 
-			// Remove gold ingots
+			// Remove item
 			HashMap<Integer, ItemStack> difference = pi.removeItem(new ItemStack(itemID, amount));
 			difference.clear();
 			// Start turt2live edit
@@ -49,7 +48,7 @@ public class Converter {
 			String formattedBalance = "";
 			String formattedConversion = "";
 			if(vault != null){ // Cause I can't think of any other way... (turt2live)
-				if(vault.isActive()){ // Do we have Vault? or Register? (turt2live)
+				if(vault.isActive()){ // Do we have Vault? (turt2live)
 					VaultSupport v = vault;
 					v.deposit(player.getName(), conversion);
 					balance = v.balance(player.getName());

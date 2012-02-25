@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 
 import com.feildmaster.lib.configuration.EnhancedConfiguration;
 
+// Use VaultSupport class
+@Deprecated
 public class Permissions {
 
 	public static boolean check(CommandSender sender, String perm, EnhancedConfiguration config){ // Added argument: configHandler (turt2live)
