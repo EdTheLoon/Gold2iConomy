@@ -13,7 +13,9 @@ public class API {
 	private VaultSupport vault; //Added by turt2live
 	private gold2economy plugin; //Added by turt2live
 
-	//Added constructor
+	/**
+	 * Creates a new instance of the API
+	 */
 	public API(){
 		plugin = (gold2economy) Bukkit.getServer().getPluginManager().getPlugin("Gold2Economy-Vault");
 		vault = new VaultSupport(plugin);
@@ -21,75 +23,110 @@ public class API {
 		config = plugin.getConfig();
 	}
 
-	// Returns whether or not an item can be sold
+	/**
+	 * Determines if an item can be sold
+	 * 
+	 * @param itemID the item ID to test
+	 * @return true if the item can be sold
+	 */
 	public boolean canBeConverted(int itemID){
 		return Converter.isAllowed(itemID);
 	}
 
-	//Returns TRUE if the CommandSender can sell diamond
-	// Updated for Vault Permissions (turt2live)
-	@Deprecated
-	// Use canSellDiamond(Player)
+	/**
+	 * Determines if diamond can be sold
+	 * 
+	 * @param player the CommandSender selling the diamond
+	 * @return true if the CommandSender can sell diamond
+	 */
 	public boolean canSellDiamond(CommandSender player){
 		return vault.hasPermission(player, getPermissionDiamond());
 	}
 
-	//Returns TRUE if the CommandSender can sell diamond
-	// Updated for Vault Permissions (turt2live)
-	@Deprecated
-	// Use canSellDiamond(Player)
+	/**
+	 * Determines if diamond can be sold
+	 * 
+	 * @param player the player selling the diamond
+	 * @return true if the player can sell diamond
+	 */
 	public boolean canSellDiamond(Player player){
 		return vault.hasPermission(player, getPermissionDiamond());
 	}
 
-	//Returns TRUE if the CommandSender can sell gold
-	// Updated for Vault Permissions (turt2live)
-	@Deprecated
-	// Use canSellGold(Player)
+	/**
+	 * Determines if gold can be sold
+	 * 
+	 * @param player the CommandSender selling the gold
+	 * @return true if the CommandSender can sell gold
+	 */
 	public boolean canSellGold(CommandSender player){
 		return vault.hasPermission(player, getPermissionGold());
 	}
 
-	//Returns TRUE if the CommandSender can sell gold
-	// Updated for Vault Permissions (turt2live)
-	@Deprecated
-	// Use canSellGold(Player)
+	/**
+	 * Determines if gold can be sold
+	 * 
+	 * @param player the player selling the gold
+	 * @return true if the player can sell gold
+	 */
 	public boolean canSellGold(Player player){
 		return vault.hasPermission(player, getPermissionGold());
 	}
 
-	//Returns TRUE if the CommandSender can sell iron
-	// Updated for Vault Permissions (turt2live)
-	@Deprecated
-	// Use canSellIron(Player)
+	/**
+	 * Determines if iron can be sold
+	 * 
+	 * @param player the CommandSender selling the iron
+	 * @return true if the CommandSener can sell iron
+	 */
 	public boolean canSellIron(CommandSender player){
 		return vault.hasPermission(player, getPermissionIron());
 	}
 
-	//Returns TRUE if the CommandSender can sell iron
-	// Updated for Vault Permissions (turt2live)
-	@Deprecated
-	// Use canSellIron(Player)
+	/**
+	 * Determines if iron can be sold
+	 * 
+	 * @param player the player selling the iron
+	 * @return true if the player can sell iron
+	 */
 	public boolean canSellIron(Player player){
 		return vault.hasPermission(player, getPermissionIron());
 	}
 
-	//Converts an item for a user (turt2live)
+	/**
+	 * Converts an item
+	 * 
+	 * @param sender the command sender converting the item
+	 * @param itemID the item ID to be converted
+	 * @param amount the amount of item ID to be converted
+	 */
 	public void convert(CommandSender sender, int itemID, int amount){
 		Converter.convertItem(sender, itemID, amount, vault, config);
 	}
 
-	//Displays the rates to the CommandSender (turt2live)
+	/**
+	 * Displays the rates table to a CommandSender
+	 * 
+	 * @param sender the CommandSender to get the rates table
+	 */
 	public void displayRates(CommandSender sender){
 		Functions.displayRates(sender, vault, config);
 	}
 
-	// Returns the configHandler being used
+	/**
+	 * Gets the configuration
+	 * 
+	 * @return the configuration
+	 */
 	public EnhancedConfiguration getConfig(){
 		return config; //Modified by turt2live
 	}
 
-	// Return the permission string for admin
+	/**
+	 * Gets the admin permission
+	 * 
+	 * @return the admin permission
+	 */
 	public String getPermissionAdmin(){
 		return gold2economy.PERMISSION_ADMIN;
 	}
@@ -99,37 +136,67 @@ public class API {
 	//		return gold2economy.usedMethod;
 	//	}
 
-	// Return the permission string for diamond
+	/**
+	 * Gets the diamond permission
+	 * 
+	 * @return the diamond permission
+	 */
 	public String getPermissionDiamond(){
 		return gold2economy.PERMISSION_DIAMOND;
 	}
 
-	// Return the permission string for gold
+	/**
+	 * Gets the gold permission
+	 * 
+	 * @return the gold permission
+	 */
 	public String getPermissionGold(){
 		return gold2economy.PERMISSION_GOLD;
 	}
 
-	// Return the permission string for iron
+	/**
+	 * Gets the iron permission
+	 * 
+	 * @return the iron permission
+	 */
 	public String getPermissionIron(){
 		return gold2economy.PERMISSION_IRON;
 	}
 
-	// Returns the rate at which an item sells (turt2live)
+	/**
+	 * Gets the rate at which an item will sell
+	 * 
+	 * @param itemID the item ID to test
+	 * @return the conversion rate per 1 item ID
+	 */
 	public double getRate(int itemID){
 		return Converter.getRate(itemID);
 	}
 
-	//get the VaultSupport class directly (turt2live)
+	/**
+	 * Get the Vault class directly
+	 * 
+	 * @return the Vault class
+	 */
 	public VaultSupport getVaultSupport(){
 		return vault;
 	}
 
-	//Returns TRUE if the CommandSender has admin access
+	/**
+	 * Determines if a CommandSender has admin access
+	 * 
+	 * @param player the CommandSender to test
+	 * @return true if the CommandSender has admin access
+	 */
 	public boolean isAdmin(CommandSender player){
 		return player.hasPermission(getPermissionAdmin());
 	}
 
-	// Returns whether the plugin is 'enabled' or not
+	/**
+	 * Determines if the plugin is 'enabled'
+	 * 
+	 * @return true if the plugin is enabled
+	 */
 	public boolean isEnabled(){
 		return gold2economy.enabled;
 	}
@@ -144,18 +211,28 @@ public class API {
 	//		return vault.hasBoth();
 	//	}
 
-	//Returns TRUE if Vault is being used as the economy hook (turt2live)
+	/**
+	 * Determines if Vault is active and has a hook into an economy
+	 * 
+	 * @return true if Vault is being used and can access an economy
+	 */
 	public boolean isVaultUsed(){
 		return vault.isActive();
 	}
 
-	//Reloads the configuration (turt2live)
+	/**
+	 * Reloads the configuration
+	 */
 	public void reloadConfig(){
 		//Removed deprecated Functions.giReload() call (turt2live)
 		config.load();
 	}
 
-	//Reloads the configuration from a command sender (turt2live)
+	/**
+	 * Reloads the configuration, alerting a CommandSender
+	 * 
+	 * @param sender the CommandSender to alert
+	 */
 	public void reloadConfig(CommandSender sender){
 		//Removed deprecated Functions.giReload() call (turt2live)
 		if(config.load()){
