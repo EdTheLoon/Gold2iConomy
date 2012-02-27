@@ -96,6 +96,9 @@ public class Commands implements CommandExecutor {
 					}else{
 						try{
 							itemID = Integer.parseInt(args[0]);
+							if(Converter.isAllowed(itemID)){
+								permNeeded = "Gold2Economy." + itemID;
+							}
 						}catch(Exception e){
 							sender.sendMessage(ChatColor.RED + "That is not a valid item ID!");
 						}
@@ -121,16 +124,14 @@ public class Commands implements CommandExecutor {
 					}else if(!Converter.isAllowed(itemID)){
 						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted! ");
 						return true;
-					}else if(Converter.isAllowed(itemID)){
-						permNeeded = "Gold2Economy." + itemID;
 					}else{ // Failsafe
 						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted!");
 						return true;
 					}
 
 					// Don't continue if player doesn't have required permission
-					if(vault.hasPermission(sender, permNeeded)){ // Fixed for argument change (turt2live)
-						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
+					if(!vault.hasPermission(sender, permNeeded)){ // Fixed for argument change (turt2live)
+						sender.sendMessage(ChatColor.RED + "You can't convert that!");
 						return true;
 					}
 
@@ -191,6 +192,9 @@ public class Commands implements CommandExecutor {
 					}else{
 						try{
 							itemID = Integer.parseInt(args[0]);
+							if(Converter.isAllowed(itemID)){
+								permNeeded = "Gold2Economy." + itemID;
+							}
 						}catch(Exception e){
 							sender.sendMessage(ChatColor.RED + "That is not a valid item ID!");
 						}
@@ -214,18 +218,16 @@ public class Commands implements CommandExecutor {
 							return true;
 						}
 					}else if(!Converter.isAllowed(itemID)){
-						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted!");
+						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted! ");
 						return true;
-					}else if(Converter.isAllowed(itemID)){
-						permNeeded = "Gold2Economy." + itemID;
 					}else{ // Failsafe
 						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted!");
 						return true;
 					}
 
-					// Check if player has permission first
-					if(vault.hasPermission(sender, permNeeded)){ // Fixed for argument change (turt2live)
-						sender.sendMessage(ChatColor.RED + "You don't have permission to do this!");
+					// Don't continue if player doesn't have required permission
+					if(!vault.hasPermission(sender, permNeeded)){ // Fixed for argument change (turt2live)
+						sender.sendMessage(ChatColor.RED + "You can't convert that!");
 						return true;
 					}
 
