@@ -2,21 +2,23 @@ package com.edtheloon.gold2economy;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import com.nijikokun.register.payment.Method;
-import com.nijikokun.register.payment.Method.MethodAccount;
-import com.nijikokun.register.payment.Methods;
+import com.feildmaster.lib.configuration.EnhancedConfiguration;
 
 public class Converter {
 
-	// Convert Gold into money
-	public static void convertItem(CommandSender sender, int itemID, int amount, VaultSupport vault, configHandler config) // Added argument: configHandler (turt2live)
-	{
+	// Convert items into money
+	public static void convertItem(CommandSender sender, int itemID, int amount, VaultSupport vault, EnhancedConfiguration config){ // Added argument: configHandler (turt2live)
+		// Setup variables (turt2live)
+		double ironRate = config.getDouble("rates.iron");
+		double goldRate = config.getDouble("rates.gold");
+		double diamondRate = config.getDouble("rates.diamond");
 
 		// Declare local variables
 		Double conversion = 0.0;
@@ -26,18 +28,19 @@ public class Converter {
 		// Calculate conversion rate
 		// Change this from a switch (itemID) to if conditions because it was causing bugs
 		if(itemID == 265){
-			conversion = config.ironRate * amount; // Fixed for argument change (turt2live)
+			conversion = ironRate * amount; // Fixed for argument change (turt2live)
 		}else if(itemID == 266){
-			conversion = config.goldRate * amount; // Fixed for argument change (turt2live)
-		}else if(itemID == 264)
-		{
-			conversion = config.diamondRate * amount; // Fixed for argument change (turt2live)
+			conversion = goldRate * amount; // Fixed for argument change (turt2live)
+		}else if(itemID == 264){
+			conversion = diamondRate * amount; // Fixed for argument change (turt2live)
+		}else if(isAllowed(itemID)){ // For customized/other items (like gold nuggets) - Turt2Live
+			conversion = getRate(itemID) * amount;
 		}
 
-		// If user has enough ingots then convert gold, otherwise inform user that they do not have enough gold ingots
+		// Check to see if they have enough of <item>
 		if(pi.contains(itemID, amount)){
 
-			// Remove gold ingots
+			// Remove item
 			HashMap<Integer, ItemStack> difference = pi.removeItem(new ItemStack(itemID, amount));
 			difference.clear();
 			// Start turt2live edit
@@ -45,29 +48,29 @@ public class Converter {
 			String formattedBalance = "";
 			String formattedConversion = "";
 			if(vault != null){ // Cause I can't think of any other way... (turt2live)
-				if(vault.isActive()){ // Do we have Vault? or Register? (turt2live)
+				if(vault.isActive()){ // Do we have Vault? (turt2live)
 					VaultSupport v = vault;
 					v.deposit(player.getName(), conversion);
 					balance = v.balance(player.getName());
 					formattedBalance = v.format(balance);
 					formattedConversion = v.format(conversion);
 				}else{ // Duplicated from null check IF (turt2live)
-					Method method = Methods.getMethod();
-					MethodAccount account = method.getAccount(player.getName());
-					account.add(conversion);
-					balance = account.balance();
-					// Format values (turt2live)
-					formattedBalance = method.format(balance);
-					formattedConversion = method.format(conversion);
+						//					Method method = Methods.getMethod();
+						//					MethodAccount account = method.getAccount(player.getName());
+						//					account.add(conversion);
+						//					balance = account.balance();
+						//					// Format values (turt2live)
+						//					formattedBalance = method.format(balance);
+						//					formattedConversion = method.format(conversion);
 				}
 			}else{ // Code in here written by EdTheLoon, just thrown into an else
-				Method method = Methods.getMethod();
-				MethodAccount account = method.getAccount(player.getName());
-				account.add(conversion);
-				balance = account.balance();
-				// Format values (turt2live)
-				formattedBalance = method.format(balance);
-				formattedConversion = method.format(conversion);
+					//				Method method = Methods.getMethod();
+					//				MethodAccount account = method.getAccount(player.getName());
+					//				account.add(conversion);
+					//				balance = account.balance();
+					//				// Format values (turt2live)
+					//				formattedBalance = method.format(balance);
+					//				formattedConversion = method.format(conversion);
 			}
 			sender.sendMessage(ChatColor.GREEN + "You converted " + amount + " item(s) into " + formattedConversion); // Renamed variable used
 			sender.sendMessage(ChatColor.GREEN + "You now have " + formattedBalance); // Renamed variable used
@@ -75,6 +78,21 @@ public class Converter {
 		}else{
 			sender.sendMessage(ChatColor.DARK_RED + "You do not have " + Integer.toString(amount) + ChatColor.DARK_RED + " of that item!");
 		}
+	}
+
+	// Added by turt2live, gets the rate of a custom item
+	public static Double getRate(int itemID){
+		gold2economy plugin = (gold2economy) Bukkit.getServer().getPluginManager().getPlugin("Gold2Economy-Vault");
+		EnhancedConfiguration config = plugin.getConversionChart();
+		return config.getDouble(String.valueOf(itemID));
+	}
+
+	// Added by turt2live, gets the allowance of an item ID (for custom items)
+	public static boolean isAllowed(int itemID){
+		gold2economy plugin = (gold2economy) Bukkit.getServer().getPluginManager().getPlugin("Gold2Economy-Vault");
+		EnhancedConfiguration config = plugin.getConversionChart();
+		//System.out.println(config.get(String.valueOf(itemID)) + " " + String.valueOf(itemID)); // DEBUG
+		return config.get(String.valueOf(itemID)) != null;
 	}
 
 }

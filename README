@@ -3,11 +3,13 @@ Original Author: EdTheLoon
 	GitHub:		https://github.com/EdTheLoon/Gold2iConomy
 	BukkitDev:	http://dev.bukkit.org/profiles/EdTheLoon/
 	Plugin:		http://dev.bukkit.org/server-mods/gold2economy/
-My Stuff:
+Vault Support added by Turt2Live:
 	GitHub:		https://github.com/turt2live/Gold2iConomy
 	BukkitDev:	http://dev.bukkit.org/profiles/turt2live/
 	Plugin: 	http://forums.bukkit.org/threads/econ-gold2economy-vault-edition-v1-4_r1-1-0-1-r1.52613/
 
 Changes:
 	- Added Vault support
-		- Yes... you can still use Register if you want
+		- Yes... you can still use Register if you want [REMOVED IN 1.4_r9]
+	- Better handling of permissions
+	- Support for 'custom' items

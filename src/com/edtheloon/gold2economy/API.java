@@ -1,39 +1,77 @@
 package com.edtheloon.gold2economy;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.entity.Player;
 
-import com.nijikokun.register.payment.Method;
+import com.feildmaster.lib.configuration.EnhancedConfiguration;
 
 public class API {
 
-	private configHandler config; //Added by turt2live
+	private EnhancedConfiguration config; //Added by turt2live
 	private VaultSupport vault; //Added by turt2live
-	private Plugin plugin; //Added by turt2live
+	private gold2economy plugin; //Added by turt2live
 
 	//Added constructor
 	public API(){
-		plugin = Bukkit.getServer().getPluginManager().getPlugin("Gold2Economy-Vault");
+		plugin = (gold2economy) Bukkit.getServer().getPluginManager().getPlugin("Gold2Economy-Vault");
 		vault = new VaultSupport(plugin);
 		vault.init();
-		config = new configHandler(plugin, vault);
-		config.loadConfig();
+		config = plugin.getConfig();
+	}
+
+	// Returns whether or not an item can be sold
+	public boolean canBeConverted(int itemID){
+		return Converter.isAllowed(itemID);
 	}
 
 	//Returns TRUE if the CommandSender can sell diamond
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellDiamond(Player)
 	public boolean canSellDiamond(CommandSender player){
-		return player.hasPermission(getPermissionDiamond());
+		return vault.hasPermission(player, getPermissionDiamond());
+	}
+
+	//Returns TRUE if the CommandSender can sell diamond
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellDiamond(Player)
+	public boolean canSellDiamond(Player player){
+		return vault.hasPermission(player, getPermissionDiamond());
 	}
 
 	//Returns TRUE if the CommandSender can sell gold
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellGold(Player)
 	public boolean canSellGold(CommandSender player){
-		return player.hasPermission(getPermissionGold());
+		return vault.hasPermission(player, getPermissionGold());
+	}
+
+	//Returns TRUE if the CommandSender can sell gold
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellGold(Player)
+	public boolean canSellGold(Player player){
+		return vault.hasPermission(player, getPermissionGold());
 	}
 
 	//Returns TRUE if the CommandSender can sell iron
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellIron(Player)
 	public boolean canSellIron(CommandSender player){
-		return player.hasPermission(getPermissionIron());
+		return vault.hasPermission(player, getPermissionIron());
+	}
+
+	//Returns TRUE if the CommandSender can sell iron
+	// Updated for Vault Permissions (turt2live)
+	@Deprecated
+	// Use canSellIron(Player)
+	public boolean canSellIron(Player player){
+		return vault.hasPermission(player, getPermissionIron());
 	}
 
 	//Converts an item for a user (turt2live)
@@ -47,19 +85,19 @@ public class API {
 	}
 
 	// Returns the configHandler being used
-	public configHandler getConfig(){
+	public EnhancedConfiguration getConfig(){
 		return config; //Modified by turt2live
-	}
-
-	// Returns the method used
-	public Method getMethod(){
-		return gold2economy.usedMethod;
 	}
 
 	// Return the permission string for admin
 	public String getPermissionAdmin(){
 		return gold2economy.PERMISSION_ADMIN;
 	}
+
+	//	// Returns the method used
+	//	public Method getMethod(){
+	//		return gold2economy.usedMethod;
+	//	}
 
 	// Return the permission string for diamond
 	public String getPermissionDiamond(){
@@ -76,9 +114,12 @@ public class API {
 		return gold2economy.PERMISSION_IRON;
 	}
 
-	//METHODS ADDED BY TURT2LIVE
+	// Returns the rate at which an item sells (turt2live)
+	public double getRate(int itemID){
+		return Converter.getRate(itemID);
+	}
 
-	//get the VaultSupport class directly
+	//get the VaultSupport class directly (turt2live)
 	public VaultSupport getVaultSupport(){
 		return vault;
 	}
@@ -94,16 +135,16 @@ public class API {
 	}
 
 	//Returns TRUE if Register is being used as the economy hook
-	public boolean isRegisterUsed(){
-		return vault.hasRegister();
-	}
+	//	public boolean isRegisterUsed(){
+	//		return vault.hasRegister();
+	//	}
+	//
+	//	//Returns TRUE if both Vault and Register COULD be used
+	//	public boolean isVaultAndRegisterUsed(){
+	//		return vault.hasBoth();
+	//	}
 
-	//Returns TRUE if both Vault and Register COULD be used
-	public boolean isVaultAndRegisterUsed(){
-		return vault.hasBoth();
-	}
-
-	//Returns TRUE if Vault is being used as the economy hook
+	//Returns TRUE if Vault is being used as the economy hook (turt2live)
 	public boolean isVaultUsed(){
 		return vault.isActive();
 	}
@@ -111,14 +152,16 @@ public class API {
 	//Reloads the configuration (turt2live)
 	public void reloadConfig(){
 		//Removed deprecated Functions.giReload() call (turt2live)
-		config.reload(null); //Turt2Live: Passing null into CommandSender 
-								//doesn't break anything, just means no display 
-								//message is sent
+		config.load();
 	}
 
 	//Reloads the configuration from a command sender (turt2live)
 	public void reloadConfig(CommandSender sender){
 		//Removed deprecated Functions.giReload() call (turt2live)
-		config.reload(null);
+		if(config.load()){
+			sender.sendMessage("[" + plugin.getDescription().getName() + "] " + ChatColor.DARK_GREEN + "Configuration Reloaded");
+		}else{
+			sender.sendMessage("[" + plugin.getDescription().getName() + "] " + ChatColor.DARK_RED + "Configuration failed to reload");
+		}
 	}
 }
