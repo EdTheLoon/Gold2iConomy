@@ -34,23 +34,6 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 	// Minecraft Log
 	public static Logger log = Logger.getLogger("Minecraft");
 
-	// Added by turt2live for gold nuggets and such
-	public EnhancedConfiguration getConversionChart(){
-		EnhancedConfiguration items = new EnhancedConfiguration(new File(getDataFolder(), "items.yml"), this);
-		items.loadDefaults(getResource("resources/items.yml"));
-		if(items.needsUpdate()){
-			items.saveDefaults();
-		}
-		items.load();
-		return items;
-	}
-
-	@Override
-	public void onDisable(){
-		log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " disabled.");
-		enabled = false;
-	}
-
 	@Override
 	public void onEnable(){
 		//Event Handler : Turt2Live
@@ -122,5 +105,22 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 		getCommand("gi").setExecutor(new Commands(this, vault)); // Fixed for argument change (turt2live)
 		// Start API
 		api = new API();
+	}
+
+	@Override
+	public void onDisable(){
+		log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " disabled.");
+		enabled = false;
+	}
+
+	// Added by turt2live for gold nuggets and such
+	public EnhancedConfiguration getConversionChart(){
+		EnhancedConfiguration items = new EnhancedConfiguration(new File(getDataFolder(), "items.yml"), this);
+		items.loadDefaults(getResource("resources/items.yml"));
+		if(items.needsUpdate()){
+			items.saveDefaults();
+		}
+		items.load();
+		return items;
 	}
 }
