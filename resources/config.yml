@@ -1,0 +1,15 @@
+# Gold2Economy - Vault Configuration
+# "convert" - true/false, convert <ITEM>
+# "rates" - double (decimal), rate for <ITEM>
+# "preferred" - Does nothing as Register was removed
+# 
+# To set your own items, see 'items.yml'
+convert:
+    iron: false
+    gold: true
+    diamond: false
+rates:
+    iron: 9.99
+    gold: 29.99
+    diamond: 99.99
+preferred: iConomy 6
