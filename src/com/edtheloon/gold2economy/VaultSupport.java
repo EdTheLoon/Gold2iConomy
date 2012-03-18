@@ -12,8 +12,6 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 public class VaultSupport {
 
 	private boolean vault = false;
-	//private boolean register = false;
-	//private boolean both = false; //Used by the API only (for now?)
 	private gold2economy plugin = null;
 	private String method = "Unknown";
 
@@ -29,7 +27,6 @@ public class VaultSupport {
 	}
 
 	public void deposit(String player, double amount){
-		// System.out.println(player + " | " + amount); //DEBUG (turt2live)
 		economy.depositPlayer(player, amount);
 	}
 
@@ -45,10 +42,6 @@ public class VaultSupport {
 		return plugin;
 	}
 
-	//	public boolean hasBoth(){
-	//		return both;
-	//	}
-
 	public boolean hasPermission(CommandSender player, String permission){
 		if(Bukkit.getPlayer(player.getName()) != null){
 			return hasPermission(Bukkit.getPlayer(player.getName()), permission);
@@ -60,10 +53,6 @@ public class VaultSupport {
 		return permissions.has(player.getLocation().getWorld(), player.getName(), permission);
 	}
 
-	//	public boolean hasRegister(){
-	//		return register;
-	//	}
-
 	public boolean init(){
 		RegisteredServiceProvider<Economy> economyProvider = plugin.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
 		if(economyProvider != null){
@@ -74,14 +63,12 @@ public class VaultSupport {
 			vault = false;
 			economy = null;
 		}
-		// System.out.println(economy); //DEBUG (turt2live)
 		RegisteredServiceProvider<Permission> permissionsProvider = plugin.getServer().getServicesManager().getRegistration(Permission.class);
 		if(permissionsProvider != null && vault){ // We only want to use perms if the economy check passed
 			permissions = permissionsProvider.getProvider();
 		}else{
 			vault = false;
 		}
-		// System.out.println(permissions); //DEBUG (turt2live)
 		return vault;
 	}
 
@@ -92,18 +79,6 @@ public class VaultSupport {
 	public String method(){
 		return method;
 	}
-
-	//	public void setBoth(boolean b){
-	//		both = b;
-	//	}
-	//
-	//	public void setBoth(Plugin vault, Plugin register){
-	//		both = ((vault != null && register != null) ? true : false);
-	//	}
-	//
-	//	public void setRegister(boolean b){
-	//		register = b;
-	//	}
 
 	public void setUsed(boolean b){
 		vault = b;
