@@ -131,11 +131,6 @@ public class API {
 		return gold2economy.PERMISSION_ADMIN;
 	}
 
-	//	// Returns the method used
-	//	public Method getMethod(){
-	//		return gold2economy.usedMethod;
-	//	}
-
 	/**
 	 * Gets the diamond permission
 	 * 
@@ -201,16 +196,6 @@ public class API {
 		return gold2economy.enabled;
 	}
 
-	//Returns TRUE if Register is being used as the economy hook
-	//	public boolean isRegisterUsed(){
-	//		return vault.hasRegister();
-	//	}
-	//
-	//	//Returns TRUE if both Vault and Register COULD be used
-	//	public boolean isVaultAndRegisterUsed(){
-	//		return vault.hasBoth();
-	//	}
-
 	/**
 	 * Determines if Vault is active and has a hook into an economy
 	 * 
@@ -224,7 +209,6 @@ public class API {
 	 * Reloads the configuration
 	 */
 	public void reloadConfig(){
-		//Removed deprecated Functions.giReload() call (turt2live)
 		config.load();
 	}
 
@@ -234,7 +218,6 @@ public class API {
 	 * @param sender the CommandSender to alert
 	 */
 	public void reloadConfig(CommandSender sender){
-		//Removed deprecated Functions.giReload() call (turt2live)
 		if(config.load()){
 			sender.sendMessage("[" + plugin.getDescription().getName() + "] " + ChatColor.DARK_GREEN + "Configuration Reloaded");
 		}else{

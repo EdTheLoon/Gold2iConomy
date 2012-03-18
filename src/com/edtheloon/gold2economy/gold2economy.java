@@ -39,7 +39,6 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 		//Event Handler : Turt2Live
 		server s = new server(this);
 		s.init();
-		//End Event Handler : Turt2Live
 
 		/*
 		 * First check to see if Register is installed/enabled. 
@@ -60,12 +59,6 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 				hasVault = true;
 			}
 		}
-		//		Plugin plugin = pm.getPlugin("Register");
-		//		if(!pm.isPluginEnabled(plugin) && !hasVault){ // Added !hasVault (turt2live)
-		//			enabled = false;
-		//			// Added Vault to error (turt2live)
-		//			log.severe("[" + getDescription().getName() + "] Register or Vault was not found. G2E will not function properly until it is enabled");
-		//		}else // Check if register has a method yet and then take note of the method
 		// Wrapped in a hasVault IF statement (turt2live)
 		if(hasVault){
 			boolean success = vault.init();
@@ -79,28 +72,13 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 			}else{
 				log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " enabled. Using " + vault.method() + " [VAULT]");
 			}
-		}//else{
-			//			vault.setUsed(false); // Added by turt2live
-			//			if(Methods.hasMethod()){
-			//				usedMethod = Methods.getMethod();
-			//			}
-			//			vault.setRegister(true);
-			//			// Finally, log to console that the plugin has finished initialising and is enabled.
-			//			enabled = true;
-			//			log.info("[" + getDescription().getName() + "] Version " + getDescription().getVersion().toString() + " enabled. Using " + usedMethod.getName());
-		//}
-		//vault.setBoth(vault_plugin, plugin); //For the API
-		// Moved to below vault check (turt2live)
-		// Start configuration (turt2live)
+		}
 		//Load the defaults, just in case (turt2live)
 		getConfig().loadDefaults(getResource("resources/config.yml"));
-		/*If the file doesn't exist or the defaults are missing/not there, 
-		  save the defaults to the config (turt2live)
-		*/
+		// If the file doesn't exist or the defaults are missing/not there, save the defaults to the config (turt2live)
 		if(getConfig().needsUpdate()){
 			getConfig().saveDefaults();
 		}
-		// Moved this down to below the Vault check (turt2live)
 		// Tell Bukkit that Commands class should handle command execution for this command
 		getCommand("gi").setExecutor(new Commands(this, vault)); // Fixed for argument change (turt2live)
 		// Start API

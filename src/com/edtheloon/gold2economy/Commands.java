@@ -25,9 +25,6 @@ public class Commands implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
 		// Initilize variables (turt2live)
 		EnhancedConfiguration config = plugin.getConfig();
-		boolean convertIron = config.getBoolean("convert.iron");
-		boolean convertGold = config.getBoolean("convert.gold");
-		boolean convertDiamond = config.getBoolean("convert.diamond");
 
 		// Reload configuration to not cause issues (turt2live)
 		config.load();
@@ -46,13 +43,6 @@ public class Commands implements CommandExecutor {
 
 				// Command = /gi rates - Tells player the conversion rate
 				if(args.length == 1 && args[0].equalsIgnoreCase("rates")){
-					//					if(vault.hasRegister() || vault.isActive()){ // Modified by turt2live (Removed Methods.hasMethod())
-					//						Functions.displayRates(sender, vault, config); // Fixed for argument change (turt2live)
-					//						return true;
-					//					}else{
-					//						sender.sendMessage(ChatColor.RED + "Gold2Economy was unable to find a supported economy plugin");
-					//						return true;
-					//					}
 					if(vault.isActive()){
 						Functions.displayRates(sender, vault, config); // Fixed for argument change (turt2live)
 						return true;
@@ -78,95 +68,14 @@ public class Commands implements CommandExecutor {
 
 				// Command = /gi <item> all - Convert all <item> - <item> is either iron, gold or diamond
 				if(args.length == 2 && args[1].equalsIgnoreCase("all") && sender instanceof Player){
-
-					int itemID = 0;
-					int amount = 0;
-					String permNeeded = "";
-
-					// Determine what itemID to use
-					if(args[0].equalsIgnoreCase("iron")){
-						itemID = 265;
-						permNeeded = gold2economy.PERMISSION_IRON;
-					}else if(args[0].equalsIgnoreCase("gold")){
-						itemID = 266;
-						permNeeded = gold2economy.PERMISSION_GOLD;
-					}else if(args[0].equalsIgnoreCase("diamond")){
-						itemID = 264;
-						permNeeded = gold2economy.PERMISSION_DIAMOND;
-					}else{
-						try{
-							itemID = Integer.parseInt(args[0]);
-							if(Converter.isAllowed(itemID)){
-								permNeeded = "Gold2Economy." + itemID;
-							}
-						}catch(Exception e){
-							sender.sendMessage(ChatColor.RED + "That is not a valid item ID!");
-						}
-					}
-
-					// Don't continue if server config says we can't convert item
-					// Change this from a switch (itemID) to if conditions because it was causing bugs
-					if(itemID == 265){ // IRON
-						if(!convertIron){
-							sender.sendMessage(ChatColor.RED + "This server doesn't allow iron to be converted");
-							return true;
-						}
-					}else if(itemID == 266){ // GOLD
-						if(!convertGold){
-							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
-							return true;
-						}
-					}else if(itemID == 264){ // DIAMOND
-						if(!convertDiamond){
-							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
-							return true;
-						}
-					}else if(!Converter.isAllowed(itemID)){
-						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted! ");
-						return true;
-					}else{ // Failsafe
-						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted!");
-						return true;
-					}
-
-					// Don't continue if player doesn't have required permission
-					if(!vault.hasPermission(sender, permNeeded)){ // Fixed for argument change (turt2live)
-						sender.sendMessage(ChatColor.RED + "You can't convert that!");
-						return true;
-					}
-
-					// Prepare to loop through player inventory
-					Player player = ((Player) sender);
-					PlayerInventory pi = player.getInventory();
-					ItemStack items[] = pi.getContents();
-
-					// First check to see that user has at least 1 of <item>
-					if(pi.contains(itemID)){
-
-						// Loop through player's inventory to look for <item>
-						for(ItemStack item : items){
-							// if the inventory slot is not null AND it is the item we are looking for then change amount
-							if(item != null && item.getTypeId() == itemID){
-								amount += item.getAmount();
-							}
-						}
-						Converter.convertItem(sender, itemID, amount, vault, config); // Added by turt2live & fixed for argument change
-						return true; // finally say we've handled command correctly
-
-					}else{
-						sender.sendMessage(ChatColor.RED + "You don't have any of that item!");
-						return true;
-					}
+					return remove(args[0], -1, (Player) sender);
 				}
 
 				// Command = /gi <item> <amount> - Convert <amount> of <item> - <item> is either iron, gold, diamond, or custom
 				// If <amount> is left empty it will convert 1 of the item
 				if(args.length >= 1 && sender instanceof Player){
-					int amount = 0;
-					int itemID = 0;
-					String permNeeded = "";
-
 					// Use a try-catch to safely retrieve amount to convert
+					int amount = 0;
 					try{
 						if(args.length == 2){
 							amount = Integer.parseInt(args[1]);
@@ -178,63 +87,7 @@ public class Commands implements CommandExecutor {
 						gold2economy.log.severe("[" + vault.getPlugin().getDescription().getName() + "] Error: " + e.toString());
 						return false;
 					}
-
-					// Determine what itemID to use
-					if(args[0].equalsIgnoreCase("iron")){
-						itemID = 265;
-						permNeeded = gold2economy.PERMISSION_IRON;
-					}else if(args[0].equalsIgnoreCase("gold")){
-						itemID = 266;
-						permNeeded = gold2economy.PERMISSION_GOLD;
-					}else if(args[0].equalsIgnoreCase("diamond")){
-						itemID = 264;
-						permNeeded = gold2economy.PERMISSION_DIAMOND;
-					}else{
-						try{
-							itemID = Integer.parseInt(args[0]);
-							if(Converter.isAllowed(itemID)){
-								permNeeded = "Gold2Economy." + itemID;
-							}
-						}catch(Exception e){
-							sender.sendMessage(ChatColor.RED + "That is not a valid item ID!");
-						}
-					}
-
-					// Don't continue if server config says we can't convert item
-					// Change this from a switch (itemID) to if conditions because it was causing bugs
-					if(itemID == 265){ // IRON
-						if(!convertIron){
-							sender.sendMessage(ChatColor.RED + "This server doesn't allow iron to be converted");
-							return true;
-						}
-					}else if(itemID == 266){ // GOLD
-						if(!convertGold){
-							sender.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
-							return true;
-						}
-					}else if(itemID == 264){ // DIAMOND
-						if(!convertDiamond){
-							sender.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
-							return true;
-						}
-					}else if(!Converter.isAllowed(itemID)){
-						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted! ");
-						return true;
-					}else{ // Failsafe
-						sender.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted!");
-						return true;
-					}
-
-					// Don't continue if player doesn't have required permission
-					if(!vault.hasPermission(sender, permNeeded)){ // Fixed for argument change (turt2live)
-						sender.sendMessage(ChatColor.RED + "You can't convert that!");
-						return true;
-					}
-
-					// Finally convert item into money
-					Converter.convertItem(sender, itemID, amount, vault, config); // Fixed for argument change (turt2live)
-					return true;
-
+					return remove(args[0], amount, (Player) sender);
 				}
 
 			}
@@ -246,5 +99,86 @@ public class Commands implements CommandExecutor {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean remove(String strItemID, Integer amount, Player player){
+		EnhancedConfiguration config = plugin.getConfig();
+		boolean convertIron = config.getBoolean("convert.iron");
+		boolean convertGold = config.getBoolean("convert.gold");
+		boolean convertDiamond = config.getBoolean("convert.diamond");
+		String permission = "Gold2Economy.null";
+		int itemID = 0;
+		// Determine what itemID to use
+		if(strItemID.equalsIgnoreCase("iron")){
+			itemID = 265;
+			permission = gold2economy.PERMISSION_IRON;
+		}else if(strItemID.equalsIgnoreCase("gold")){
+			itemID = 266;
+			permission = gold2economy.PERMISSION_GOLD;
+		}else if(strItemID.equalsIgnoreCase("diamond")){
+			itemID = 264;
+			permission = gold2economy.PERMISSION_DIAMOND;
+		}else{
+			try{
+				itemID = Integer.parseInt(strItemID);
+				if(Converter.isAllowed(itemID)){
+					permission = "Gold2Economy." + itemID;
+				}
+			}catch(Exception e){
+				player.sendMessage(ChatColor.RED + "That is not a valid item ID!");
+			}
+		}
+
+		// Don't continue if server config says we can't convert item
+		// Change this from a switch (itemID) to if conditions because it was causing bugs
+		if(itemID == 265){ // IRON
+			if(!convertIron){
+				player.sendMessage(ChatColor.RED + "This server doesn't allow iron to be converted");
+				return true;
+			}
+		}else if(itemID == 266){ // GOLD
+			if(!convertGold){
+				player.sendMessage(ChatColor.RED + "This server doesn't allow gold to be converted");
+				return true;
+			}
+		}else if(itemID == 264){ // DIAMOND
+			if(!convertDiamond){
+				player.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be converted");
+				return true;
+			}
+		}else if(!Converter.isAllowed(itemID)){
+			player.sendMessage(ChatColor.RED + "This server doesn't allow that to be converted! ");
+			return true;
+		}
+
+		// Don't continue if player doesn't have required permission
+		if(!vault.hasPermission(player, permission)){ // Fixed for argument change (turt2live)
+			player.sendMessage(ChatColor.RED + "You can't convert that!");
+			return true;
+		}
+
+		// Prepare to loop through player inventory
+		PlayerInventory pi = player.getInventory();
+		ItemStack items[] = pi.getContents();
+
+		// First check to see that user has at least 1 of <item>
+		if(pi.contains(itemID)){
+
+			if(amount == -1){
+				// Loop through player's inventory to look for <item>
+				for(ItemStack item : items){
+					// if the inventory slot is not null AND it is the item we are looking for then change amount
+					if(item != null && item.getTypeId() == itemID){
+						amount += item.getAmount();
+					}
+				}
+			}
+			Converter.convertItem(player, itemID, amount, vault, config); // Added by turt2live & fixed for argument change
+			return true; // finally say we've handled command correctly
+
+		}else{
+			player.sendMessage(ChatColor.RED + "You don't have any of that item!");
+			return true;
+		}
 	}
 }
