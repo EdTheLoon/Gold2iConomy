@@ -39,7 +39,6 @@ public class Converter {
 
 		// Check to see if they have enough of <item>
 		if(pi.contains(itemID, amount)){
-
 			// Remove item
 			HashMap<Integer, ItemStack> difference = pi.removeItem(new ItemStack(itemID, amount));
 			difference.clear();
@@ -54,23 +53,7 @@ public class Converter {
 					balance = v.balance(player.getName());
 					formattedBalance = v.format(balance);
 					formattedConversion = v.format(conversion);
-				}else{ // Duplicated from null check IF (turt2live)
-						//					Method method = Methods.getMethod();
-						//					MethodAccount account = method.getAccount(player.getName());
-						//					account.add(conversion);
-						//					balance = account.balance();
-						//					// Format values (turt2live)
-						//					formattedBalance = method.format(balance);
-						//					formattedConversion = method.format(conversion);
 				}
-			}else{ // Code in here written by EdTheLoon, just thrown into an else
-					//				Method method = Methods.getMethod();
-					//				MethodAccount account = method.getAccount(player.getName());
-					//				account.add(conversion);
-					//				balance = account.balance();
-					//				// Format values (turt2live)
-					//				formattedBalance = method.format(balance);
-					//				formattedConversion = method.format(conversion);
 			}
 			sender.sendMessage(ChatColor.GREEN + "You converted " + amount + " item(s) into " + formattedConversion); // Renamed variable used
 			sender.sendMessage(ChatColor.GREEN + "You now have " + formattedBalance); // Renamed variable used
@@ -91,7 +74,6 @@ public class Converter {
 	public static boolean isAllowed(int itemID){
 		gold2economy plugin = (gold2economy) Bukkit.getServer().getPluginManager().getPlugin("Gold2Economy-Vault");
 		EnhancedConfiguration config = plugin.getConversionChart();
-		//System.out.println(config.get(String.valueOf(itemID)) + " " + String.valueOf(itemID)); // DEBUG
 		return config.get(String.valueOf(itemID)) != null;
 	}
 

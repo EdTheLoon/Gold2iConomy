@@ -20,31 +20,7 @@ public class Functions {
 		double goldRate = config.getDouble("rates.gold");
 		double diamondRate = config.getDouble("rates.diamond");
 
-		//if(vault.hasRegister()){ // Added by turt2live (rate table for Register is EdTheLoon)
-		//			Method method = Methods.getMethod();
-		//
-		//			// Display the rates here
-		//			if(!convertDiamond && !convertGold && !convertIron){
-		//				sender.sendMessage(ChatColor.RED + "This server doesn't allow anything to be converted");
-		//			}else{
-		//				sender.sendMessage("--- Conversion Rates ---");
-		//
-		//				if(convertIron){
-		//					sender.sendMessage("1 " + ChatColor.GRAY + "Iron" + ChatColor.WHITE + " = "
-		//							+ ChatColor.GREEN + method.format(ironRate));
-		//				}
-		//
-		//				if(convertGold){
-		//					sender.sendMessage("1 " + ChatColor.YELLOW + "Gold" + ChatColor.WHITE + " = "
-		//							+ ChatColor.GREEN + method.format(goldRate));
-		//				}
-		//
-		//				if(convertDiamond){
-		//					sender.sendMessage("1 " + ChatColor.AQUA + "Diamond" + ChatColor.WHITE + " = "
-		//							+ ChatColor.GREEN + method.format(diamondRate));
-		//				}
-		//			}
-		/*}else */if(!convertDiamond && !convertGold && !convertIron){
+		if(!convertDiamond && !convertGold && !convertIron){
 			sender.sendMessage(ChatColor.RED + "This server doesn't allow anything to be converted");
 		}else{
 			sender.sendMessage("--- Conversion Rates ---");

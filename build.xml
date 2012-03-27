@@ -35,7 +35,7 @@
     <target name="clean" >
 
         <echo>
-Cleaning
+Cleaning 
         </echo>
 
         <delete dir="${build}" />
@@ -52,7 +52,7 @@ Cleaning
         depends="clean" >
 
         <echo>
-Compiling
+Compiling 
         </echo>
 
         <javac
@@ -67,7 +67,7 @@ Compiling
         depends="compile" >
 
         <echo>
-Building
+Building
         </echo>
 
         <copy todir="${build}" >
@@ -90,6 +90,19 @@ Building
             basedir="${build}"
             compress="true"
             destfile="${dist}/${ant.project.name}.jar" />
+
+        <copy todir="${build}" >
+
+            <fileset
+                dir="${src}"
+                excludes="**/*.form"
+                includes="**" />
+        </copy>
+
+        <jar
+            basedir="${build}"
+            compress="true"
+            destfile="${dist}/${ant.project.name}-source.jar" />
     </target>
 
 </project>
