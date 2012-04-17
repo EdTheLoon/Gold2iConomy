@@ -126,6 +126,7 @@ public class Commands implements CommandExecutor {
 				}
 			}catch(Exception e){
 				player.sendMessage(ChatColor.RED + "That is not a valid item ID!");
+				return true;
 			}
 		}
 
@@ -166,10 +167,13 @@ public class Commands implements CommandExecutor {
 
 			if(amount == -1){
 				// Loop through player's inventory to look for <item>
+				amount = 0; // Reset to zero to remove the "one remaining" bug
 				for(ItemStack item : items){
 					// if the inventory slot is not null AND it is the item we are looking for then change amount
-					if(item != null && item.getTypeId() == itemID){
-						amount += item.getAmount();
+					if(item != null){
+						if(item.getTypeId() == itemID){
+							amount += item.getAmount();
+						}
 					}
 				}
 			}

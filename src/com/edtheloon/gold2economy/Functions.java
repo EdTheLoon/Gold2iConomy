@@ -19,8 +19,10 @@ public class Functions {
 		double ironRate = config.getDouble("rates.iron");
 		double goldRate = config.getDouble("rates.gold");
 		double diamondRate = config.getDouble("rates.diamond");
+		EnhancedConfiguration items = vault.getPlugin().getConversionChart();
+		Set<String> keys = items.getConfigurationSection("").getKeys(false);
 
-		if(!convertDiamond && !convertGold && !convertIron){
+		if(!convertDiamond && !convertGold && !convertIron && keys.size() == 0){
 			sender.sendMessage(ChatColor.RED + "This server doesn't allow anything to be converted");
 		}else{
 			sender.sendMessage("--- Conversion Rates ---");
@@ -40,8 +42,6 @@ public class Functions {
 						+ ChatColor.GREEN + vault.format(diamondRate));
 			}
 			// Display other items (turt2live)
-			EnhancedConfiguration items = vault.getPlugin().getConversionChart();
-			Set<String> keys = items.getConfigurationSection("").getKeys(false);
 			int i = 0;
 			for(String itemID : keys){
 				Material item = Material.getMaterial(Integer.valueOf(itemID.replace("'", "")));
