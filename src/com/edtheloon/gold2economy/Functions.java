@@ -47,7 +47,7 @@ public class Functions {
 				Material item = Material.getMaterial(Integer.valueOf(itemID.replace("'", "")));
 				String itemName = item.name().substring(0, 1) + item.name().toLowerCase().substring(1);
 				double rate = Converter.getRate(item.getId());
-				sender.sendMessage("1 " + ChatColor.AQUA + itemName + ChatColor.WHITE + " = "
+				sender.sendMessage("1 " + ChatColor.GREEN + itemName + ChatColor.WHITE + " = "
 						+ ChatColor.GREEN + vault.format(rate));
 				i++;
 				if(i == 10){
