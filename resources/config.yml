@@ -1,6 +1,8 @@
 # Gold2Economy - Vault Configuration
 # "convert" - true/false, convert <ITEM>
+# "buy" - true/false, buyback <ITEM>
 # "rates" - double (decimal), rate for <ITEM>
+# "buy-rates" - double (decimal), rate for buyback (/gi buy)
 # "preferred" - Does nothing as Register was removed
 # 
 # To set your own items, see 'items.yml'
@@ -8,8 +10,16 @@ convert:
     iron: false
     gold: true
     diamond: false
+buy:
+    iron: false
+    gold: true
+    diamond: false
 rates:
     iron: 9.99
     gold: 29.99
     diamond: 99.99
+buy-rates:
+    iron: 14.99
+    gold: 34.99
+    diamond: 104.99
 preferred: iConomy 6

@@ -10,6 +10,7 @@ commands:
         usage: |
             /gi - Shows this help menu
             /gi rates - Shows you the conversion rates
+            /gi buy <item> <amount> - Buys an item (amount optional)
             /gi <item> <amount> - Where <amount> is the amount of <item> to convert. <item> can be iron, gold or diamond
             /gi <item> all - Converts all your gold ingots into money. <item> can be iron, gold or diamond
             /gi reload - Reload config (Admin command)

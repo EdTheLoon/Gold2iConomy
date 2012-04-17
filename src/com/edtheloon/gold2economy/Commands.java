@@ -1,6 +1,9 @@
 package com.edtheloon.gold2economy;
 
+import java.util.HashMap;
+
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,7 +26,7 @@ public class Commands implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		// Initilize variables (turt2live)
+		// Initialize variables (turt2live)
 		EnhancedConfiguration config = plugin.getConfig();
 
 		// Reload configuration to not cause issues (turt2live)
@@ -39,6 +42,18 @@ public class Commands implements CommandExecutor {
 				// Command = /gi - Shows the help menu
 				if(args.length == 0){
 					return false;
+				}
+
+				// Check for buy command
+				if(args[0].equalsIgnoreCase("buy")){
+					if(args.length < 3){
+						return false;
+					}
+					if(!(sender instanceof Player)){
+						sender.sendMessage(ChatColor.RED + "Sorry! Only players can buy things");
+						return true;
+					}
+					return buy(args[1], args[2], (Player) sender);
 				}
 
 				// Command = /gi rates - Tells player the conversion rate
@@ -99,6 +114,163 @@ public class Commands implements CommandExecutor {
 			return true;
 		}
 		return false;
+	}
+
+	@SuppressWarnings ("deprecation")
+	public boolean buy(String strItemID, String strAmount, Player player){
+		EnhancedConfiguration config = plugin.getConfig();
+		boolean convertIron = config.getBoolean("buy.iron");
+		boolean convertGold = config.getBoolean("buy.gold");
+		boolean convertDiamond = config.getBoolean("buy.diamond");
+		String permission = "Gold2Economy.null";
+		int itemID = 0;
+		// Determine what itemID to use
+		if(strItemID.equalsIgnoreCase("iron")){
+			itemID = 265;
+			permission = gold2economy.PERMISSION_IRON;
+		}else if(strItemID.equalsIgnoreCase("gold")){
+			itemID = 266;
+			permission = gold2economy.PERMISSION_GOLD;
+		}else if(strItemID.equalsIgnoreCase("diamond")){
+			itemID = 264;
+			permission = gold2economy.PERMISSION_DIAMOND;
+		}else{
+			try{
+				itemID = Integer.parseInt(strItemID);
+				if(Converter.isAllowed(itemID)){
+					permission = "Gold2Economy." + itemID;
+				}
+			}catch(Exception e){
+				player.sendMessage(ChatColor.RED + "That is not a valid item ID!");
+				return true;
+			}
+		}
+
+		// Don't continue if server config says we can't convert item
+		// Change this from a switch (itemID) to if conditions because it was causing bugs
+		if(itemID == 265){ // IRON
+			if(!convertIron){
+				player.sendMessage(ChatColor.RED + "This server doesn't allow iron to be bought");
+				return true;
+			}
+		}else if(itemID == 266){ // GOLD
+			if(!convertGold){
+				player.sendMessage(ChatColor.RED + "This server doesn't allow gold to be bought");
+				return true;
+			}
+		}else if(itemID == 264){ // DIAMOND
+			if(!convertDiamond){
+				player.sendMessage(ChatColor.RED + "This server doesn't allow diamond to be bought");
+				return true;
+			}
+		}else if(!Converter.canBuy(itemID)){
+			player.sendMessage(ChatColor.RED + "This server doesn't allow that to be bought! ");
+			return true;
+		}
+
+		// Don't continue if player doesn't have required permission
+		if(!vault.hasPermission(player, permission)){ // Fixed for argument change (turt2live)
+			player.sendMessage(ChatColor.RED + "You can't buy that!");
+			return true;
+		}
+
+		// Check number
+		double amount = 0.0;
+		try{
+			amount = Double.parseDouble(strAmount);
+		}catch(Exception e){
+			player.sendMessage(ChatColor.RED + "'" + strAmount + "' is not a number!");
+			return true;
+		}
+
+		double balance = vault.balance(player.getName());
+		// Setup variables (turt2live)
+		double ironRate = config.getDouble("rates.iron");
+		double goldRate = config.getDouble("rates.gold");
+		double diamondRate = config.getDouble("rates.diamond");
+
+		// Declare local variables
+		Double conversion = 0.0;
+		PlayerInventory pi = player.getInventory();
+
+		// Calculate conversion rate
+		// Change this from a switch (itemID) to if conditions because it was causing bugs
+		if(itemID == 265){
+			conversion = ironRate * amount; // Fixed for argument change (turt2live)
+		}else if(itemID == 266){
+			conversion = goldRate * amount; // Fixed for argument change (turt2live)
+		}else if(itemID == 264){
+			conversion = diamondRate * amount; // Fixed for argument change (turt2live)
+		}else if(Converter.canBuy(itemID)){ // For customized/other items (like gold nuggets) - Turt2Live
+			conversion = Converter.getBuyRate(itemID) * amount;
+		}
+
+		if(conversion > balance){
+			player.sendMessage(ChatColor.RED + "You can't afford that! " + ChatColor.GRAY + "(Cost: " + vault.format(conversion) + ", Balance: " + vault.format(balance) + ")");
+			return true;
+		}
+
+		// Add items to inventory
+		boolean room = true;
+		int freeSpace = 0;
+		for(ItemStack item : pi.getContents()){
+			if(item != null){
+				if(item.getTypeId() == itemID){
+					if(item.getAmount() < item.getMaxStackSize()){
+						freeSpace += item.getMaxStackSize() - item.getAmount();
+					}
+				}
+			}else{
+				freeSpace += 64;
+			}
+		}
+		if(freeSpace >= amount){
+			double left = amount;
+			int index = 0;
+			HashMap<Integer, ItemStack> add = new HashMap<Integer, ItemStack>();
+			for(ItemStack item : pi.getContents()){
+				if(item != null){
+					if(item.getTypeId() == itemID){
+						double camount = item.getAmount();
+						if(camount < 64){
+							double mdiff = 64 - camount;
+							if(mdiff > left){
+								mdiff = left;
+							}
+							left -= mdiff;
+							item.setAmount((int) (camount + mdiff));
+						}
+					}else if(item.getType() == Material.AIR){
+						item = new ItemStack(itemID, (int) (left >= 64 ? 64 : left));
+						left -= (int) (left >= 64 ? 64 : left);
+					}
+				}else{
+					item = new ItemStack(itemID, (int) (left >= 64 ? 64 : left));
+					left -= (int) (left >= 64 ? 64 : left);
+					add.put(index, item);
+				}
+				if(left <= 0){
+					break;
+				}
+				index++;
+			}
+			for(Integer i : add.keySet()){
+				pi.setItem(i, add.get(i));
+			}
+		}else{
+			room = false;
+		}
+
+		// Withdraw and alert
+		if(room){
+			player.getInventory().setContents(pi.getContents());
+			vault.withdraw(player.getName(), conversion);
+			player.sendMessage(ChatColor.GREEN + "Item" + (amount > 1 ? "s" : "") + " bought! Your new balance is " + vault.format(vault.balance(player.getName())));
+		}else{
+			player.sendMessage(ChatColor.RED + "You have no inventory space for that!");
+		}
+		player.updateInventory();
+		return true;
 	}
 
 	public boolean remove(String strItemID, Integer amount, Player player){

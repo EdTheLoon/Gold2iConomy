@@ -101,4 +101,15 @@ public class gold2economy extends PluginWrapper { //To implement feildmaster's c
 		items.load();
 		return items;
 	}
+
+	// Added by turt2live for gold nuggets and such (buying)
+	public EnhancedConfiguration getSellChart(){
+		EnhancedConfiguration items = new EnhancedConfiguration(new File(getDataFolder(), "sell.yml"), this);
+		items.loadDefaults(getResource("resources/sell.yml"));
+		if(items.needsUpdate()){
+			items.saveDefaults();
+		}
+		items.load();
+		return items;
+	}
 }
