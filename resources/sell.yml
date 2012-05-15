@@ -1,0 +1,10 @@
+# Custom Items List
+# 
+# This is for the /gi buy command.
+# 
+# To add a new item, simply follow this structure:
+# ID: cost
+# 
+# Example:
+# '1': 24.99 
+# This would make stone cost 24.99

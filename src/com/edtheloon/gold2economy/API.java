@@ -3,7 +3,6 @@ package com.edtheloon.gold2economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.feildmaster.lib.configuration.EnhancedConfiguration;
 
@@ -44,16 +43,6 @@ public class API {
 	}
 
 	/**
-	 * Determines if diamond can be sold
-	 * 
-	 * @param player the player selling the diamond
-	 * @return true if the player can sell diamond
-	 */
-	public boolean canSellDiamond(Player player){
-		return vault.hasPermission(player, getPermissionDiamond());
-	}
-
-	/**
 	 * Determines if gold can be sold
 	 * 
 	 * @param player the CommandSender selling the gold
@@ -64,32 +53,12 @@ public class API {
 	}
 
 	/**
-	 * Determines if gold can be sold
-	 * 
-	 * @param player the player selling the gold
-	 * @return true if the player can sell gold
-	 */
-	public boolean canSellGold(Player player){
-		return vault.hasPermission(player, getPermissionGold());
-	}
-
-	/**
 	 * Determines if iron can be sold
 	 * 
 	 * @param player the CommandSender selling the iron
 	 * @return true if the CommandSener can sell iron
 	 */
 	public boolean canSellIron(CommandSender player){
-		return vault.hasPermission(player, getPermissionIron());
-	}
-
-	/**
-	 * Determines if iron can be sold
-	 * 
-	 * @param player the player selling the iron
-	 * @return true if the player can sell iron
-	 */
-	public boolean canSellIron(Player player){
 		return vault.hasPermission(player, getPermissionIron());
 	}
 

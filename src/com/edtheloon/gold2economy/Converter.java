@@ -77,4 +77,18 @@ public class Converter {
 		return config.get(String.valueOf(itemID)) != null;
 	}
 
+	// Added by turt2live, checks if the item can be bought
+	public static boolean canBuy(int itemID){
+		gold2economy plugin = (gold2economy) Bukkit.getServer().getPluginManager().getPlugin("Gold2Economy-Vault");
+		EnhancedConfiguration config = plugin.getSellChart();
+		return config.get(String.valueOf(itemID)) != null;
+	}
+
+	// Added by turt2live, gets the rate of a custom item (buying)
+	public static Double getBuyRate(int itemID){
+		gold2economy plugin = (gold2economy) Bukkit.getServer().getPluginManager().getPlugin("Gold2Economy-Vault");
+		EnhancedConfiguration config = plugin.getSellChart();
+		return config.getDouble(String.valueOf(itemID));
+	}
+
 }

@@ -26,7 +26,7 @@ public class server implements Listener { //Fixed for new event system - Turt2Li
 		// Check Vault (turt2live)
 		if(event.getPlugin().getDescription().getName() == "Vault"){
 			gold2economy.enabled = false;
-			gold2economy.log.info("[Gold2Economy] Disabled. G2E will re-enable once Vault is enabled.");
+			gold2economy.log.info("["+plugin.getDescription().getVersion()+"] "+"[Gold2Economy] Disabled. G2E will re-enable once Vault is enabled.");
 		}
 	}
 
@@ -35,7 +35,7 @@ public class server implements Listener { //Fixed for new event system - Turt2Li
 		// Check Vault (turt2live)
 		if(gold2economy.enabled == false && event.getPlugin().getDescription().getName() == "Vault"){
 			gold2economy.enabled = true;
-			gold2economy.log.info("[Gold2Economy] Vault was enabled. G2E now functional.");
+			gold2economy.log.info("["+plugin.getDescription().getVersion()+"] "+"[Gold2Economy] Vault was enabled. G2E now functional.");
 		}
 	}
 
